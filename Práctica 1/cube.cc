@@ -31,17 +31,39 @@ _cube::_cube(float Size)
 
   Triangles.resize(12);
 
+//Cara frontal
   Triangles[0]=_vertex3ui(0,1,2);
   Triangles[1]=_vertex3ui(0,2,3);
+  
+//Cara trasera
   Triangles[2]=_vertex3ui(4,5,6);
   Triangles[3]=_vertex3ui(4,6,7);
+  
+//Cara superior
   Triangles[4]=_vertex3ui(3,7,6);
   Triangles[5]=_vertex3ui(3,2,6);
+  
+//Cara inferior
   Triangles[6]=_vertex3ui(0,4,5);
   Triangles[7]=_vertex3ui(0,1,5);
+  
+//Cara izquierda
   Triangles[8]=_vertex3ui(1,5,6);
   Triangles[9]=_vertex3ui(1,2,6);
+  
+//Cara derecha
   Triangles[10]=_vertex3ui(0,4,7);
   Triangles[11]=_vertex3ui(0,3,7);
   
+  /*
+
+    3-------------2
+    | \ 7-----6 / |
+    |   |     |   |
+    |   |     |   |
+    | / 4-----5 \ |
+    0-------------1
+
+
+  */
 }
