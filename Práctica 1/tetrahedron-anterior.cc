@@ -6,14 +6,14 @@
 * GPL 3
 */
 
-#include "tetrahedron.h"
+
 
 /**
 *
 *@param
 *@returns
 */
-
+/*
 _tetrahedron::_tetrahedron(float Size)
 {
   Vertices.resize(4);
@@ -30,4 +30,4 @@ _tetrahedron::_tetrahedron(float Size)
   Triangles[2]=_vertex3ui(2,0,3);
   Triangles[3]=_vertex3ui(0,2,1);
 }
-
+*/

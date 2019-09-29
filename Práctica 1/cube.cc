@@ -5,14 +5,14 @@
 * GPL 3
 */
 
-#include "cube.h"
+
 
 /**
 *
 *@param
 *@returns
 */
-
+/*
 _cube::_cube(float Size)
 {
   Vertices.resize(8);
@@ -66,4 +66,6 @@ _cube::_cube(float Size)
 
 
   */
-}
+
+
+
