@@ -25,6 +25,9 @@ class Malla3D
    // dibuja el objeto en modo inmediato
    void draw_ModoInmediato();
 
+   // Crea VBO
+   GLuint crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero_ram);
+
    // dibuja el objeto en modo diferido (usando VBOs)
    void draw_ModoDiferido();
 
