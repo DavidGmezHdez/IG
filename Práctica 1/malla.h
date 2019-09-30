@@ -11,6 +11,7 @@
 #define MALLA3D_H_INCLUDED
 
 #include "aux.h"
+#include <string.h>
 
 // *****************************************************************************
 //
@@ -31,10 +32,22 @@ class Malla3D
    // dibuja el objeto en modo diferido (usando VBOs)
    void draw_ModoDiferido();
 
+   //dibuja los puntos del objeto
+   void draw_Puntos();
+
+   //dibuja las lineas del objeto
+   void draw_Lineas();
+
+   //dibuja las caras del objeto
+   void draw_Caras();
+
+   //dibuja las caras del objeto en modo ajedrez
+   void draw_Ajedrez();
+
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(int modoDibujado) ;
+   void draw(int modoDibujado, int modoVisualizacion) ;
 
    protected:
 
@@ -43,6 +56,7 @@ class Malla3D
    std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c; //una terna 3 float por cada color
+   GLenum metodoGL;
 
    // completar: tabla de colores, tabla de normales de vértices
 } ;

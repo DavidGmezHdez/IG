@@ -58,26 +58,10 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
-    // COMPLETAR
-    //   Dibujar los diferentes elementos de la escena
-    // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
-    // y hacer 
-    // cubo.draw()
-    // o
-    // tetraedro.draw()
-
    if(seleccionDibujo == 1)
-      tetraedro->draw(metodoDibujado);
+      tetraedro->draw(metodoDibujado,modoVisualizacion);
    else if(seleccionDibujo == 2)
-      cubo->draw(metodoDibujado);
-
-   switch (modoVisualizacion){
-      case 1:
-         
-
-
-   }
-
+      cubo->draw(metodoDibujado,modoVisualizacion);
 
 }
 
@@ -143,11 +127,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             modoVisualizacion = 4;
          break;
       case 1 :
-         if(modoMenu == SELVISUALIZACION)
+         if(modoMenu == SELDIBUJADO)
             metodoDibujado = 1;
          break;
       case 2:
-         if(modoMenu == SELVISUALIZACION)
+         if(modoMenu == SELDIBUJADO)
             metodoDibujado = 2;
          break;
 
