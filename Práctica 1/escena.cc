@@ -55,8 +55,9 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
+   glEnable(GL_CULL_FACE);
 	change_observer();
-    ejes.draw();
+   ejes.draw();
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -64,7 +65,20 @@ void Escena::dibujar()
     // cubo.draw()
     // o
     // tetraedro.draw()
-    
+
+   if(seleccionDibujo == 1)
+      tetraedro->draw(metodoDibujado);
+   else if(seleccionDibujo == 2)
+      cubo->draw(metodoDibujado);
+
+   switch (modoVisualizacion){
+      case 1:
+         
+
+
+   }
+
+
 }
 
 //**************************************************************************
@@ -93,16 +107,50 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          // ESTAMOS EN MODO SELECCION DE OBJETO
          modoMenu=SELOBJETO; 
          break ;
-        case 'V' :
+      case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
          break ;
-       case 'D' :
+      case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
          modoMenu=SELDIBUJADO;
          break ;
          // COMPLETAR con los diferentes opciones de teclado
-            
+      case 'C' :
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 2;
+         break;
+      case 'T' :
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 1;
+         break;
+
+      case 'P':
+         if(modoMenu == SELVISUALIZACION)
+            modoVisualizacion = 1;
+         break;
+      
+      case 'L':
+         if(modoMenu == SELVISUALIZACION)
+            modoVisualizacion = 2;
+         break;
+      case 'S':
+         if(modoMenu == SELVISUALIZACION)
+            modoVisualizacion = 3;
+         break;
+      case 'A':
+         if(modoMenu == SELVISUALIZACION)
+            modoVisualizacion = 4;
+         break;
+      case 1 :
+         if(modoMenu == SELVISUALIZACION)
+            metodoDibujado = 1;
+         break;
+      case 2:
+         if(modoMenu == SELVISUALIZACION)
+            metodoDibujado = 2;
+         break;
+
    }
    return salir;
 }

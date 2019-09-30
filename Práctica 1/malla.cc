@@ -50,9 +50,15 @@ void Malla3D::draw_ModoDiferido()
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw()
+void Malla3D::draw(int modoDibujado)
 {
    // completar .....(práctica 1)
+
+   if(modoDibujado == 1)
+      draw_ModoInmediato();
+   else if(modoDibujado == 2)
+      draw_ModoDiferido();
+
 
 }
 

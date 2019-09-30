@@ -37,6 +37,7 @@ class Escena
    Ejes ejes;
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
+   int seleccionDibujo, metodoDibujado, modoVisualizacion;
 
    
    public:
