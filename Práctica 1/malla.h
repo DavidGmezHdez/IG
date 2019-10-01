@@ -47,7 +47,7 @@ class Malla3D
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(int modoDibujado, int modoVisualizacion) ;
+   void draw(bool modoDibujado, GLenum modoVisualizacion) ;
 
    protected:
 
@@ -56,7 +56,7 @@ class Malla3D
    std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c; //una terna 3 float por cada color
-   GLenum metodoGL;
+
 
    // completar: tabla de colores, tabla de normales de vértices
 } ;

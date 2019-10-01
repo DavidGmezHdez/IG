@@ -16,8 +16,11 @@ void Malla3D::draw_ModoInmediato()
   // ...
    glEnableClientState(GL_VERTEX_ARRAY);
    glVertexPointer(3,GL_FLOAT,0,v.data());
-
+   glEnableClientState(GL_COLOR_ARRAY);
+   glColorPointer(3, GL_FLOAT, 0, c.data());
+   glShadeModel(GL_FLAT);
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
+   glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState( GL_VERTEX_ARRAY );
 }
 // -----------------------------------------------------------------------------
@@ -38,99 +41,44 @@ void Malla3D::draw_ModoDiferido()
    // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
    // completar (práctica 1)
    // .....
-   glBindBuffer(GL_ARRAY_BUFFER,crearVBO(GL_ARRAY_BUFFER,sizeof(v.size()),v.data())); 
+   glBindBuffer(GL_ARRAY_BUFFER,crearVBO(GL_ARRAY_BUFFER,v.size(),v.data())); 
    glVertexPointer(3,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,crearVBO(GL_ELEMENT_ARRAY_BUFFER,sizeof(f.size()),f.data()));
-   glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,0);
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,crearVBO(GL_ELEMENT_ARRAY_BUFFER,v.size(),v.data()));
+   glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
    glDisableClientState(GL_VERTEX_ARRAY); 
 }
 
-// -----------------------------------------------------------------------------
-/*
-//dibuja los puntos del objeto
-void Malla3D::draw_Puntos(){
-  glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
-  glBegin(GL_TRIANGLES);
-  for (unsigned int i=0;i<f.size();i++){
-     glVertex3fv((GLfloat *) &v[f[i](1)]);
-     glVertex3fv((GLfloat *) &v[f[i](2)]);
-     glVertex3fv((GLfloat *) &v[f[i](3)]);
-  }
-  glEnd();
-}
 
 // -----------------------------------------------------------------------------
 
-
-//dibuja las lineas del objeto
-void Malla3D::draw_Lineas(){
-   glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-   glBegin(GL_TRIANGLES);
-   for (unsigned int i=0;i<f.size();i++){
-     glVertex3fv((GLfloat *) &v[f[i](1)]);
-     glVertex3fv((GLfloat *) &v[f[i](2)]);
-     glVertex3fv((GLfloat *) &v[f[i](3)]);
-   }
-   glEnd();
-}
-
-
-// -----------------------------------------------------------------------------
-
-
-//dibuja las caras del objeto
-void Malla3D::draw_Caras(){
-   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-   glBegin(GL_TRIANGLES);
-   for (unsigned int i=0;i<f.size();i++){
-     glVertex3fv((GLfloat *) &v[f[i](1)]);
-     glVertex3fv((GLfloat *) &v[f[i](2)]);
-     glVertex3fv((GLfloat *) &v[f[i](3)]);
-   }
-   glEnd();
-}
-
-
-// -----------------------------------------------------------------------------
-
-
-//dibuja las caras del objeto en modo ajedrez
-//void Malla3D::draw_Ajedrez();
-
-
-// -----------------------------------------------------------------------------
-
-*/
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(int modoDibujado, int modoVisualizacion)
+void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion)
 {
    // completar .....(práctica 1)
    switch (modoVisualizacion){
-      case 1:
-         metodoGL = GL_POINT;
+      case GL_POINT:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
          break;
-      case 2:
-         metodoGL = GL_LINE;
+      case GL_LINE:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
          break;
-      case 3:
-         metodoGL = GL_FILL;
+      case GL_FILL:
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
          break;
       case 4:
          //draw_Ajedrez();
          break;
    }
 
-   glPolygonMode(GL_FRONT_AND_BACK,metodoGL);
-
-   if(modoDibujado == 1)
-      draw_ModoInmediato();
-   else if(modoDibujado == 2)
+   if(modoDibujado)
       draw_ModoDiferido();
+   else
+      draw_ModoInmediato();
 
 }
 

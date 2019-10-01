@@ -21,6 +21,7 @@ Escena::Escena()
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
+    cubo = new Cubo();
 
 }
 
@@ -111,28 +112,28 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
       case 'P':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 1;
+            modoVisualizacion = GL_POINT;
          break;
       
       case 'L':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 2;
+            modoVisualizacion = GL_LINE;
          break;
       case 'S':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 3;
+            modoVisualizacion = GL_FILL;
          break;
       case 'A':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 4;
+            //modoVisualizacion = 4;
          break;
       case 1 :
          if(modoMenu == SELDIBUJADO)
-            metodoDibujado = 1;
+            metodoDibujado = false;
          break;
       case 2:
          if(modoMenu == SELDIBUJADO)
-            metodoDibujado = 2;
+            metodoDibujado = true;
          break;
 
    }

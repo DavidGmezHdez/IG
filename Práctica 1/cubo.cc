@@ -4,62 +4,70 @@
 
 Cubo::Cubo(float lado)
 {
-
+  
    // inicializar la tabla de vértices
-   v.resize(8);
-   
-   //Primer cuadrado
-   Tupla3f p0(50*lado/2,50*-lado/2,50*lado/2),p1(50*lado/2,50*-lado/2,50*-lado/2), p2(50*-lado/2,50*-lado/2,50*-lado/2),
-   p3(50*-lado/2,50*-lado/2,50*lado/2);
-   
-   //Segundo cuadrado
-   Tupla3f p4(50*lado/2,50*lado/2,50*lado/2), p5(50*lado/2,50*lado/2,50*-lado/2),
-   p6(50*-lado/2,50*lado/2,50*-lado/2), p7(50*-lado/2,50*lado/2,50*lado/2);
-   
-   v.push_back(p0);
-   v.push_back(p1);
-   v.push_back(p2);
-   v.push_back(p3);
-   v.push_back(p4);
-   v.push_back(p5);
-   v.push_back(p6);
-   v.push_back(p7);
+   // Primer cuadrado
+   Tupla3f v1(-lado*50, -lado*50, lado*-50.0), v2(lado*50, -lado*50, lado*-50.0), v3(lado*50, lado*50, lado*-50.0), v4(-lado*50, lado*50, lado*-50.0);
+   v.push_back(v1);
+   v.push_back(v2);
+   v.push_back(v3);
+   v.push_back(v4);
+
+   // Segundo cuadrado
+   Tupla3f v5(-lado*50, -lado*50, lado*50), v6(lado*50, -lado*50, lado*50), v7(lado*50, lado*50, lado*50), v8(-lado*50, lado*50, lado*50);
+   v.push_back(v5);
+   v.push_back(v6);
+   v.push_back(v7);
+   v.push_back(v8);
 
    // inicializar la tabla de caras o triángulos:
+   // Cara frontal
+   Tupla3i t1(0, 2, 1), t2(0, 3, 2);
+   f.push_back(t1);
+   f.push_back(t2);
 
-   //Cara inferior
-   Tupla3i c0(3,0,1), c1(1,2,3);
-   f.push_back(c0);
-   f.push_back(c1);
+   // Cara final
+   Tupla3i t3(4, 5, 6), t4(4, 6, 7);
+   f.push_back(t3);
+   f.push_back(t4);
 
-   //Cara superior
-   Tupla3i c2(4,5,6), c3(6,7,4);
-   f.push_back(c2);
-   f.push_back(c3);
+   // Cara derecha
+   Tupla3i t5(1, 2, 6), t6(1, 6, 5);
+   f.push_back(t5);
+   f.push_back(t6);
 
-   //Cara frontal
-   Tupla3i c4(4,0,3), c5(3,7,4);
-   f.push_back(c4);
-   f.push_back(c5);
+   // Cara izquierda
+   Tupla3i t7(0, 7, 3), t8(0, 4, 7);
+   f.push_back(t7);
+   f.push_back(t8);
 
-   //Cara trasera
-   Tupla3i c6(1,5,6), c7(6,2,1);
-   f.push_back(c6);
-   f.push_back(c7);
+   // Cara de arriba
+   Tupla3i t9(2, 3, 6), t10(3, 7, 6);
+   f.push_back(t9);
+   f.push_back(t10);
 
-   //Cara derecha
-   Tupla3i c8(4,5,1), c9(1,0,4);
-   f.push_back(c8);
-   f.push_back(c9);
+   // Cara de abajo
+   Tupla3i t11(0, 1, 4), t12(5, 4, 1);
+   f.push_back(t11);
+   f.push_back(t12);
 
-   //Cara superior
-   Tupla3i c10(6,7,3), c11(3,2,6);
-   f.push_back(c10);
-   f.push_back(c11);
+
+   //Inicializamos los colores
+   Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0), c5(200,0,0), c6(200,0,0), c7(200,0,0), c8(200,0,0);
+   c.push_back(c1);
+   c.push_back(c2);
+   c.push_back(c3);
+   c.push_back(c4);
+   c.push_back(c5);
+   c.push_back(c6);
+   c.push_back(c7);
+   c.push_back(c8);
 
    
    // (es importante en cada cara ordenar los vértices en sentido contrario
    //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
 
 }
+
+
 
