@@ -40,6 +40,7 @@ class Escena
    bool metodoDibujado;
    int seleccionDibujo;
    GLenum modoVisualizacion;
+   bool ajedrez = false;
 
    
    public:

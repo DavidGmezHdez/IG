@@ -22,6 +22,7 @@ Escena::Escena()
     // .......completar: ...
     // .....
     cubo = new Cubo();
+    tetraedro = new Tetraedro();
 
 }
 
@@ -60,9 +61,9 @@ void Escena::dibujar()
 	change_observer();
    ejes.draw();
    if(seleccionDibujo == 1)
-      tetraedro->draw(metodoDibujado,modoVisualizacion);
+      tetraedro->draw(metodoDibujado,modoVisualizacion, ajedrez);
    else if(seleccionDibujo == 2)
-      cubo->draw(metodoDibujado,modoVisualizacion);
+      cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
 
 }
 
@@ -125,7 +126,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       case 'A':
          if(modoMenu == SELVISUALIZACION)
-            //modoVisualizacion = 4;
+            ajedrez = !ajedrez;
          break;
       case 1 :
          if(modoMenu == SELDIBUJADO)

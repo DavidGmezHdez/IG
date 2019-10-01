@@ -53,21 +53,39 @@ Cubo::Cubo(float lado)
 
 
    //Inicializamos los colores
-   Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0), c5(200,0,0), c6(200,0,0), c7(200,0,0), c8(200,0,0);
-   c.push_back(c1);
-   c.push_back(c2);
-   c.push_back(c3);
-   c.push_back(c4);
-   c.push_back(c5);
-   c.push_back(c6);
-   c.push_back(c7);
-   c.push_back(c8);
+
+   if (ajedrez == false){
+      c.clear();
+      Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0), c5(200,0,0), c6(200,0,0), c7(200,0,0), c8(200,0,0);
+      c.push_back(c1);
+      c.push_back(c2);
+      c.push_back(c3);
+      c.push_back(c4);
+      c.push_back(c5);
+      c.push_back(c6);
+      c.push_back(c7);
+      c.push_back(c8);
+   }
+   else{
+      c.clear();
+      Tupla3f c1(0,0,0), c2(0,200,0), c3(0,0,0), c4(0,200,0), c5(0,0,0), c6(0,200,0), c7(0,0,0), c8(0,200,0);
+      c.push_back(c1);
+      c.push_back(c2);
+      c.push_back(c3);
+      c.push_back(c4);
+      c.push_back(c5);
+      c.push_back(c6);
+      c.push_back(c7);
+      c.push_back(c8);
+   }
 
    
    // (es importante en cada cara ordenar los vértices en sentido contrario
    //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
 
 }
+
+
 
 
 

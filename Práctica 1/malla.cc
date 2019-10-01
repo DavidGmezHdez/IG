@@ -57,7 +57,7 @@ void Malla3D::draw_ModoDiferido()
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion)
+void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
 {
    // completar .....(práctica 1)
    switch (modoVisualizacion){
@@ -70,15 +70,30 @@ void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion)
       case GL_FILL:
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
          break;
-      case 4:
-         //draw_Ajedrez();
-         break;
    }
 
    if(modoDibujado)
       draw_ModoDiferido();
    else
       draw_ModoInmediato();
+
+   this->ajedrez = chess;
+
+}
+
+
+
+void Malla3D::draw_ajedrez(){
+   
+   float color_random = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/255));
+   int posicion = static_cast <int> (rand()) / (static_cast <int> (RAND_MAX/2));
+
+   for(int i=0;i<c.size();i+=2){
+      c[i](posicion) = color_random;
+   }
+
+
+
 
 }
 
