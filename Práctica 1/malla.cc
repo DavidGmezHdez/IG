@@ -11,9 +11,6 @@
 
 void Malla3D::draw_ModoInmediato()
 {
-  // visualizar la malla usando glDrawElements,
-  // completar (práctica 1)
-  // ...
    glEnableClientState(GL_VERTEX_ARRAY);
    glVertexPointer(3,GL_FLOAT,0,v.data());
    glEnableClientState(GL_COLOR_ARRAY);
@@ -38,14 +35,15 @@ GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero
 // -----------------------------------------------------------------------------
 void Malla3D::draw_ModoDiferido()
 {
-   // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
-   // completar (práctica 1)
-   // .....
-   glBindBuffer(GL_ARRAY_BUFFER,crearVBO(GL_ARRAY_BUFFER,v.size(),v.data())); 
+   if(vbo_v == 0 && vbo_f==0){
+      vbo_v = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*v.size(),v.data());
+      vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());  
+   }
+   glBindBuffer(GL_ARRAY_BUFFER,vbo_v); 
    glVertexPointer(3,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,crearVBO(GL_ELEMENT_ARRAY_BUFFER,v.size(),v.data()));
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
    glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
    glDisableClientState(GL_VERTEX_ARRAY); 
@@ -72,28 +70,53 @@ void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
          break;
    }
 
-   if(modoDibujado)
+   this->ajedrez = chess;
+   if(ajedrez)
+      draw_ajedrezInmediato();
+   else if(modoDibujado)
       draw_ModoDiferido();
    else
       draw_ModoInmediato();
-
-   this->ajedrez = chess;
 
 }
 
 
 
-void Malla3D::draw_ajedrez(){
+void Malla3D::draw_ajedrezInmediato(){
+   glEnableClientState(GL_VERTEX_ARRAY);
+   glVertexPointer(3,GL_FLOAT,0,v.data());
+   glEnableClientState(GL_COLOR_ARRAY);
    
-   float color_random = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/255));
-   int posicion = static_cast <int> (rand()) / (static_cast <int> (RAND_MAX/2));
+   for(int i=0;i<f.size();i+=2){
+      impares.push_back(f[i]);
+      pares.push_back(f[i+1]);
+   }
+   glShadeModel(GL_FLAT);
 
-   for(int i=0;i<c.size();i+=2){
-      c[i](posicion) = color_random;
+   cimpares.resize(c.size());
+   cpares.resize(c.size());
+
+   for(int i=0;i<cpares.size();i++){
+      cpares[i][0] = (200.0);
+      cpares[i][1] = (0.0);
+      cpares[i][2] = (0.0);
    }
 
+   for(int i=0;i<cimpares.size();i++){
+      cimpares[i](0) = (0.0);
+      cimpares[i](1) = (0.0);
+      cimpares[i](2) = (0.0);
+   }
+
+   glColorPointer(3, GL_FLOAT, 0, cpares.data());
+   glDrawElements(GL_TRIANGLES, 3*pares.size(),GL_UNSIGNED_INT,pares.data());
 
 
+   glColorPointer(3, GL_FLOAT, 0, cimpares.data());
+   glDrawElements(GL_TRIANGLES, 3*impares.size(),GL_UNSIGNED_INT,impares.data());
 
+   glDisableClientState(GL_COLOR_ARRAY);
+   glDisableClientState( GL_VERTEX_ARRAY );
+   
 }
 

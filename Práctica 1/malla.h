@@ -37,16 +37,17 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(bool modoDibujado, GLenum modoVisualizacion, bool chess);
 
-   void draw_ajedrez();
+   void draw_ajedrezInmediato();
 
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
 
    std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
-   std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
-   std::vector<Tupla3f> c; //una terna 3 float por cada color
+   std::vector<Tupla3i> f, impares, pares; // una terna de 3 enteros por cada cara o triángulo
+   std::vector<Tupla3f> c, cimpares, cpares; //una terna 3 float por cada color
    bool ajedrez;
+   GLuint vbo_v = 0,vbo_f= 0;
 
 
    // completar: tabla de colores, tabla de normales de vértices

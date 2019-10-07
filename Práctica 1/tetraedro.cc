@@ -13,7 +13,7 @@ Tetraedro::Tetraedro()
    v.push_back(v4);
     
    // inicializar la tabla de caras o triángulos:
-   Tupla3i t1(0,1,3), t2(1,2,3), t3(2,0,3), t4(0,1,2);
+   Tupla3i t1(0,1,3), t2(1,2,3),t4(0,2,1), t3(0,3,2)  ;
    f.push_back(t1);
    f.push_back(t2);
    f.push_back(t3);
@@ -24,7 +24,7 @@ Tetraedro::Tetraedro()
    Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0);
    c.push_back(c1);
    c.push_back(c2);
-   c.push_back(c3);
+   c.push_back(c3); 
    c.push_back(c4);
 
    // (es importante en cada cara ordenar los vértices en sentido contrario
