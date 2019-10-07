@@ -32,12 +32,15 @@ class Malla3D
    // dibuja el objeto en modo diferido (usando VBOs)
    void draw_ModoDiferido();
 
+   //funcion que redibuja el objeto con el modo ajedrez
+   void draw_ajedrezInmediato();
+   
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(bool modoDibujado, GLenum modoVisualizacion, bool chess);
 
-   void draw_ajedrezInmediato();
+   
 
    protected:
 
@@ -49,8 +52,6 @@ class Malla3D
    bool ajedrez;
    GLuint vbo_v = 0,vbo_f= 0;
 
-
-   // completar: tabla de colores, tabla de normales de vértices
 } ;
 
 

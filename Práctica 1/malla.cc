@@ -7,7 +7,9 @@
 //
 // *****************************************************************************
 
+// -----------------------------------------------------------------------------
 // Visualización en modo inmediato con 'glDrawElements'
+// -----------------------------------------------------------------------------
 
 void Malla3D::draw_ModoInmediato()
 {
@@ -20,10 +22,11 @@ void Malla3D::draw_ModoInmediato()
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState( GL_VERTEX_ARRAY );
 }
-// -----------------------------------------------------------------------------
-// Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
 // -----------------------------------------------------------------------------
+// Visualización en modo diferido con 'glDrawElements' (usando VBOs)
+// -----------------------------------------------------------------------------
+
 GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero_ram){
    GLuint id_vbo;
    glGenBuffers( 1, & id_vbo );
@@ -32,7 +35,9 @@ GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero
    glBindBuffer( tipo_vbo, 0 );
    return id_vbo ;
 }
+
 // -----------------------------------------------------------------------------
+
 void Malla3D::draw_ModoDiferido()
 {
    if(vbo_v == 0 && vbo_f==0){
@@ -49,15 +54,55 @@ void Malla3D::draw_ModoDiferido()
    glDisableClientState(GL_VERTEX_ARRAY); 
 }
 
-
+// -----------------------------------------------------------------------------
+// Visualización en modo inmediato con el modo ajedrez
 // -----------------------------------------------------------------------------
 
+void Malla3D::draw_ajedrezInmediato(){
+   glEnableClientState(GL_VERTEX_ARRAY);
+   glVertexPointer(3,GL_FLOAT,0,v.data());
+   glEnableClientState(GL_COLOR_ARRAY);
+   
+   for(int i=0;i<f.size();i+=2){
+      impares.push_back(f[i]);
+      pares.push_back(f[i+1]);
+   }
+
+   glShadeModel(GL_FLAT);
+
+   cimpares.resize(c.size());
+   cpares.resize(c.size());
+
+   for(int i=0;i<cpares.size();++i){
+      cpares[i][0] = (200.0);
+      cpares[i][1] = (0.0);
+      cpares[i][2] = (0.0);
+   }
+
+   for(int i=0;i<cimpares.size();++i){
+      cimpares[i](0) = (0.0);
+      cimpares[i](1) = (0.0);
+      cimpares[i](2) = (0.0);
+   }
+
+   glColorPointer(3, GL_FLOAT, 0, cpares.data());
+   glDrawElements(GL_TRIANGLES, 3*pares.size(),GL_UNSIGNED_INT,pares.data());
+
+   glColorPointer(3, GL_FLOAT, 0, cimpares.data());
+   glDrawElements(GL_TRIANGLES, 3*impares.size(),GL_UNSIGNED_INT,impares.data());
+
+   glDisableClientState(GL_COLOR_ARRAY);
+   glDisableClientState( GL_VERTEX_ARRAY );
+   
+}
+
+// -----------------------------------------------------------------------------
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
+// -----------------------------------------------------------------------------
 
 void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
 {
-   // completar .....(práctica 1)
    switch (modoVisualizacion){
       case GL_POINT:
          glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
@@ -69,7 +114,6 @@ void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
          break;
    }
-
    this->ajedrez = chess;
    if(ajedrez)
       draw_ajedrezInmediato();
@@ -77,46 +121,8 @@ void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
       draw_ModoDiferido();
    else
       draw_ModoInmediato();
-
 }
 
 
 
-void Malla3D::draw_ajedrezInmediato(){
-   glEnableClientState(GL_VERTEX_ARRAY);
-   glVertexPointer(3,GL_FLOAT,0,v.data());
-   glEnableClientState(GL_COLOR_ARRAY);
-   
-   for(int i=0;i<f.size();i+=2){
-      impares.push_back(f[i]);
-      pares.push_back(f[i+1]);
-   }
-   glShadeModel(GL_FLAT);
-
-   cimpares.resize(c.size());
-   cpares.resize(c.size());
-
-   for(int i=0;i<cpares.size();i++){
-      cpares[i][0] = (200.0);
-      cpares[i][1] = (0.0);
-      cpares[i][2] = (0.0);
-   }
-
-   for(int i=0;i<cimpares.size();i++){
-      cimpares[i](0) = (0.0);
-      cimpares[i](1) = (0.0);
-      cimpares[i](2) = (0.0);
-   }
-
-   glColorPointer(3, GL_FLOAT, 0, cpares.data());
-   glDrawElements(GL_TRIANGLES, 3*pares.size(),GL_UNSIGNED_INT,pares.data());
-
-
-   glColorPointer(3, GL_FLOAT, 0, cimpares.data());
-   glDrawElements(GL_TRIANGLES, 3*impares.size(),GL_UNSIGNED_INT,impares.data());
-
-   glDisableClientState(GL_COLOR_ARRAY);
-   glDisableClientState( GL_VERTEX_ARRAY );
-   
-}
 
