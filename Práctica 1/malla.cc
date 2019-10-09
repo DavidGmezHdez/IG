@@ -77,14 +77,11 @@ void Malla3D::draw_ajedrezInmediato(){
       cpares[i][0] = (200.0);
       cpares[i][1] = (0.0);
       cpares[i][2] = (0.0);
-   }
-
-   for(int i=0;i<cimpares.size();++i){
       cimpares[i](0) = (0.0);
       cimpares[i](1) = (0.0);
       cimpares[i](2) = (0.0);
    }
-
+   
    glColorPointer(3, GL_FLOAT, 0, cpares.data());
    glDrawElements(GL_TRIANGLES, 3*pares.size(),GL_UNSIGNED_INT,pares.data());
 
