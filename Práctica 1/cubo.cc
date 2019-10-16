@@ -1,7 +1,6 @@
 #include "aux.h"
 #include "malla.h"
 #include "cubo.h"
-
 Cubo::Cubo(float lado)
 {
   
