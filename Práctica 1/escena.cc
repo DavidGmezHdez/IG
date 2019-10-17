@@ -21,8 +21,8 @@ Escena::Escena()
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
-    /*cubo = new Cubo();
-    tetraedro = new Tetraedro();*/
+    cubo = new Cubo();
+    tetraedro = new Tetraedro();
 
     peon = new ObjRevolucion("plys/peon.ply",30,true,true);
 
@@ -62,15 +62,19 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
-   /*if(seleccionDibujo == 1)
+   if(seleccionDibujo == 1)
       tetraedro->draw(metodoDibujado,modoVisualizacion, ajedrez);
    else if(seleccionDibujo == 2)
       cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
-   */
+   
+
+   //PRÁCTICA 2
+  /*
    glPushMatrix();
-      glScalef(10.0,10.0,10.0);
+      glScalef(50.0,50.0,50.0);
       peon->draw(metodoDibujado,modoVisualizacion,ajedrez);
    glPopMatrix();
+   */
 }
 
 //**************************************************************************

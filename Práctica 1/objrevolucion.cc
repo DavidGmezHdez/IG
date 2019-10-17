@@ -42,25 +42,27 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original, int num_in
    Tupla3f aux, TuplatapaSup,TuplatapaInf;
 
    if(tapaInf && hayTapaSup)
-      tapaInf = this->sacarTapaInf(perfil_original,num_instancias);
+      tapaInf = this->sacarTapaInf(perfil_original);
 
    if(tapaSup && hayTapaSup)
-      tapaSup = this->sacarTapaSup(perfil_original,num_instancias);
-
+      tapaSup = this->sacarTapaSup(perfil_original);
+   
 
    for(int i = 0;i<num_instancias;i++){
       for(int j=0;j<perfil_original.size();j++){
-         aux(2) = cos((2*PI*i)/num_instancias) * aux(0);
-         aux(0) = sin((2*PI*i)/num_instancias) * aux(0);
+         aux(1) = perfil_original[j](1);
+         aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
+         aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
          this->v.push_back(aux);
       }
    }
-
+   
    if(tapaInf && hayTapaInf)
       this->v.push_back(TuplatapaInf);
 
    if(tapaSup && hayTapaSup)
       this->v.push_back(TuplatapaSup);
+   
 }
 
 
@@ -84,9 +86,9 @@ void ObjRevolucion::crearTriangulos(std::vector<Tupla3f> perfil_original, int nu
    this->f.clear();
    int a,b;
    for (int i=0;i<num_instancias;i++){
-      for(int j=0;j<perfil_original.size();j++){
+      for(int j=0;j<perfil_original.size()-1;j++){
          a = perfil_original.size() * i + j;
-         b = perfil_original.size()*((i+j)%num_instancias) + j;
+         b = perfil_original.size()*((i+1)%num_instancias) + j;
          Tupla3i aux1(a,b,b+1),aux2(a,b+1,a+1);
          this->f.push_back(aux1);
          this->f.push_back(aux2);
@@ -98,36 +100,27 @@ void ObjRevolucion::crearTriangulos(std::vector<Tupla3f> perfil_original, int nu
 // Función que busca la tapa superior
 // *****************************************************************************
 
-bool ObjRevolucion::buscarTapaSup(std::vector<Tupla3f> perfil_original, int num_instancias){
+bool ObjRevolucion::buscarTapaSup(std::vector<Tupla3f> perfil_original){
    int tamanio = perfil_original.size();
-   return (perfil_original[0](0) != perfil_original[1](0) && perfil_original[0](1) == perfil_original[tamanio](1));
+   return (perfil_original[0](0) == 0 && perfil_original[0](2) == 0);
 }
 
 // *****************************************************************************
 // Función que busca la tapa inferior
 // *****************************************************************************
 
-bool ObjRevolucion::buscarTapaInf(std::vector<Tupla3f> perfil_original, int num_instancias){
+bool ObjRevolucion::buscarTapaInf(std::vector<Tupla3f> perfil_original){
    int tamanio = perfil_original.size();
-   return (perfil_original[tamanio](0) != perfil_original[tamanio-1](0) && perfil_original[tamanio](1) == perfil_original[0](1));
+   return (perfil_original[tamanio](0) == 0 && perfil_original[tamanio](2) == 0);
 }
 
 // *****************************************************************************
 // Función que devuelve el polo norte
 // *****************************************************************************
 
-Tupla3f ObjRevolucion::sacarTapaSup(std::vector<Tupla3f> perfil_original, int num_instancias){
+Tupla3f ObjRevolucion::sacarTapaSup(std::vector<Tupla3f> perfil_original){
    Tupla3f tapaSup = perfil_original[0];
-   std::vector<Tupla3f> aux;
-   aux.resize(perfil_original.size()-1);
-   for(int i=1,j=0;i<perfil_original.size();i++,j++)
-      aux[j] = perfil_original[i];
-   
-   perfil_original.resize(aux.size());
-   
-   for(int i=1;i<aux.size();i++)
-      perfil_original[i] = aux[i];
-
+   perfil_original.erase(perfil_original.begin());
    return tapaSup;
 }
 
@@ -135,9 +128,9 @@ Tupla3f ObjRevolucion::sacarTapaSup(std::vector<Tupla3f> perfil_original, int nu
 // Función que devuelve el polo sur
 // *****************************************************************************
 
-Tupla3f ObjRevolucion::sacarTapaInf(std::vector<Tupla3f> perfil_original, int num_instancias){
+Tupla3f ObjRevolucion::sacarTapaInf(std::vector<Tupla3f> perfil_original){
    Tupla3f tapaInf = perfil_original[perfil_original.size()];
-   perfil_original.resize(perfil_original.size()-1);
+   perfil_original.pop_back();
    return tapaInf;
 }
 
@@ -148,13 +141,8 @@ Tupla3f ObjRevolucion::sacarTapaInf(std::vector<Tupla3f> perfil_original, int nu
 void ObjRevolucion::crearTapaSup(std::vector<Tupla3f> perfil_original, int num_instancias){
    int a,b;
    for (int i=0;i<num_instancias;i++){
-      for(int j=0;j<perfil_original.size();j++){
-         //a = perfil_original.size() * i + j;
-         //b = perfil_original.size()*((i+j)%num_instancias) + j;
-         //Tupla3i aux(v[perfil_original.size()*i],v[(perfil_original.size()+1)%num_instancias],v[v.size()]);
-         Tupla3i aux((v.size()*i)%v.size(),(v.size()+1)%num_instancias,(float)v.size());
+         Tupla3i aux(perfil_original.size()*num_instancias + 1,perfil_original.size()*(((i+1)%num_instancias) + 1),perfil_original.size()*(i+1)-1);
          this->f.push_back(aux);
-      }
    }
 }
 
@@ -171,8 +159,8 @@ void ObjRevolucion::crearTapaInf(std::vector<Tupla3f> perfil_original, int num_i
 // *****************************************************************************
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf) {
-   bool hayTapa_inf = this->buscarTapaInf(perfil_original,num_instancias);
-   bool hayTapa_sup = this->buscarTapaSup(perfil_original,num_instancias);
+   bool hayTapa_inf = this->buscarTapaInf(perfil_original);
+   bool hayTapa_sup = this->buscarTapaSup(perfil_original);
    
    if(perfil_original[0](1) < perfil_original[perfil_original.size()](1))
       this->crearPuntosReversos(perfil_original,num_instancias);
@@ -180,10 +168,11 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
    this->crearPuntos(perfil_original,num_instancias,tapa_sup,hayTapa_sup,tapa_inf,hayTapa_inf);
 
    this->crearTriangulos(perfil_original,num_instancias);
-
+   
    if(tapa_sup && hayTapa_sup)
       this->crearTapaSup(perfil_original,num_instancias);
 
    if(tapa_inf && hayTapa_inf)
       this->crearTapaInf(perfil_original,num_instancias);
+      
 }
