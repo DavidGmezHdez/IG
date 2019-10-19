@@ -48,9 +48,12 @@ void Malla3D::draw_ModoDiferido()
    glVertexPointer(3,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
+   glEnableClientState(GL_COLOR_ARRAY);
+   glColorPointer(3, GL_FLOAT, 0, c.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
    glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+   glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_VERTEX_ARRAY); 
 }
 
