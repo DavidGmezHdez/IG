@@ -21,10 +21,11 @@ Escena::Escena()
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
-    /*cubo = new Cubo();
-    tetraedro = new Tetraedro();*/
-
-    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
+    cubo = new Cubo();
+    tetraedro = new Tetraedro();
+    
+   prueba = new ObjPLY("plys/beethoven.ply");
+   cilindro = new Cilindro(5,30,50,10);
 
 }
 
@@ -67,10 +68,13 @@ void Escena::dibujar()
    else if(seleccionDibujo == 2)
       cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
    */
+   
+   
    glPushMatrix();
       glScalef(10.0,10.0,10.0);
-      peon->draw(metodoDibujado,modoVisualizacion,ajedrez);
+      cilindro->draw(metodoDibujado,modoVisualizacion,ajedrez);
    glPopMatrix();
+   
 }
 
 //**************************************************************************
