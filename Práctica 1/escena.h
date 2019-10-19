@@ -42,9 +42,10 @@ class Escena
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
    Cilindro * cilindro = nullptr;
    ObjPLY * prueba = nullptr;
+   ObjRevolucion * peon = nullptr;
    bool metodoDibujado;
    int seleccionDibujo;
-   GLenum modoVisualizacion;
+   int modoVisualizacion;
    bool ajedrez = false;
 
    
