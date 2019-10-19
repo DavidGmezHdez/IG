@@ -62,19 +62,20 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
+   /*
    if(seleccionDibujo == 1)
       tetraedro->draw(metodoDibujado,modoVisualizacion, ajedrez);
    else if(seleccionDibujo == 2)
       cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
-   
+   */
 
    //PRÁCTICA 2
-  /*
+  
    glPushMatrix();
       glScalef(50.0,50.0,50.0);
       peon->draw(metodoDibujado,modoVisualizacion,ajedrez);
    glPopMatrix();
-   */
+  
 }
 
 //**************************************************************************

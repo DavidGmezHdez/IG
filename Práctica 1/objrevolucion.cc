@@ -102,7 +102,7 @@ void ObjRevolucion::crearTriangulos(std::vector<Tupla3f> perfil_original, int nu
 
 bool ObjRevolucion::buscarTapaSup(std::vector<Tupla3f> perfil_original){
    int tamanio = perfil_original.size();
-   return (perfil_original[0](0) == 0 && perfil_original[0](2) == 0);
+   return perfil_original[0](1) == 0;
 }
 
 // *****************************************************************************
@@ -111,7 +111,7 @@ bool ObjRevolucion::buscarTapaSup(std::vector<Tupla3f> perfil_original){
 
 bool ObjRevolucion::buscarTapaInf(std::vector<Tupla3f> perfil_original){
    int tamanio = perfil_original.size();
-   return (perfil_original[tamanio](0) == 0 && perfil_original[tamanio](2) == 0);
+   return perfil_original[tamanio](1) == 0;
 }
 
 // *****************************************************************************
