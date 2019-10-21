@@ -10,14 +10,15 @@
 
 Escena::Escena()
 {
-    Front_plane       = 50.0;
-    Back_plane        = 2000.0;
-    Observer_distance = 4*Front_plane;
-    Observer_angle_x  = 0.0 ;
-    Observer_angle_y  = 0.0 ;
+   Front_plane       = 50.0;
+   Back_plane        = 2000.0;
+   Observer_distance = 4*Front_plane;
+   Observer_angle_x  = 0.0 ;
+   Observer_angle_y  = 0.0 ;
 
-    ejes.changeAxisSize( 5000 );
+   ejes.changeAxisSize( 5000 );
 
+<<<<<<< HEAD
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
@@ -25,6 +26,18 @@ Escena::Escena()
     tetraedro = new Tetraedro();
    prueba = new ObjPLY("plys/ant.ply");
     peon = new ObjRevolucion("plys/peon.ply",30,true,true);
+=======
+   metodoDibujado = false;
+   seleccionDibujo = 0;
+   modoVisualizacion = 3;
+
+   cubo = new Cubo();
+   tetraedro = new Tetraedro();
+    
+   prueba = new ObjPLY("plys/beethoven.ply");
+   cilindro = new Cilindro(5,30,50,10);
+   peon = new ObjRevolucion("plys/peon.ply",30,true,true);
+>>>>>>> 6a3c8c91903bf9e1309120b72f3e79f42d81c68e
 
 }
 
@@ -62,21 +75,58 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
+<<<<<<< HEAD
    glPushMatrix();
    glTranslatef(100.0,100.0,100.0);
+=======
+   
+   ajedrez = false;
+
+
+   switch (modoVisualizacion){
+      case 1:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
+         break;
+      case 2:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+         break;
+      case 3:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+         break;
+      case 4:
+         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+         ajedrez = true;
+         break;
+   }
+   
+
+>>>>>>> 6a3c8c91903bf9e1309120b72f3e79f42d81c68e
    if(seleccionDibujo == 1)
-      tetraedro->draw(metodoDibujado,modoVisualizacion, ajedrez);
+      tetraedro->draw(metodoDibujado,ajedrez);
    else if(seleccionDibujo == 2)
+<<<<<<< HEAD
       cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
    glPopMatrix();
+=======
+      cubo->draw(metodoDibujado,ajedrez);
+   
+   
+   /*
+   glPushMatrix();
+      glScalef(10.0,10.0,10.0);
+      cilindro->draw(metodoDibujado,modoVisualizacion,ajedrez);
+   glPopMatrix();
+   */
+>>>>>>> 6a3c8c91903bf9e1309120b72f3e79f42d81c68e
 
    //PRÁCTICA 2
-  
+  /*
    glPushMatrix();
       glPointSize(6);
       glScalef(50.0,50.0,50.0);
       peon->draw(metodoDibujado,modoVisualizacion,ajedrez);
    glPopMatrix();
+   */
   
 }
 
@@ -126,20 +176,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
       case 'P':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = GL_POINT;
+            modoVisualizacion = 1;
          break;
       
       case 'L':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = GL_LINE;
+            modoVisualizacion = 2;
          break;
       case 'S':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = GL_FILL;
+            modoVisualizacion = 3;
          break;
       case 'A':
          if(modoMenu == SELVISUALIZACION)
-            ajedrez = !ajedrez;
+            modoVisualizacion = 4;
          break;
       case 1 :
          if(modoMenu == SELDIBUJADO)

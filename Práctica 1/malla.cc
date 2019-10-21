@@ -101,19 +101,9 @@ void Malla3D::draw_ajedrezInmediato(){
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 // -----------------------------------------------------------------------------
 
-void Malla3D::draw(bool modoDibujado, GLenum modoVisualizacion, bool chess)
+void Malla3D::draw(bool modoDibujado, bool chess)
 {
-   switch (modoVisualizacion){
-      case GL_POINT:
-         glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
-         break;
-      case GL_LINE:
-         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-         break;
-      case GL_FILL:
-        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-         break;
-   }
+
    this->ajedrez = chess;
    if(ajedrez)
       draw_ajedrezInmediato();

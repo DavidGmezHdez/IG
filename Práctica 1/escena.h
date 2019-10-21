@@ -6,6 +6,10 @@
 #include "cubo.h"
 #include "tetraedro.h"
 #include "objrevolucion.h"
+<<<<<<< HEAD
+=======
+#include "cilindro.h"
+>>>>>>> 6a3c8c91903bf9e1309120b72f3e79f42d81c68e
 #include "objply.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
@@ -39,11 +43,13 @@ class Escena
    Ejes ejes;
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
+   Cilindro * cilindro = nullptr;
+   ObjPLY * prueba = nullptr;
    ObjRevolucion * peon = nullptr;
    ObjPLY * prueba = nullptr;
    bool metodoDibujado;
    int seleccionDibujo;
-   GLenum modoVisualizacion;
+   int modoVisualizacion;
    bool ajedrez = false;
 
    
