@@ -23,7 +23,7 @@ Escena::Escena()
     // .....
     cubo = new Cubo();
     tetraedro = new Tetraedro();
-
+   prueba = new ObjPLY("plys/ant.ply");
     peon = new ObjRevolucion("plys/peon.ply",30,true,true);
 
 }
@@ -62,16 +62,18 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
-   /*
+   glPushMatrix();
+   glTranslatef(100.0,100.0,100.0);
    if(seleccionDibujo == 1)
       tetraedro->draw(metodoDibujado,modoVisualizacion, ajedrez);
    else if(seleccionDibujo == 2)
       cubo->draw(metodoDibujado,modoVisualizacion, ajedrez);
-   */
+   glPopMatrix();
 
    //PRÁCTICA 2
   
    glPushMatrix();
+      glPointSize(6);
       glScalef(50.0,50.0,50.0);
       peon->draw(metodoDibujado,modoVisualizacion,ajedrez);
    glPopMatrix();
