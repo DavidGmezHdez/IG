@@ -31,22 +31,22 @@ class ObjRevolucion : public Malla3D
     ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
     ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
 private:
-    std::vector<Tupla3f> perfil_original; int N,M;
+    std::vector<Tupla3f> perfil; int N,M;
     void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf);
     
-    void crearPuntos(std::vector<Tupla3f> perfil_original,int num_instancias,bool tapaSup, bool tapaInf);
-    void crearPuntosReversos(std::vector<Tupla3f> perfil_original);
+    void crearPuntos(bool tapaSup, bool tapaInf);
+    void crearPuntosReversos();
     
-    void crearTriangulos(std::vector<Tupla3f> perfil_original,int num_instancias);
+    void crearTriangulos();
     
-    bool buscarTapaSup(std::vector<Tupla3f> perfil_original);
-    bool buscarTapaInf(std::vector<Tupla3f> perfil_original);
+    bool buscarTapaSup();
+    bool buscarTapaInf();
     
-    Tupla3f sacarTapaInf(std::vector<Tupla3f> perfil_original);
-    Tupla3f sacarTapaSup(std::vector<Tupla3f> perfil_original);
+    Tupla3f sacarTapaInf();
+    Tupla3f sacarTapaSup();
     
-    void crearTapaSup(std::vector<Tupla3f> perfil_original,int num_instancias);
-    void crearTapaInf(std::vector<Tupla3f> perfil_original,int num_instancias);
+    void crearTapaSup();
+    void crearTapaInf();
 
     void detectarTapas();
     void borrarTapas();
