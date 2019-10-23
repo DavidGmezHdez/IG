@@ -1,3 +1,4 @@
+
 #include "aux.h"
 #include "malla.h"
 
@@ -11,11 +12,28 @@
 // Visualización en modo inmediato con 'glDrawElements'
 // -----------------------------------------------------------------------------
 
+void Malla3D::setColor(Tupla3f color, std::vector<Tupla3f> &colores){
+   for(int i=0;i<colores.size();i++){
+      colores[i](0) = color(0);
+      colores[i](1) = color(1);
+      colores[i](2) = color(2);
+   }
+}
+
+
 void Malla3D::draw_ModoInmediato()
 {
    glEnableClientState(GL_VERTEX_ARRAY);
    glVertexPointer(3,GL_FLOAT,0,v.data());
+
    glEnableClientState(GL_COLOR_ARRAY);
+
+   Tupla3f color(1.0,0.0,0.0);
+   if(c.empty()){
+      c.resize(v.size());
+      setColor(color,c);
+   }
+
    glColorPointer(3, GL_FLOAT, 0, c.data());
    glShadeModel(GL_FLAT);
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
@@ -49,6 +67,11 @@ void Malla3D::draw_ModoDiferido()
    glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_COLOR_ARRAY);
+   Tupla3f color(1.0,0.0,0.0);
+   if(c.empty()){
+      c.resize(v.size());
+      setColor(color,c);
+   }
    glColorPointer(3, GL_FLOAT, 0, c.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
    glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());
@@ -112,7 +135,3 @@ void Malla3D::draw(bool modoDibujado, bool chess)
    else
       draw_ModoInmediato();
 }
-
-
-
-

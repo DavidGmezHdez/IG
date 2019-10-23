@@ -40,6 +40,10 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(bool modoDibujado, bool chess);
 
+   void crearAjedrez();
+
+   void setColor(Tupla3f color, std::vector<Tupla3f> &colores);
+
    
 
    protected:

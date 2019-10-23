@@ -18,7 +18,7 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
-   //prueba = new ObjPLY("plys/ant.ply");
+   prueba = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
 
 }
