@@ -20,6 +20,7 @@ Escena::Escena()
    tetraedro = new Tetraedro();
    prueba = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
+   cilindro = new Cilindro(30,50,15,15);
 
 }
 
@@ -42,8 +43,6 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	glViewport( 0, 0, UI_window_width, UI_window_height );
 }
 
-
-
 // **************************************************************************
 //
 // función de dibujo de la escena: limpia ventana, fija cámara, dibuja ejes,
@@ -57,12 +56,13 @@ void Escena::dibujar()
    glEnable(GL_CULL_FACE);
 	change_observer();
    ejes.draw();
+   
+   
    glPushMatrix();
+   
    glPointSize(6);
 
    ajedrez = false;
-
-
    switch (modoVisualizacion){
       case 1:
          glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
@@ -79,9 +79,6 @@ void Escena::dibujar()
          break;
    }
    
-   
-   //glTranslatef(100.0,100.0,100.0);
-   
    switch(seleccionDibujo){
       case 1:
          tetraedro->draw(metodoDibujado,ajedrez);
@@ -96,6 +93,10 @@ void Escena::dibujar()
       case 4:
          glScalef(25.0,25.0,25.0);
          prueba->draw(metodoDibujado,ajedrez);
+         break;
+      case 5:
+         glScalef(2.0,2.0,2.0);
+         cilindro->draw(metodoDibujado,ajedrez);
          break;
    }
    glPopMatrix();
@@ -154,6 +155,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'J':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 4;
+         break;
+
+      case 'H':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 5;
          break;
       
       case 'P':
