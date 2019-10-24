@@ -6,14 +6,9 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
     float distanciaPuntosY = altura/num_vert_perfil;
     float distanciaPuntosX = radio/num_vert_perfil;
 
-    Tupla3f aux;
-    int contador = 0;
-    for(int i = num_instancias_perf-1;i>=0;i--){
-        aux(0) = contador * distanciaPuntosX;
-        aux(1) = i*distanciaPuntosY;
-        aux(2) = 0;
-        perfil[i] = aux;
-        contador++;
+    for(int i = num_instancias_perf-1,j=0; i>=0; --i,++j){
+        Tupla3f aux(j * distanciaPuntosX,i * distanciaPuntosY,0);
+        perfil[j] = aux;
     }
     crearMalla(perfil,num_instancias_perf,true,true);
 }
