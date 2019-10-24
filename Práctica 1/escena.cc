@@ -20,7 +20,8 @@ Escena::Escena()
    tetraedro = new Tetraedro();
    prueba = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
-   cilindro = new Cilindro(30,50,15,15);
+   cilindro = new Cilindro(50,50,25,10);
+   cono = new Cono(50,50,25,10);
 
 }
 
@@ -95,8 +96,12 @@ void Escena::dibujar()
          prueba->draw(metodoDibujado,ajedrez);
          break;
       case 5:
-         glScalef(2.0,2.0,2.0);
+         glScalef(5.0,5.0,5.0);
          cilindro->draw(metodoDibujado,ajedrez);
+         break;
+      case 6:
+         glScalef(5.0,5.0,5.0);
+         cono->draw(metodoDibujado,ajedrez);
          break;
    }
    glPopMatrix();
@@ -160,6 +165,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'H':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 5;
+         break;
+      case 'G':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 6;
          break;
       
       case 'P':
