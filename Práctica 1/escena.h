@@ -9,6 +9,7 @@
 #include "objply.h"
 #include "cilindro.h"
 #include "cono.h"
+#include "esfera.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -43,6 +44,7 @@ class Escena
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
    Cilindro * cilindro = nullptr;
    Cono * cono = nullptr;
+   Esfera * esfera = nullptr;
    ObjPLY * prueba = nullptr;
    ObjRevolucion * peon = nullptr;
    bool metodoDibujado;

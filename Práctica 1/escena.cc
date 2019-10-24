@@ -22,7 +22,7 @@ Escena::Escena()
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
    cilindro = new Cilindro(50,50,25,10);
    cono = new Cono(50,50,25,10);
-
+   esfera = new Esfera(50,50,10);
 }
 
 //**************************************************************************
@@ -59,9 +59,7 @@ void Escena::dibujar()
    ejes.draw();
    
    
-   glPushMatrix();
-   
-   glPointSize(6);
+
 
    ajedrez = false;
    switch (modoVisualizacion){
@@ -79,33 +77,51 @@ void Escena::dibujar()
          ajedrez = true;
          break;
    }
-   
-   switch(seleccionDibujo){
-      case 1:
-         tetraedro->draw(metodoDibujado,ajedrez);
-         break;
-      case 2:
-         cubo->draw(metodoDibujado, ajedrez);
-         break;
-      case 3:
-         glScalef(50.0,50.0,50.0);
-         peon->draw(metodoDibujado,ajedrez);
-         break;
-      case 4:
-         glScalef(25.0,25.0,25.0);
-         prueba->draw(metodoDibujado,ajedrez);
-         break;
-      case 5:
-         glScalef(5.0,5.0,5.0);
-         cilindro->draw(metodoDibujado,ajedrez);
-         break;
-      case 6:
-         glScalef(5.0,5.0,5.0);
-         cono->draw(metodoDibujado,ajedrez);
-         break;
-   }
-   glPopMatrix();
+   glPushMatrix();
+   glPointSize(6);
 
+      glPushMatrix();
+      glTranslatef(100,0,0);
+      glScalef(25,25,25);
+      tetraedro->draw(metodoDibujado,ajedrez);
+      glPopMatrix();
+
+      glPushMatrix();
+      glTranslatef(-100,0,100);
+      glScalef(25,25,25);
+      cubo->draw(metodoDibujado,ajedrez);
+      glPopMatrix();
+
+      glPushMatrix();
+      glScalef(25.0,25.0,25.0);
+      peon->draw(metodoDibujado,ajedrez);
+      glPopMatrix();
+
+      glPushMatrix();
+      glTranslatef(-100,0,0);
+      glScalef(3,3,3);
+      prueba->draw(metodoDibujado,ajedrez);
+      glPopMatrix();
+
+      glPushMatrix();
+      glTranslatef(100,0,100);
+      glScalef(5,5,5);
+      esfera->draw(metodoDibujado,ajedrez);
+      glPopMatrix(); 
+
+      glPushMatrix();
+      glTranslatef(-100,0,-100);
+      glScalef(3,3,3);
+      cilindro->draw(metodoDibujado,ajedrez);
+      glPopMatrix();
+
+      glPushMatrix();
+      glTranslatef(100,0,-100);
+      glScalef(3,3,3);
+      cono->draw(metodoDibujado,ajedrez);
+      glPopMatrix();            
+
+   glPopMatrix();
 }
 
 //**************************************************************************
@@ -166,9 +182,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 5;
          break;
+      
       case 'G':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 6;
+         break;
+      
+      case 'E':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 7;
          break;
       
       case 'P':

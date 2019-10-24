@@ -6,7 +6,7 @@ Tetraedro::Tetraedro()
 {
 
    // inicializar la tabla de vértices
-   Tupla3f v1(-50,-50,-50), v2(0,-50,50), v3(50,-50,-50), v4(0,50,0);
+   Tupla3f v1(-1,-1,-1), v2(0,-1,1), v3(1,-1,-1), v4(0,1,0);
    v.push_back(v1);
    v.push_back(v2);
    v.push_back(v3);

@@ -6,7 +6,7 @@ Cubo::Cubo(float lado)
   
    // inicializar la tabla de vértices
    // Primer cuadrado
-   Tupla3f v0(-lado*50, -lado*50, lado*50), v1(lado*50, -lado*50, lado*50), v2(lado*50, lado*50, lado*50), v3(-lado*50, lado*50, lado*50);
+   Tupla3f v0(-lado, -lado, lado), v1(lado, -lado, lado), v2(lado, lado, lado), v3(-lado, lado, lado);
    
    v.push_back(v0);
    v.push_back(v1);
@@ -14,7 +14,7 @@ Cubo::Cubo(float lado)
    v.push_back(v3);
 
    // Segundo cuadrado
-   Tupla3f v4(lado*50, -lado*50, lado*-50.0), v5(-lado*50, -lado*50, lado*-50.0),v6(-lado*50, lado*50, lado*-50.0),v7(lado*50, lado*50, lado*-50.0);
+   Tupla3f v4(lado, -lado, -lado), v5(-lado, -lado, -lado),v6(-lado, lado, -lado),v7(lado, lado, -lado);
    v.push_back(v4);
    v.push_back(v5);
    v.push_back(v6);

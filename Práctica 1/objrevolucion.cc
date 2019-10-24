@@ -2,8 +2,6 @@
 #include "objrevolucion.h"
 
 
-const float PI = 3.141592653;
-
 
 // *****************************************************************************
 //
@@ -176,7 +174,6 @@ void ObjRevolucion::borrarTapas(){
 
 }
 
-
 void ObjRevolucion::detectarTapas(){
    if (this->buscarTapaSup(perfil_original) && this->buscarTapaInf(perfil_original))
       this->borrarTapas();
@@ -187,12 +184,12 @@ void ObjRevolucion::detectarTapas(){
 
 }
 
-
 // *****************************************************************************
 // Función principal que crea la malla del objeto
 // *****************************************************************************
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf) {
+
    if(perfil_original[0](1) < perfil_original[perfil_original.size()-1](1))
       this->crearPuntosReversos(perfil_original);
    

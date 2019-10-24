@@ -5,12 +5,8 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
     perfil.resize(num_vert_perfil);
     float distanciaPuntos = altura / num_instancias_perf;
 
-    Tupla3f aux;
-    int contador = 0;
     for(int i = 0;i<num_vert_perfil;i++){
-        aux(0) = radio;
-        aux(1) = i*distanciaPuntos;
-        aux(2) = 0;
+        Tupla3f aux(radio,i*distanciaPuntos,0);
         perfil[i] = aux;
     }
 
