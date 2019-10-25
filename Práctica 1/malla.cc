@@ -134,4 +134,14 @@ void Malla3D::draw(bool modoDibujado, bool chess)
       draw_ModoDiferido();
    else
       draw_ModoInmediato();
+
+
+   /*Apuntes práctica 3
+      Crear un vector de normales
+      material = activo
+
+
+   */
+
+   
 }
