@@ -61,17 +61,13 @@ void Malla3D::draw_ModoDiferido()
    if(vbo_v == 0 && vbo_f==0){
       vbo_v = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*v.size(),v.data());
       vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());  
+      vbo_c = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data());
    }
    glBindBuffer(GL_ARRAY_BUFFER,vbo_v); 
    glVertexPointer(3,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_COLOR_ARRAY);
-   Tupla3f color(1.0,0.0,0.0);
-   if(c.empty()){
-      c.resize(v.size());
-      setColor(color,c);
-   }
    glColorPointer(3, GL_FLOAT, 0, c.data());
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
    glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());

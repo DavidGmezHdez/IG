@@ -54,7 +54,7 @@ class Malla3D
    std::vector<Tupla3i> f, impares, pares; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c, cimpares, cpares; //una terna 3 float por cada color
    bool ajedrez;
-   GLuint vbo_v = 0,vbo_f= 0;
+   GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0;
 
 } ;
 

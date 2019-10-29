@@ -47,18 +47,18 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
             aux(1) = perfil_original[j](1);
             aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
             aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
-            vertices_tapa.push_back(aux);
+            v.push_back(aux);
          }
       }
 
 
       if(tapaInf){
          if(hayTapa_inf)
-            tapaInf = this->sacarTapaInf(perfil_original);
+            TuplatapaInf = this->sacarTapaInf(perfil_original);
          else
             TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
 
-         vertices_tapa.push_back(TuplatapaInf);
+         v.push_back(TuplatapaInf);
       }
 
       if(tapaSup){
@@ -67,7 +67,7 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
          else
             TuplatapaSup(0) = 0; TuplatapaSup(2) = 0; TuplatapaSup(1) = v[0](1);
          
-         vertices_tapa.push_back(TuplatapaSup);  
+         v.push_back(TuplatapaSup);  
       }
 
       v = vertices_tapa;
