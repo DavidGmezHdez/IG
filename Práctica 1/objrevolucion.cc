@@ -36,39 +36,57 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, b
 // *****************************************************************************
 
 void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_instancias,bool tapaSup,bool tapaInf){
-   this->v.clear();
+   this->v.clear();  
    bool hayTapa_inf = this->buscarTapaInf(perfil_original);
    bool hayTapa_sup = this->buscarTapaSup(perfil_original);
    Tupla3f aux, TuplatapaSup,TuplatapaInf;
 
-   for(int i = 0;i<num_instancias;i++){
-      for(int j=0;j<perfil_original.size();j++){
-         aux(1) = perfil_original[j](1);
-         aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
-         aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
-         this->v.push_back(aux);
+   if(tapaSup && tapaInf){
+      for(int i = 0;i<num_instancias;i++){
+         for(int j=0;j<perfil_original.size();j++){
+            aux(1) = perfil_original[j](1);
+            aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
+            aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
+            v.push_back(aux);
+         }
       }
+
+
+      if(tapaInf){
+         if(hayTapa_inf)
+            TuplatapaInf = this->sacarTapaInf(perfil_original);
+         else
+            TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
+
+         v.push_back(TuplatapaInf);
+      }
+
+      if(tapaSup){
+         if(hayTapa_sup)if(tapaSup && tapaInf)
+            TuplatapaSup = this->sacarTapaSup(perfil_original);
+         else
+            TuplatapaSup(0) = 0; TuplatapaSup(2) = 0; TuplatapaSup(1) = v[0](1);
+         
+         v.push_back(TuplatapaSup);  
+      }
+
+      v = vertices_tapa;
    }
-
-
-   if(tapaInf){
-      if(hayTapa_inf)
-         tapaInf = this->sacarTapaInf(perfil_original);
-      else
-         TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
-
-      this->v.push_back(TuplatapaInf);
+   /*
+   else{
+      for(int i = 0;i<num_instancias;i++){
+         for(int j=0;j<perfil_original.size();j++){
+            aux(1) = perfil_original[j](1);
+            aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
+            aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
+            this->vertices_notapa.push_back(aux);
+         }
+      }
+      vertices_notapa = v;
    }
+   */
 
-   if(tapaSup){
-      if(hayTapa_sup)
-         TuplatapaSup = this->sacarTapaSup(perfil_original);
-      else
-         TuplatapaSup(0) = 0; TuplatapaSup(2) = 0; TuplatapaSup(1) = v[0](1);
-      
-      this->v.push_back(TuplatapaSup);
-   }
-   
+
 }
 
 

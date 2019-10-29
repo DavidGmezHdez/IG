@@ -20,8 +20,8 @@ Escena::Escena()
    tetraedro = new Tetraedro();
    prueba = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
-   cilindro = new Cilindro(50,50,25,10);
-   cono = new Cono(50,50,25,10);
+   cilindro = new Cilindro(50,25,10);
+   cono = new Cono(50,25,10);
    esfera = new Esfera(50,50,10);
 }
 
@@ -79,47 +79,59 @@ void Escena::dibujar()
    }
    glPushMatrix();
    glPointSize(6);
-
+   /*
       glPushMatrix();
-      glTranslatef(100,0,0);
+      //glTranslatef(100,0,0);
       glScalef(25,25,25);
       tetraedro->draw(metodoDibujado,ajedrez);
       glPopMatrix();
-
+   */
+   /*
       glPushMatrix();
-      glTranslatef(-100,0,100);
+      //glTranslatef(-100,0,100);
       glScalef(25,25,25);
       cubo->draw(metodoDibujado,ajedrez);
       glPopMatrix();
+   */
 
+   /*
       glPushMatrix();
       glScalef(25.0,25.0,25.0);
       peon->draw(metodoDibujado,ajedrez);
       glPopMatrix();
-
+   */
+  
+   /*
       glPushMatrix();
-      glTranslatef(-100,0,0);
+      //glTranslatef(-100,0,0);
       glScalef(3,3,3);
       prueba->draw(metodoDibujado,ajedrez);
       glPopMatrix();
+   */
 
+   /*
       glPushMatrix();
-      glTranslatef(100,0,100);
+      //glTranslatef(100,0,100);
       glScalef(5,5,5);
       esfera->draw(metodoDibujado,ajedrez);
       glPopMatrix(); 
+   */
 
+   /*
       glPushMatrix();
-      glTranslatef(-100,0,-100);
+      //glTranslatef(-100,0,-100);
       glScalef(3,3,3);
       cilindro->draw(metodoDibujado,ajedrez);
       glPopMatrix();
+   */
 
+   
       glPushMatrix();
-      glTranslatef(100,0,-100);
+      //glTranslatef(100,0,-100);
       glScalef(3,3,3);
       cono->draw(metodoDibujado,ajedrez);
       glPopMatrix();            
+   
 
    glPopMatrix();
 }
