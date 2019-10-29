@@ -83,20 +83,23 @@ void Escena::dibujar()
       glPushMatrix();
       //glTranslatef(100,0,0);
       glScalef(25,25,25);
+      tetraedro->setColor(0.1,0.1,0.1);
       tetraedro->draw(metodoDibujado,ajedrez);
       glPopMatrix();
    */
-   /*
+   
       glPushMatrix();
       //glTranslatef(-100,0,100);
       glScalef(25,25,25);
+      cubo->setColor(0.2,0.2,0.2);
       cubo->draw(metodoDibujado,ajedrez);
       glPopMatrix();
-   */
+   
 
    /*
       glPushMatrix();
       glScalef(25.0,25.0,25.0);
+      peon->setColor(0.3,0.3,0.3);
       peon->draw(metodoDibujado,ajedrez);
       glPopMatrix();
    */
@@ -105,6 +108,7 @@ void Escena::dibujar()
       glPushMatrix();
       //glTranslatef(-100,0,0);
       glScalef(3,3,3);
+      prueba->setColor(0.4,0.4,0.4);
       prueba->draw(metodoDibujado,ajedrez);
       glPopMatrix();
    */
@@ -113,6 +117,7 @@ void Escena::dibujar()
       glPushMatrix();
       //glTranslatef(100,0,100);
       glScalef(5,5,5);
+      esfera->setColor(0.5,0.5,0.5);
       esfera->draw(metodoDibujado,ajedrez);
       glPopMatrix(); 
    */
@@ -121,17 +126,19 @@ void Escena::dibujar()
       glPushMatrix();
       //glTranslatef(-100,0,-100);
       glScalef(3,3,3);
+      prueba->setColor(0.6,0.6,0.6);
       cilindro->draw(metodoDibujado,ajedrez);
       glPopMatrix();
    */
 
-   
+   /*
       glPushMatrix();
       //glTranslatef(100,0,-100);
       glScalef(3,3,3);
+      cono->setColor(0.7,0.7,0.7);
       cono->draw(metodoDibujado,ajedrez);
       glPopMatrix();            
-   
+   */
 
    glPopMatrix();
 }

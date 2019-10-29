@@ -42,7 +42,7 @@ class Malla3D
 
    void crearAjedrez();
 
-   void setColor(Tupla3f color, std::vector<Tupla3f> &colores);
+   void setColor(float R, float G, float B);
 
    
 

@@ -41,7 +41,7 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
    bool hayTapa_sup = this->buscarTapaSup(perfil_original);
    Tupla3f aux, TuplatapaSup,TuplatapaInf;
 
-   if(tapaSup && tapaInf){
+   
       for(int i = 0;i<num_instancias;i++){
          for(int j=0;j<perfil_original.size();j++){
             aux(1) = perfil_original[j](1);
@@ -62,16 +62,14 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
       }
 
       if(tapaSup){
-         if(hayTapa_sup)if(tapaSup && tapaInf)
+         if(hayTapa_sup)
             TuplatapaSup = this->sacarTapaSup(perfil_original);
          else
             TuplatapaSup(0) = 0; TuplatapaSup(2) = 0; TuplatapaSup(1) = v[0](1);
          
          v.push_back(TuplatapaSup);  
       }
-
-      v = vertices_tapa;
-   }
+   
    /*
    else{
       for(int i = 0;i<num_instancias;i++){
@@ -135,7 +133,7 @@ bool ObjRevolucion::buscarTapaSup(std::vector<Tupla3f> perfil_original){
 
 bool ObjRevolucion::buscarTapaInf(std::vector<Tupla3f> perfil_original){
    int tamanio = perfil_original.size();
-   return perfil_original[tamanio](0) == 0 && perfil_original[tamanio](2) == 0;
+   return perfil_original[tamanio-1](0) == 0 && perfil_original[tamanio-1](2) == 0;
 }
 
 // *****************************************************************************
@@ -153,7 +151,7 @@ Tupla3f ObjRevolucion::sacarTapaSup(std::vector<Tupla3f> perfil_original){
 // *****************************************************************************
 
 Tupla3f ObjRevolucion::sacarTapaInf(std::vector<Tupla3f> perfil_original){
-   Tupla3f tapaInf = perfil_original[M-1];
+   Tupla3f tapaInf = perfil_original[perfil_original.size()-1];
    perfil_original.pop_back();
    return tapaInf;
 }
