@@ -108,6 +108,45 @@ void Malla3D::draw_ajedrezInmediato(){
 }
 
 // -----------------------------------------------------------------------------
+// Función que calcula las normales de las caras
+// -----------------------------------------------------------------------------
+
+void Malla3D::calcularNormalesCaras(){
+   Tupla3f p,q,r,a,b,mc,n;
+   for(int i=0;i<f.size();i++){
+      p = v[f[i](0)];
+      q = v[f[i](1)];
+      r = v[f[i](2)];
+      a = q-p;
+      b = r-p;
+      mc = a.cross(b);
+      n = mc.normalized();
+      nc.push_back(n);
+   }
+}
+
+
+// -----------------------------------------------------------------------------
+// Función que calcula las normales de los vertices
+// -----------------------------------------------------------------------------
+
+void Malla3D::calcularNormalesVertices(){
+
+
+
+}
+
+// -----------------------------------------------------------------------------
+// Función que calcula las normales
+// -----------------------------------------------------------------------------
+void Malla3D::calcularNormales(){
+   this->calcularNormalesCaras();
+   this->calcularNormalesVertices();
+}
+
+
+
+// -----------------------------------------------------------------------------
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 // -----------------------------------------------------------------------------
