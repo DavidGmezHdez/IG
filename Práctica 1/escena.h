@@ -45,7 +45,7 @@ class Escena
    Cilindro * cilindro = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
-   ObjPLY * prueba = nullptr;
+   ObjPLY * hormiga = nullptr;
    ObjRevolucion * peon = nullptr;
    bool metodoDibujado;
    int seleccionDibujo;

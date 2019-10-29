@@ -18,7 +18,7 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
-   prueba = new ObjPLY("plys/ant.ply");
+   hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,true,true);
    cilindro = new Cilindro(50,25,10);
    cono = new Cono(50,25,10);
@@ -79,67 +79,114 @@ void Escena::dibujar()
    }
    glPushMatrix();
    glPointSize(6);
-   /*
-      glPushMatrix();
-      //glTranslatef(100,0,0);
-      glScalef(25,25,25);
-      tetraedro->setColor(0.1,0.1,0.1);
-      tetraedro->draw(metodoDibujado,ajedrez);
-      glPopMatrix();
-   */
-   
-      glPushMatrix();
-      //glTranslatef(-100,0,100);
-      glScalef(25,25,25);
-      cubo->setColor(0.2,0.2,0.2);
-      cubo->draw(metodoDibujado,ajedrez);
-      glPopMatrix();
-   
 
-   /*
-      glPushMatrix();
-      glScalef(25.0,25.0,25.0);
-      peon->setColor(0.3,0.3,0.3);
-      peon->draw(metodoDibujado,ajedrez);
-      glPopMatrix();
-   */
-  
-   /*
-      glPushMatrix();
-      //glTranslatef(-100,0,0);
-      glScalef(3,3,3);
-      prueba->setColor(0.4,0.4,0.4);
-      prueba->draw(metodoDibujado,ajedrez);
-      glPopMatrix();
-   */
+   switch (seleccionDibujo){
+      case 1:
+         glPushMatrix();
+         glScalef(25,25,25);
+         tetraedro->setColor(0,0,1);
+         tetraedro->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;
+      
+      case 2:
+         glPushMatrix();
+         glScalef(25,25,25);
+         cubo->setColor(0,1,0);
+         cubo->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;
+      
+      case 3:
+         glPushMatrix();
+         glScalef(25.0,25.0,25.0);
+         peon->setColor(1,0,0);
+         peon->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;
+      
+      case 4:
+         glPushMatrix();
+         glScalef(3,3,3);
+         hormiga->setColor(1,0,1);
+         hormiga->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;
+      
+      case 5:
+         glPushMatrix();
+         glScalef(3,3,3);
+         cilindro->setColor(0,0,1);
+         cilindro->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;
+      
+      case 6:
+         glPushMatrix();
+         glScalef(3,3,3);
+         cono->setColor(0,1,0);
+         cono->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         break;    
 
-   /*
-      glPushMatrix();
-      //glTranslatef(100,0,100);
-      glScalef(5,5,5);
-      esfera->setColor(0.5,0.5,0.5);
-      esfera->draw(metodoDibujado,ajedrez);
-      glPopMatrix(); 
-   */
+      case 7:
+         glPushMatrix();
+         glScalef(5,5,5);
+         esfera->setColor(1,0,1);
+         esfera->draw(metodoDibujado,ajedrez);
+         glPopMatrix(); 
+         break;
 
-   /*
-      glPushMatrix();
-      //glTranslatef(-100,0,-100);
-      glScalef(3,3,3);
-      prueba->setColor(0.6,0.6,0.6);
-      cilindro->draw(metodoDibujado,ajedrez);
-      glPopMatrix();
-   */
+      case 8:
+         glPushMatrix();
+         glTranslatef(100,0,0);
+         glScalef(25,25,25);
+         tetraedro->setColor(0,0,1);
+         tetraedro->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
 
-   /*
-      glPushMatrix();
-      //glTranslatef(100,0,-100);
-      glScalef(3,3,3);
-      cono->setColor(0.7,0.7,0.7);
-      cono->draw(metodoDibujado,ajedrez);
-      glPopMatrix();            
-   */
+         glPushMatrix();
+         glTranslatef(-100,0,100);
+         glScalef(25,25,25);
+         cubo->setColor(0,1,0);
+         cubo->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+         
+         glPushMatrix();
+         glScalef(25.0,25.0,25.0);
+         peon->setColor(1,0,0);
+         peon->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
 
+         glPushMatrix();
+         glTranslatef(-100,0,0);
+         glScalef(3,3,3);
+         hormiga->setColor(1,0,1);
+         hormiga->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         glTranslatef(-100,0,-100);
+         glScalef(3,3,3);
+         cilindro->setColor(0,0,1);
+         cilindro->draw(metodoDibujado,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         glTranslatef(100,0,-100);
+         glScalef(3,3,3);
+         cono->setColor(0,1,0);
+         cono->draw(metodoDibujado,ajedrez);
+         glPopMatrix(); 
+
+         glPushMatrix();
+         glTranslatef(100,0,100);
+         glScalef(5,5,5);
+         esfera->setColor(1,0,1);
+         esfera->draw(metodoDibujado,ajedrez);
+         glPopMatrix(); 
+
+   }
    glPopMatrix();
 }
 
@@ -210,6 +257,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'E':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 7;
+         break;
+      
+      case 'Y':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 8;
          break;
       
       case 'P':
