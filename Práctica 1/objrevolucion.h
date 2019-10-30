@@ -2,7 +2,7 @@
 //
 // Informática Gráfica (Grado Informática)
 //
-// Archivo: Cubo.h
+// Archivo: ObjRevolucion.h
 
 //
 // #############################################################################

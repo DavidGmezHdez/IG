@@ -131,9 +131,12 @@ void Malla3D::calcularNormalesCaras(){
 // -----------------------------------------------------------------------------
 
 void Malla3D::calcularNormalesVertices(){
-
-
-
+   nv.resize(v.size());
+   for(int i = 0;i<f.size();i++){
+      nv[f[i](0)] = (nv[f[i](0)] + nc[i]).normalized();
+      nv[f[i](1)] = (nv[f[i](1)] + nc[i]).normalized();
+      nv[f[i](2)] = (nv[f[i](2)] + nc[i]).normalized();
+   }
 }
 
 // -----------------------------------------------------------------------------
