@@ -3,12 +3,12 @@
 // Informática Gráfica (Grado Informática)
 //
 // Archivo: Material.h
-// -- declaraciones de clase Malla3D (mallas indexadas) y derivados
+// -- declaraciones de clase Material
 //
 // #############################################################################
-
-#ifndef MALLA3D_H_INCLUDED
-#define MALLA3D_H_INCLUDED
+/*
+#ifndef MATERIAL_H_INCLUDED
+#define MATERIAL_H_INCLUDED
 
 #include "aux.h"
 
@@ -26,3 +26,5 @@ class Material{
 
 }
 #endif
+
+*/

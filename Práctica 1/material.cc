@@ -1,3 +1,4 @@
+/*
 #include "material.h"
 
  Material::Material(Tupla4f mdifuso,Tupla4f mespecular,Tupla4f mambiente,float mbrillo){
@@ -14,3 +15,4 @@ Material::aplicar{
     glMaterialfv(GL_FRONT,GL_SPECULAR,this->especular.data());
     glMaterialfv(GL_FRONT,GL_SHININESS,this->brillo);
 }
+*/
