@@ -20,6 +20,7 @@ Escena::Escena()
    tetraedro = new Tetraedro();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
+   peon2 = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    cilindro = new Cilindro(50,25,10);
    cono = new Cono(50,25,10);
    esfera = new Esfera(50,50,10);
@@ -262,12 +263,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 8;
          break;
-      
+      case 'N':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 9;
+         break;
+
+
       case 'P':
          if(modoMenu == SELVISUALIZACION)
             modoVisualizacion = 1;
          break;
-      
       case 'L':
          if(modoMenu == SELVISUALIZACION)
             modoVisualizacion = 2;

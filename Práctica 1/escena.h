@@ -47,6 +47,7 @@ class Escena
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;
    ObjRevolucion * peon = nullptr;
+   ObjRevolucion * peon2 = nullptr;
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
