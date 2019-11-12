@@ -48,7 +48,6 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
             aux(2) = cos((2*PI*i)/num_instancias) * perfil_original[j](0);
             aux(0) = sin((2*PI*i)/num_instancias) * perfil_original[j](0);
             v.push_back(aux);
-            vtapas.push_back(aux);
          }
       }
 
@@ -59,7 +58,7 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
          else
             TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
 
-         vtapas.push_back(TuplatapaInf);
+         v.push_back(TuplatapaInf);
       }
 
       if(tapaSup){
@@ -68,8 +67,10 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
          else
             TuplatapaSup(0) = 0; TuplatapaSup(2) = 0; TuplatapaSup(1) = v[0](1);
          
-         vtapas.push_back(TuplatapaSup);  
+         v.push_back(TuplatapaSup);  
       }
+
+      this->vnotapas = v;
 }
 
 
@@ -99,10 +100,9 @@ void ObjRevolucion::crearTriangulos(std::vector<Tupla3f> perfil_original,int num
          Tupla3i aux1(a,b,b+1),aux2(a,b+1,a+1);
          this->f.push_back(aux1);
          this->f.push_back(aux2);
-         this->ftapas.push_back(aux1);
-         this->ftapas.push_back(aux2);
       }
    }
+   this->fnotapas = f;
 }
 
 // *****************************************************************************
@@ -151,7 +151,7 @@ void ObjRevolucion::crearTapaInf(std::vector<Tupla3f> perfil_original,int num_in
    int a,b;
    for (int i=0;i<num_instancias;i++){
          Tupla3i aux(perfil_original.size()*num_instancias+1,((i+1)%num_instancias)*perfil_original.size(),perfil_original.size()*i);
-         this->ftapas.push_back(aux);
+         this->f.push_back(aux);
    }
 }
 
@@ -163,8 +163,21 @@ void ObjRevolucion::crearTapaSup(std::vector<Tupla3f> perfil_original,int num_in
    int a,b;
    for(int i=0;i<num_instancias;i++){
       Tupla3i aux(perfil_original.size()*num_instancias,perfil_original.size()*(i+1)-1,perfil_original.size()*(((i+1)%num_instancias)+1)-1);
-      this->ftapas.push_back(aux);
+      this->f.push_back(aux);
    }
+}
+
+
+void ObjRevolucion::switchTapas(bool &tapas){
+   std::vector<Tupla3f> auxv = v;
+   v = vnotapas;
+   vnotapas = auxv;
+
+   std::vector<Tupla3i> auxf = f;
+   f = fnotapas;
+   fnotapas = auxf;
+
+   tapas = !tapas;
 }
 
 // *****************************************************************************

@@ -50,7 +50,7 @@ class Escena
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool ajedrez = false,tapas = false;
+   bool ajedrez = false,tapas = true;
 
    
    public:
