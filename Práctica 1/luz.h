@@ -13,13 +13,12 @@
 
 class Luz
 {
-    private:
+    protected:
         Tupla4f posicion, colorAmbiente, colorDifuso, colorEspecular;
-        glEnum id;
-        
+        GLenum id;
     public:
         void activar();
-}
+};
 
 
 

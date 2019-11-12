@@ -13,10 +13,10 @@
 #include "aux.h"
 #include "luz.h"
 
-class LuzPosicional :: public Luz
+class LuzPosicional : public Luz
 {
     public:
-    LuzPosicional(const Tupla2f & posicion);
-}
+    LuzPosicional(Tupla3f posicion,GLenum id,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular);
+};  
 
 #endif

@@ -13,17 +13,17 @@
 #include "aux.h"
 #include "luz.h"
 
-class LuzDireccional :: public Luz
+class LuzDireccional : public Luz
 {
     protected:
         float alpha;
         float beta;
     public:
-    LuzDireccional(const Tupla2f & orientacion);
+    LuzDireccional(GLenum id,const Tupla3f &orientacion,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular);
 
     void variarAnguloAlpha(float incremento);
 
     void variarAnguloBeta(float incremento);
-}
+};
 
 #endif
