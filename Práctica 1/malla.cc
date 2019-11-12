@@ -76,10 +76,13 @@ void Malla3D::draw_ajedrezInmediato(){
    glEnableClientState(GL_VERTEX_ARRAY);
    glVertexPointer(3,GL_FLOAT,0,v.data());
    glEnableClientState(GL_COLOR_ARRAY);
+
+   impares.resize(f.size()/2);
+   pares.resize(f.size()/2);
    
-   for(int i=0;i<f.size();i+=2){
-      impares.push_back(f[i]);
-      pares.push_back(f[i+1]);
+   for(int i=0, j=0;i<f.size();i+=2,j++){
+      pares[j] = f[i];
+      impares[j] = f[i+1];
    }
 
    glShadeModel(GL_FLAT);
@@ -152,12 +155,9 @@ void Malla3D::calcularNormales(){
 // Función que modifica el material
 // -----------------------------------------------------------------------------
 
-/*
 void Malla3D::setMaterial(Material mat){
    this->m = mat;
 }
-*/
-
 
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,

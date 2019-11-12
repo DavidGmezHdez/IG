@@ -11,8 +11,7 @@
 #define MALLA3D_H_INCLUDED
 
 #include "aux.h"
-//#include "material.h"
-#include <string.h>
+#include "material.h"
 
 // *****************************************************************************
 //
@@ -51,7 +50,7 @@ class Malla3D
 
    void calcularNormales();
 
-   //void setMaterial(Material mat);
+   void setMaterial(Material mat);
    
    protected:
 
@@ -62,7 +61,7 @@ class Malla3D
    std::vector<Tupla3f> c, cimpares, cpares; //una terna 3 float por cada color
    bool ajedrez;
    GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0;
-   //Material m;
+   Material m;
 
 } ;
 

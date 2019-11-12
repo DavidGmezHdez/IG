@@ -69,8 +69,6 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
          
          v.push_back(TuplatapaSup);  
       }
-
-      this->vnotapas = v;
 }
 
 
@@ -102,7 +100,6 @@ void ObjRevolucion::crearTriangulos(std::vector<Tupla3f> perfil_original,int num
          this->f.push_back(aux2);
       }
    }
-   this->fnotapas = f;
 }
 
 // *****************************************************************************
@@ -167,6 +164,9 @@ void ObjRevolucion::crearTapaSup(std::vector<Tupla3f> perfil_original,int num_in
    }
 }
 
+// *****************************************************************************
+// Función que activa o no las tapas
+// *****************************************************************************
 
 void ObjRevolucion::switchTapas(bool &tapas){
    std::vector<Tupla3f> auxv = v;
@@ -192,6 +192,9 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
    this->crearPuntos(perfil_original,num_instancias,tapa_sup,tapa_inf);
 
    this->crearTriangulos(perfil_original,num_instancias);
+   
+   this->vnotapas = v;
+   this->fnotapas = f;
    
    if(tapa_inf)
       this->crearTapaInf(perfil_original,num_instancias);

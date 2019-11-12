@@ -23,6 +23,8 @@ Escena::Escena()
    cilindro = new Cilindro(50,25,10);
    cono = new Cono(50,25,10);
    esfera = new Esfera(50,50,10);
+   
+   
 }
 
 //**************************************************************************
@@ -72,12 +74,6 @@ void Escena::dibujar()
       case 4:
          glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
          ajedrez = true;
-         break;
-      case 5:
-         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-         peon->switchTapas(tapas);
-         cilindro->switchTapas(tapas);
-         cono->switchTapas(tapas);
          break;
    }
    glPushMatrix();
@@ -286,7 +282,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       case 'M':
          if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 5;
+            peon->switchTapas(tapas);
+            cilindro->switchTapas(tapas);
+            cono->switchTapas(tapas);
          break;
       case 1 :
          if(modoMenu == SELDIBUJADO)

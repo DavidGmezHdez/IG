@@ -6,7 +6,7 @@
 // -- declaraciones de clase Material
 //
 // #############################################################################
-/*
+
 #ifndef MATERIAL_H_INCLUDED
 #define MATERIAL_H_INCLUDED
 
@@ -20,11 +20,11 @@ class Material{
         float brillo;
     
     public:
+        Material();
         Material(Tupla4f mdifuso,Tupla4f mespecular,Tupla4f mambiente,float mbrillo);
-
         void aplicar();
+        Material operator=(const Material &m);
 
-}
+};
 #endif
 
-*/
