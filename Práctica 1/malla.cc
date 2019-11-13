@@ -157,6 +157,7 @@ void Malla3D::calcularNormales(){
 
 void Malla3D::setMaterial(Material mat){
    this->m = Material(mat);
+   m.aplicar();
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +173,6 @@ void Malla3D::draw(bool modoDibujado, bool chess, bool luces)
       if(nv.empty())
          this->calcularNormales();
       glEnable(GL_NORMALIZE);
-      glEnable(GL_SMOOTH);
       this->m.aplicar();
    }
    else

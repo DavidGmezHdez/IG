@@ -11,6 +11,9 @@
 #include "cono.h"
 #include "esfera.h"
 #include "material.h"
+#include "luz.h"
+#include "luzdireccional.h"
+#include "luzposicional.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -50,6 +53,7 @@ class Escena
    ObjRevolucion * peon = nullptr;
    ObjRevolucion * peon2 = nullptr;
    Material m;
+   LuzPosicional *luzpos = nullptr;
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;

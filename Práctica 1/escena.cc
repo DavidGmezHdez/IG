@@ -25,6 +25,7 @@ Escena::Escena()
    cono = new Cono(50,25,10);
    esfera = new Esfera(50,50,10);
    m = Material({1.0,1.0,1.0,1.0},{0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},128.0);
+   luzpos = new LuzPosicional({0,0,0},GL_LIGHT0,{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    
 }
 
@@ -80,10 +81,17 @@ void Escena::dibujar()
    glPushMatrix();
    glPointSize(6);
 
-   if(luces)
-      glEnable(GL_LIGHTING);
+   if(luces){
+      if(!glIsEnabled(GL_LIGHTING))
+         glEnable(GL_LIGHTING);
+   }
    else
-      glDisable(GL_LIGHTING);
+      if(glIsEnabled(GL_LIGHTING))
+         glDisable(GL_LIGHTING);
+
+   glEnable(GL_SMOOTH);
+   glEnable(GL_LIGHT0);
+   luzpos->activar();
    
    switch (seleccionDibujo){
       case 1:
