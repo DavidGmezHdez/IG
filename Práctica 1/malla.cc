@@ -134,7 +134,7 @@ void Malla3D::calcularNormalesCaras(){
 // -----------------------------------------------------------------------------
 
 void Malla3D::calcularNormalesVertices(){
-   nv.resize(v.size());
+     nv = std::vector<Tupla3f>(v.size(), {0, 0, 0});
    for(int i = 0;i<f.size();i++){
       nv[f[i](0)] = (nv[f[i](0)] + nc[i]).normalized();
       nv[f[i](1)] = (nv[f[i](1)] + nc[i]).normalized();
@@ -156,7 +156,7 @@ void Malla3D::calcularNormales(){
 // -----------------------------------------------------------------------------
 
 void Malla3D::setMaterial(Material mat){
-   this->m = mat;
+   this->m = Material(mat);
 }
 
 // -----------------------------------------------------------------------------
@@ -164,11 +164,21 @@ void Malla3D::setMaterial(Material mat){
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 // -----------------------------------------------------------------------------
 
-void Malla3D::draw(bool modoDibujado, bool chess)
+void Malla3D::draw(bool modoDibujado, bool chess, bool luces)
 {
    this->ajedrez = chess;
 
-    if(ajedrez)
+   if(luces){
+      if(nv.empty())
+         this->calcularNormales();
+      glEnable(GL_NORMALIZE);
+      glEnable(GL_SMOOTH);
+      this->m.aplicar();
+   }
+   else
+      glEnable(GL_FLAT);
+
+   if(ajedrez)
       draw_ajedrezInmediato();
       else if(modoDibujado)
          draw_ModoDiferido();

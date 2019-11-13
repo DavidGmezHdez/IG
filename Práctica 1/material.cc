@@ -23,6 +23,14 @@ Material::Material(){
 
 }
 
+Material::Material(const Material &material){
+    this->difuso = material.difuso;
+    this->especular = material.especular;
+    this->ambiente = material.ambiente;
+    this->brillo = material.brillo;
+
+}
+
  Material::Material(Tupla4f mdifuso,Tupla4f mespecular,Tupla4f mambiente,float mbrillo){
     this->difuso = mdifuso;
     this->especular = mespecular;
@@ -36,11 +44,4 @@ void Material::aplicar(){
     glMaterialfv(GL_FRONT,GL_DIFFUSE,this->difuso);
     glMaterialfv(GL_FRONT,GL_SPECULAR,this->especular);
     glMaterialf(GL_FRONT,GL_SHININESS,this->brillo);
-}
-
-Material Material::operator=(const Material &m){
-    this->difuso = m.difuso;
-    this->especular = m.especular;
-    this->ambiente = m.ambiente;
-    this->brillo = m.brillo;
 }

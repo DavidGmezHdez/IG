@@ -21,10 +21,9 @@ class Material{
     
     public:
         Material();
+        Material(const Material &material);
         Material(Tupla4f mdifuso,Tupla4f mespecular,Tupla4f mambiente,float mbrillo);
         void aplicar();
-        Material operator=(const Material &m);
-
 };
 #endif
 

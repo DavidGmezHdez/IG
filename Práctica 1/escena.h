@@ -10,6 +10,7 @@
 #include "cilindro.h"
 #include "cono.h"
 #include "esfera.h"
+#include "material.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -48,10 +49,11 @@ class Escena
    ObjPLY * hormiga = nullptr;
    ObjRevolucion * peon = nullptr;
    ObjRevolucion * peon2 = nullptr;
+   Material m;
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool ajedrez = false,tapas = true;
+   bool ajedrez = false,tapas = true,luces = false,angulo;
 
    
    public:
