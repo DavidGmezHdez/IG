@@ -61,7 +61,7 @@ class Malla3D
    std::vector<Tupla3f> c, cimpares, cpares; //una terna 3 float por cada color
    bool ajedrez;
    GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0, vbo_nv = 0;
-   Material m;
+   Material * m;
 
 } ;
 

@@ -10,5 +10,5 @@ LuzPosicional::LuzPosicional(GLenum id,Tupla3f posicion,Tupla4f ambiente,Tupla4f
     this->posicion(0) = posicion(0);
     this->posicion(1) = posicion(1);
     this->posicion(2) = posicion(2);
-    this->posicion(3) = 0;
+    this->posicion(3) = 1;
 }

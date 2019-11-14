@@ -23,12 +23,15 @@ void Malla3D::draw_ModoInmediato()
 {
    glEnableClientState(GL_VERTEX_ARRAY);
    glVertexPointer(3,GL_FLOAT,0,v.data());
+   glEnableClientState(GL_NORMAL_ARRAY);
+   glNormalPointer(GL_FLOAT,0,nv.data());
    glEnableClientState(GL_COLOR_ARRAY);
    glColorPointer(3, GL_FLOAT, 0, c.data());
    glShadeModel(GL_FLAT);
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
    glDisableClientState(GL_COLOR_ARRAY);
-   glDisableClientState( GL_VERTEX_ARRAY );
+   glDisableClientState(GL_NORMAL_ARRAY);
+   glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +147,7 @@ void Malla3D::calcularNormalesCaras(){
 // -----------------------------------------------------------------------------
 
 void Malla3D::calcularNormalesVertices(){
-     nv = std::vector<Tupla3f>(v.size(), {0, 0, 0});
+   nv = std::vector<Tupla3f>(v.size(), {0, 0, 0});
    for(int i = 0;i<f.size();i++){
       nv[f[i](0)] = (nv[f[i](0)] + nc[i]).normalized();
       nv[f[i](1)] = (nv[f[i](1)] + nc[i]).normalized();
@@ -166,7 +169,7 @@ void Malla3D::calcularNormales(){
 // -----------------------------------------------------------------------------
 
 void Malla3D::setMaterial(Material mat){
-   this->m = Material(mat);
+   this->m = new Material(mat);
 }
 
 // -----------------------------------------------------------------------------
@@ -176,8 +179,9 @@ void Malla3D::setMaterial(Material mat){
 
 void Malla3D::draw(bool modoDibujado, bool chess)
 {
-   this->ajedrez = chess;
-   this->m.aplicar();
+
+   ajedrez = chess;
+   m->aplicar();
    if(nv.empty())
       this->calcularNormales();
    

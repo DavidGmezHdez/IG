@@ -52,7 +52,7 @@ class Escena
    ObjPLY * hormiga = nullptr;
    ObjRevolucion * peon = nullptr;
    ObjRevolucion * peon2 = nullptr;
-   Material oro,plata,bronce;
+   Material oro,plata,bronce,negro;
    LuzPosicional *luzpos = nullptr;
    LuzDireccional *luzdir = nullptr;
    bool metodoDibujado;

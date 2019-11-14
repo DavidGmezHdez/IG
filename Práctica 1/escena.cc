@@ -27,7 +27,8 @@ Escena::Escena()
    plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.0, 0.0,0.0, 1.0},128.0);//Sin brillos especulares
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
-   luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
+   luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT1,{3, 10, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
@@ -88,7 +89,7 @@ void Escena::dibujar()
    }
    
    peon->setMaterial(plata);
-   peon2->setMaterial(oro);
+   peon2->setMaterial(negro);
    tetraedro->setMaterial(bronce);
    cubo->setMaterial(oro);
    hormiga->setMaterial(bronce);
@@ -96,14 +97,14 @@ void Escena::dibujar()
    esfera->setMaterial(oro);
    
    if(luces){
-      if(!glIsEnabled(GL_LIGHTING))
+      if(!glIsEnabled(GL_LIGHTING)){
          glEnable(GL_LIGHTING);
+      }
    }
-   else
+   else{
       if(glIsEnabled(GL_LIGHTING))
          glDisable(GL_LIGHTING);
-
-
+   }
 
    glPushMatrix();
    glPointSize(6);
@@ -159,14 +160,14 @@ void Escena::dibujar()
          break;
       case 2:
          glPushMatrix();
-         glTranslatef(-100,0,0);
+         glTranslatef(-50,0,0);
          glScalef(25.0,25.0,25.0);
          peon->setColor(1,0,0);
          peon->draw(metodoDibujado,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
-         glTranslatef(100,0,0);
+         glTranslatef(50,0,0);
          glScalef(25.0,25.0,25.0);
          peon2->setColor(1,0,0);
          peon2->draw(metodoDibujado,ajedrez);
@@ -241,6 +242,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             peon->switchTapas(tapas);
             cilindro->switchTapas(tapas);
             cono->switchTapas(tapas);
+            peon2->switchTapas(tapas);
          }
          break;
       case 'I':
@@ -280,9 +282,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          else if(luces){
             if(!glIsEnabled(GL_LIGHT2)){
                glEnable(GL_LIGHT2);
+               
+               std::cout<<"Luz 2 activada"<<endl;
             }
             else
                glDisable(GL_LIGHT2);
+               std::cout<<"Luz 2 desactivada"<<endl;
          }
          break;
       case '3':

@@ -21,7 +21,6 @@ class Material{
     
     public:
         Material();
-        Material(const Material &material);
         Material(Tupla4f mambiente,Tupla4f mdifuso,Tupla4f mespecular,float mbrillo);
         void aplicar();
 };
