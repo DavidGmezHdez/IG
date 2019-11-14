@@ -48,23 +48,33 @@ GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero
 
 void Malla3D::draw_ModoDiferido()
 {
-   if(vbo_v == 0 && vbo_f==0){
+   if(vbo_v == 0 && vbo_f==0 && vbo_c==0 && vbo_nv == 0){
       vbo_v = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*v.size(),v.data());
       vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());  
       vbo_c = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data());
+      vbo_nv = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*nv.size(),nv.data());
    }
-   glBindBuffer(GL_ARRAY_BUFFER,vbo_v);
-   glBindBuffer(GL_ARRAY_BUFFER,vbo_c);  
+   glBindBuffer(GL_ARRAY_BUFFER,vbo_v);  
    glVertexPointer(3,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0);
-   glBindBuffer(GL_ARRAY_BUFFER,0); 
    glEnableClientState(GL_VERTEX_ARRAY);
-   glEnableClientState(GL_COLOR_ARRAY);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
-   glShadeModel(GL_FLAT);
-   glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,f.data());
+   
+   glBindBuffer(GL_ARRAY_BUFFER,vbo_nv);
+   glNormalPointer(GL_FLOAT,0,0);
+   glBindBuffer(GL_ARRAY_BUFFER,0);
+   glEnableClientState(GL_NORMAL_ARRAY);
+   
+   glEnableClientState(GL_COLOR_ARRAY);
+   glBindBuffer(GL_ARRAY_BUFFER,vbo_c);  
+   glColorPointer(3, GL_FLOAT, 0,0);
+   glBindBuffer(GL_ARRAY_BUFFER,0);  
+
+
+   glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
    glDisableClientState(GL_COLOR_ARRAY);
+   glDisableClientState(GL_NORMAL_ARRAY);
    glDisableClientState(GL_VERTEX_ARRAY); 
 }
 
@@ -167,9 +177,10 @@ void Malla3D::setMaterial(Material mat){
 void Malla3D::draw(bool modoDibujado, bool chess)
 {
    this->ajedrez = chess;
+   this->m.aplicar();
    if(nv.empty())
       this->calcularNormales();
-   this->m.aplicar();
+   
    if(ajedrez)
       draw_ajedrezInmediato();
       else if(modoDibujado)

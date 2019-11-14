@@ -27,7 +27,7 @@ Escena::Escena()
    plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.0, 0.0,0.0, 1.0},128.0);//Sin brillos especulares
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
-   luzpos = new LuzPosicional(GL_LIGHT0,{200, 200, 200},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT1,{3, 10, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
@@ -43,8 +43,6 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
     
-
-
 	Width  = UI_window_width/10;
 	Height = UI_window_height/10;
 
@@ -249,7 +247,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             luces = !luces;
          }
-      case 0:
+      case '0':
          if(luces){
             if(!glIsEnabled(GL_LIGHT0)){
                glEnable(GL_LIGHT0);
@@ -262,7 +260,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             }
          }
          break;
-      case 1 :
+      case '1' :
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = false;
          else if(luces){
@@ -276,7 +274,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                std::cout<<"Luz 1 desactivada"<<endl;
          }
          break;
-      case 2:
+      case '2':
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = true;
          else if(luces){
@@ -287,7 +285,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                glDisable(GL_LIGHT2);
          }
          break;
-      case 3:
+      case '3':
          if(modoVisualizacion == 0){
             if(!glIsEnabled(GL_LIGHT3)){
                glEnable(GL_LIGHT3);
@@ -296,7 +294,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                glDisable(GL_LIGHT3);
          }
          break;
-      case 4:
+      case '4':
          if(modoVisualizacion == 0){
             if(!glIsEnabled(GL_LIGHT4)){
                glEnable(GL_LIGHT4);
@@ -305,7 +303,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                glDisable(GL_LIGHT4);
          }
          break;
-      case 5:
+      case '5':
          if(modoVisualizacion == 0){
             if(!glIsEnabled(GL_LIGHT5)){
                glEnable(GL_LIGHT5);
@@ -314,7 +312,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                glDisable(GL_LIGHT5);
          }
          break;
-      case 6:
+      case '6':
          if(modoVisualizacion == 0){
             if(!glIsEnabled(GL_LIGHT6)){
                glEnable(GL_LIGHT6);
@@ -323,7 +321,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                glDisable(GL_LIGHT6);
          }
          break;
-      case 7:
+      case '7':
          if(modoVisualizacion == 0){
             if(!glIsEnabled(GL_LIGHT7)){
                glEnable(GL_LIGHT7);
