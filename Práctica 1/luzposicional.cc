@@ -1,7 +1,7 @@
 #include "luzposicional.h"
 
 
-LuzPosicional::LuzPosicional(Tupla3f posicion,GLenum id,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular){
+LuzPosicional::LuzPosicional(GLenum id,Tupla3f posicion,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular){
     this->id = id;
     this->colorAmbiente = ambiente;
     this->colorDifuso = difuso;

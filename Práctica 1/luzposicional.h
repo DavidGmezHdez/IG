@@ -16,7 +16,7 @@
 class LuzPosicional : public Luz
 {
     public:
-    LuzPosicional(Tupla3f posicion,GLenum id,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular);
+    LuzPosicional(GLenum id,Tupla3f posicion,Tupla4f ambiente,Tupla4f difuso,Tupla4f especular);
 };  
 
 #endif

@@ -157,7 +157,6 @@ void Malla3D::calcularNormales(){
 
 void Malla3D::setMaterial(Material mat){
    this->m = Material(mat);
-   m.aplicar();
 }
 
 // -----------------------------------------------------------------------------
@@ -165,19 +164,12 @@ void Malla3D::setMaterial(Material mat){
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 // -----------------------------------------------------------------------------
 
-void Malla3D::draw(bool modoDibujado, bool chess, bool luces)
+void Malla3D::draw(bool modoDibujado, bool chess)
 {
    this->ajedrez = chess;
-
-   if(luces){
-      if(nv.empty())
-         this->calcularNormales();
-      glEnable(GL_NORMALIZE);
-      this->m.aplicar();
-   }
-   else
-      glEnable(GL_FLAT);
-
+   if(nv.empty())
+      this->calcularNormales();
+   this->m.aplicar();
    if(ajedrez)
       draw_ajedrezInmediato();
       else if(modoDibujado)
