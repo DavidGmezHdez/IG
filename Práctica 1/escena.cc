@@ -29,7 +29,7 @@ Escena::Escena()
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
    luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   luzdir = new LuzDireccional(GL_LIGHT1,{3, 10, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
+   luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 10},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
 //**************************************************************************
@@ -190,6 +190,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    using namespace std ;
    cout << "Tecla pulsada: '" << tecla << "'" << endl;
    bool salir=false;
+   bool angulo;
    switch( toupper(tecla) )
    {
       case 'Q' :
@@ -236,6 +237,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'A':
          if(modoMenu == SELVISUALIZACION)
             modoVisualizacion = 4;
+         else if(luces)
+            angulo = true;
+         break;
+      case 'B':
+         if(luces)
+            angulo = false;
          break;
       case 'T':
          if(modoMenu == SELVISUALIZACION){
@@ -271,9 +278,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                luzdir->activar();
                std::cout<<"Luz 1 activada"<<endl;
             }
-            else
+            else{
                glDisable(GL_LIGHT1);
                std::cout<<"Luz 1 desactivada"<<endl;
+            }
          }
          break;
       case '2':
@@ -334,6 +342,18 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             else
                glDisable(GL_LIGHT7);
          }
+         break;
+      case '>':
+         if(luces && angulo && modoMenu == SELVISUALIZACION)
+            luzdir->variarAnguloAlpha(-1.0);
+         else if(luces && !angulo && modoMenu == SELVISUALIZACION)
+            luzdir->variarAnguloBeta(-1.0);
+         break;
+      case '<':
+         if(luces && angulo && modoMenu == SELVISUALIZACION)
+            luzdir->variarAnguloAlpha(1.0);
+         else if(luces && !angulo && modoMenu == SELVISUALIZACION)
+            luzdir->variarAnguloBeta(1.0);
          break;
    }
    return salir;
