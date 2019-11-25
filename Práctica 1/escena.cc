@@ -29,7 +29,7 @@ Escena::Escena()
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
    luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 10},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
+   luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
 //**************************************************************************
@@ -98,9 +98,8 @@ void Escena::dibujar()
    esfera->setMaterial(oro);
    
    if(luces){
-      if(!glIsEnabled(GL_LIGHTING)){
+      if(!glIsEnabled(GL_LIGHTING))
          glEnable(GL_LIGHTING);
-      }
    }
    else{
       if(glIsEnabled(GL_LIGHTING))

@@ -27,7 +27,7 @@ void Malla3D::draw_ModoInmediato()
    glNormalPointer(GL_FLOAT,0,nv.data());
    glEnableClientState(GL_COLOR_ARRAY);
    glColorPointer(3, GL_FLOAT, 0, c.data());
-   glShadeModel(GL_FLAT);
+   //glShadeModel(GL_FLAT);
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
