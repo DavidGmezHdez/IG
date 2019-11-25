@@ -31,10 +31,6 @@ Escena::Escena()
 
    luces[0] = new LuzPosicional(GL_LIGHT1,{0, 0, 0},{0.2,0.2,0.2,0.2},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
-
-
-   //luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   //luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
 //**************************************************************************
@@ -253,9 +249,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       
       case 'I':
-         if(modoMenu == SELVISUALIZACION)
+         if(modoMenu == SELVISUALIZACION){
             luz = !luz;
-      
+         }
       case '0':
          if(modoMenu == SELVISUALIZACION){
             if(!glIsEnabled(this->luces[0]->getID()))

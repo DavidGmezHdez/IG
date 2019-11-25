@@ -53,8 +53,6 @@ class Escena
    ObjRevolucion * peon = nullptr;
    ObjRevolucion * peon2 = nullptr;
    Material oro,plata,bronce,negro;
-   LuzPosicional *luzpos = nullptr;
-   LuzDireccional *luzdir = nullptr;
    Luz* luces[8] = {nullptr};
    bool metodoDibujado;
    int seleccionDibujo;
