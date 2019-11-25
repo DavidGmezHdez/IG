@@ -18,6 +18,9 @@ class Luz
         GLenum id;
     public:
         void activar();
+        virtual void variarAnguloAlpha(float incremento){};
+        virtual void variarAnguloBeta(float incremento){};
+        inline GLenum getID(){return id;};
 };
 
 

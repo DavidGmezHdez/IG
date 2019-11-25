@@ -55,10 +55,11 @@ class Escena
    Material oro,plata,bronce,negro;
    LuzPosicional *luzpos = nullptr;
    LuzDireccional *luzdir = nullptr;
+   Luz* luces[8] = {nullptr};
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool ajedrez = false,tapas = true,luces = false,angulo;
+   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo;
 
    
    public:

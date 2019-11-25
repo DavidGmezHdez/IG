@@ -14,9 +14,16 @@
 
 void Malla3D::setColor(float R, float G, float B){
    c.clear();
+   Tupla3f colorPuntos(0.5,0.5,0.5), colorLineas(0.25,1.0,0.0), colorSolido(R,G,B);
    for(int i=0;i<v.size();i++){
-      c.push_back(Tupla3f(R,G,B));
+      cp.push_back(colorPuntos);
+      cl.push_back(colorLineas);
+      c.push_back(colorSolido);
    }
+
+   cp.push_back(colorPuntos);
+   cl.push_back(colorLineas);
+   c.push_back(colorSolido);
 }
 
 void Malla3D::draw_ModoInmediato()
@@ -26,8 +33,20 @@ void Malla3D::draw_ModoInmediato()
    glEnableClientState(GL_NORMAL_ARRAY);
    glNormalPointer(GL_FLOAT,0,nv.data());
    glEnableClientState(GL_COLOR_ARRAY);
-   glColorPointer(3, GL_FLOAT, 0, c.data());
-   //glShadeModel(GL_FLAT);
+
+   if(puntos){
+      glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
+      glColorPointer(3, GL_FLOAT, 0, cp.data());
+   }
+   if(lineas){
+      glPolygonMode(GL_FRONT_AND_BACK,GL_LINES);
+      glColorPointer(3, GL_FLOAT, 0, cl.data());
+   }
+   if(solido){
+      glPolygonMode(GL_FRONT_AND_BACK,GL_LINES);
+      glColorPointer(3, GL_FLOAT, 0, c.data());
+   }
+
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
@@ -51,10 +70,15 @@ GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero
 
 void Malla3D::draw_ModoDiferido()
 {
-   if(vbo_v == 0 && vbo_f==0 && vbo_c==0 && vbo_nv == 0){
+   if(vbo_v == 0 && vbo_f==0 && (vbo_c==0 || vbo_cp == 0 || vbo_cl == 0) && vbo_nv == 0){
       vbo_v = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*v.size(),v.data());
-      vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());  
-      vbo_c = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data());
+      vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());
+      if(puntos)
+         vbo_cp = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cp.size(),cp.data());
+      if(lineas)
+         vbo_cl = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cl.size(),cl.data());
+      if(solido)
+         vbo_c = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data());
       vbo_nv = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*nv.size(),nv.data());
    }
    glBindBuffer(GL_ARRAY_BUFFER,vbo_v);  
@@ -69,7 +93,12 @@ void Malla3D::draw_ModoDiferido()
    glEnableClientState(GL_NORMAL_ARRAY);
    
    glEnableClientState(GL_COLOR_ARRAY);
-   glBindBuffer(GL_ARRAY_BUFFER,vbo_c);  
+      if(puntos)
+         glBindBuffer(GL_ARRAY_BUFFER,vbo_cp);
+      if(lineas)
+         glBindBuffer(GL_ARRAY_BUFFER,vbo_cl);
+      if(solido)
+         glBindBuffer(GL_ARRAY_BUFFER,vbo_c);
    glColorPointer(3, GL_FLOAT, 0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0);  
 
@@ -177,9 +206,12 @@ void Malla3D::setMaterial(Material mat){
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 // -----------------------------------------------------------------------------
 
-void Malla3D::draw(bool modoDibujado, bool chess)
+void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess)
 {
 
+   puntos = points;
+   lineas = lines;
+   solido = fill;
    ajedrez = chess;
    m->aplicar();
    if(nv.empty())

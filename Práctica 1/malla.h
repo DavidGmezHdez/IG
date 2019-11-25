@@ -38,7 +38,7 @@ class Malla3D
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(bool modoDibujado, bool chess);
+   void draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess);
 
    void crearAjedrez();
 
@@ -58,9 +58,9 @@ class Malla3D
 
    std::vector<Tupla3f> v,vnotapas,nc,nv ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f,fnotapas,impares, pares; // una terna de 3 enteros por cada cara o triángulo
-   std::vector<Tupla3f> c, cimpares, cpares; //una terna 3 float por cada color
-   bool ajedrez;
-   GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0, vbo_nv = 0;
+   std::vector<Tupla3f> c, cimpares, cpares,cp,cl; //una terna 3 float por cada color
+   bool puntos,lineas,solido,ajedrez;
+   GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0,vbo_cp = 0,vbo_cl = 0, vbo_nv = 0;
    Material * m;
 
 } ;

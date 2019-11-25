@@ -28,8 +28,13 @@ Escena::Escena()
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
-   luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
+
+   luces[0] = new LuzPosicional(GL_LIGHT1,{0, 0, 0},{0.2,0.2,0.2,0.2},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
+
+
+   //luzpos = new LuzPosicional(GL_LIGHT0,{0, 0, 0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   //luzdir = new LuzDireccional(GL_LIGHT1,{0, 0, 1},{0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0}, {0.0, 0.0, 0.0, 1.0});
 }
 
 //**************************************************************************
@@ -55,7 +60,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 //
 // función de dibujo de la escena: limpia ventana, fija cámara, dibuja ejes,
 // y dibuja los objetos
-//
+//= 3;
 // **************************************************************************
 
 void Escena::dibujar()
@@ -67,27 +72,6 @@ void Escena::dibujar()
    glEnable(GL_SMOOTH);
 	change_observer();
    ejes.draw();
-
-   ajedrez = false;
-   switch (modoVisualizacion){
-      case 1:
-         glDisable(GL_LIGHTING);
-         glPolygonMode(GL_FRONT_AND_BACK,GL_POINT);
-         break;
-      case 2:
-         glDisable(GL_LIGHTING);
-         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-         break;
-      case 3:
-         glDisable(GL_LIGHTING);
-         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-         break;
-      case 4:
-         glDisable(GL_LIGHTING);
-         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-         ajedrez = true;
-         break;
-   }
    
    peon->setMaterial(plata);
    peon2->setMaterial(negro);
@@ -97,13 +81,15 @@ void Escena::dibujar()
    cilindro->setMaterial(plata);
    esfera->setMaterial(oro);
    
-   if(luces){
+   if(luz){
       if(!glIsEnabled(GL_LIGHTING))
          glEnable(GL_LIGHTING);
+      glShadeModel(GL_SMOOTH);
    }
    else{
       if(glIsEnabled(GL_LIGHTING))
          glDisable(GL_LIGHTING);
+      glShadeModel(GL_FLAT);
    }
 
    glPushMatrix();
@@ -114,48 +100,48 @@ void Escena::dibujar()
          glTranslatef(100,0,0);
          glScalef(25,25,25);
          tetraedro->setColor(0,0,1);
-         tetraedro->draw(metodoDibujado,ajedrez);
+         tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,100);
          glScalef(25,25,25);
          cubo->setColor(0,1,0);
-         cubo->draw(metodoDibujado,ajedrez);
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          glScalef(25.0,25.0,25.0);
          peon->setColor(1,0,0);
-         peon->draw(metodoDibujado,ajedrez);
+         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,0);
          glScalef(3,3,3);
          hormiga->setColor(1,0,1);
-         hormiga->draw(metodoDibujado,ajedrez);
+         hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,-100);
          glScalef(3,3,3);
          cilindro->setColor(0,0,1);
-         cilindro->draw(metodoDibujado,ajedrez);
+         cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
       /*
          glPushMatrix();
          glTranslatef(100,0,-100);
          glScalef(3,3,3);
          cono->setColor(0,1,0);
-         cono->draw(metodoDibujado,ajedrez);
+         cono->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix(); 
       */
          glPushMatrix();
          glTranslatef(100,0,100);
          glScalef(5,5,5);
          esfera->setColor(1,0,1);
-         esfera->draw(metodoDibujado,ajedrez);
+         esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
       case 2:
@@ -163,14 +149,14 @@ void Escena::dibujar()
          glTranslatef(-50,0,0);
          glScalef(25.0,25.0,25.0);
          peon->setColor(1,0,0);
-         peon->draw(metodoDibujado,ajedrez);
+         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(50,0,0);
          glScalef(25.0,25.0,25.0);
          peon2->setColor(1,0,0);
-         peon2->draw(metodoDibujado,ajedrez);
+         peon2->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
    }
@@ -223,27 +209,40 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
 
       case 'P':
-         if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 1;
+         if(modoMenu == SELVISUALIZACION){
+            luz = false;
+            puntos = !puntos;
+         }
          break;
+      
       case 'L':
-         if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 2;
+         if(modoMenu == SELVISUALIZACION){
+            luz = false;
+            lineas = !lineas;
+         }
          break;
+      
       case 'S':
-         if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 3;
+         if(modoMenu == SELVISUALIZACION){
+            luz = false;
+            solido = !solido;
+         }
          break;
+      
       case 'A':
-         if(modoMenu == SELVISUALIZACION)
-            modoVisualizacion = 4;
-         else if(luces)
+         if(modoMenu == SELVISUALIZACION){
+            luz = false;
+            ajedrez = !ajedrez;
+         }
+         if(luz)
             angulo = true;
          break;
+      
       case 'B':
-         if(luces)
+         if(luz)
             angulo = false;
          break;
+      
       case 'T':
          if(modoMenu == SELVISUALIZACION){
             peon->switchTapas(tapas);
@@ -252,108 +251,99 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             peon2->switchTapas(tapas);
          }
          break;
+      
       case 'I':
-         if(modoMenu == SELVISUALIZACION){
-            luces = !luces;
-         }
+         if(modoMenu == SELVISUALIZACION)
+            luz = !luz;
+      
       case '0':
-         if(luces){
-            if(!glIsEnabled(GL_LIGHT0)){
-               glEnable(GL_LIGHT0);
-               luzpos->activar();
-               std::cout<<"Luz 0 activada"<<endl;
-            }
-            else{
-               glDisable(GL_LIGHT0);
-               std::cout<<"Luz 0 desactivada"<<endl;
-            }
+         if(modoMenu == SELVISUALIZACION){
+            if(!glIsEnabled(this->luces[0]->getID()))
+               this->luces[0]->activar();
+            else
+               glDisable(this->luces[0]->getID());
          }
          break;
+      
       case '1' :
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = false;
-         else if(luces){
-            if(!glIsEnabled(GL_LIGHT1)){
-               glEnable(GL_LIGHT1);
-               luzdir->activar();
-               std::cout<<"Luz 1 activada"<<endl;
+         else if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[1]->getID()))
+                  this->luces[1]->activar();
+               else
+                  glDisable(this->luces[1]->getID());
             }
-            else{
-               glDisable(GL_LIGHT1);
-               std::cout<<"Luz 1 desactivada"<<endl;
-            }
-         }
          break;
+      
       case '2':
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = true;
-         else if(luces){
-            if(!glIsEnabled(GL_LIGHT2)){
-               glEnable(GL_LIGHT2);
-               
-               std::cout<<"Luz 2 activada"<<endl;
+         else if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[2]->getID()))
+                  this->luces[2]->activar();
+               else
+                  glDisable(this->luces[2]->getID());
             }
-            else
-               glDisable(GL_LIGHT2);
-               std::cout<<"Luz 2 desactivada"<<endl;
-         }
          break;
+      
       case '3':
-         if(modoVisualizacion == 0){
-            if(!glIsEnabled(GL_LIGHT3)){
-               glEnable(GL_LIGHT3);
+            if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[3]->getID()))
+                  this->luces[3]->activar();
+               else
+                  glDisable(this->luces[3]->getID());
             }
-            else
-               glDisable(GL_LIGHT3);
-         }
          break;
+      
       case '4':
-         if(modoVisualizacion == 0){
-            if(!glIsEnabled(GL_LIGHT4)){
-               glEnable(GL_LIGHT4);
+            if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[4]->getID()))
+                  this->luces[3]->activar();
+               else
+                  glDisable(this->luces[4]->getID());
             }
-            else
-               glDisable(GL_LIGHT4);
-         }
          break;
+      
       case '5':
-         if(modoVisualizacion == 0){
-            if(!glIsEnabled(GL_LIGHT5)){
-               glEnable(GL_LIGHT5);
+            if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[5]->getID()))
+                  this->luces[3]->activar();
+               else
+                  glDisable(this->luces[5]->getID());
             }
-            else
-               glDisable(GL_LIGHT5);
-         }
          break;
+      
       case '6':
-         if(modoVisualizacion == 0){
-            if(!glIsEnabled(GL_LIGHT6)){
-               glEnable(GL_LIGHT6);
+            if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[6]->getID()))
+                  this->luces[3]->activar();
+               else
+                  glDisable(this->luces[6]->getID());
             }
-            else
-               glDisable(GL_LIGHT6);
-         }
          break;
+      
       case '7':
-         if(modoVisualizacion == 0){
-            if(!glIsEnabled(GL_LIGHT7)){
-               glEnable(GL_LIGHT7);
+            if(modoMenu == SELVISUALIZACION){
+               if(!glIsEnabled(this->luces[7]->getID()))
+                  this->luces[3]->activar();
+               else
+                  glDisable(this->luces[7]->getID());
             }
-            else
-               glDisable(GL_LIGHT7);
-         }
          break;
+      
       case '>':
-         if(luces && angulo && modoMenu == SELVISUALIZACION)
-            luzdir->variarAnguloAlpha(-1.0);
-         else if(luces && !angulo && modoMenu == SELVISUALIZACION)
-            luzdir->variarAnguloBeta(-1.0);
+         if(luz && angulo && modoMenu == SELVISUALIZACION)
+            this->luces[1]->variarAnguloAlpha(-1.0);
+         else if(luz && !angulo && modoMenu == SELVISUALIZACION)
+            this->luces[1]->variarAnguloBeta(-1.0);
          break;
+      
       case '<':
-         if(luces && angulo && modoMenu == SELVISUALIZACION)
-            luzdir->variarAnguloAlpha(1.0);
-         else if(luces && !angulo && modoMenu == SELVISUALIZACION)
-            luzdir->variarAnguloBeta(1.0);
+         if(luz && angulo && modoMenu == SELVISUALIZACION)
+            this->luces[1]->variarAnguloAlpha(1.0);
+         else if(luz && !angulo && modoMenu == SELVISUALIZACION)
+            this->luces[1]->variarAnguloBeta(1.0);
          break;
    }
    return salir;
