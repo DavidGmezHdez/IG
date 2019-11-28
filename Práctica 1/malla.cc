@@ -8,10 +8,12 @@
 //
 // *****************************************************************************
 
-// -----------------------------------------------------------------------------
-// Visualización en modo inmediato con 'glDrawElements'
-// -----------------------------------------------------------------------------
 
+
+
+// -----------------------------------------------------------------------------
+// Función para poner el color del objeto en modo solido, en modo lineas y puntos el color será por defecto
+// -----------------------------------------------------------------------------
 void Malla3D::setColor(float R, float G, float B){
    c.clear();
    cp.clear();
@@ -28,6 +30,10 @@ void Malla3D::setColor(float R, float G, float B){
    c.push_back(colorSolido);
 }
 
+
+// -----------------------------------------------------------------------------
+// Visualización en modo inmediato con 'glDrawElements'
+// -----------------------------------------------------------------------------
 void Malla3D::draw_ModoInmediato(int modo)
 {
    glEnableClientState(GL_VERTEX_ARRAY);
@@ -55,7 +61,7 @@ void Malla3D::draw_ModoInmediato(int modo)
 }
 
 // -----------------------------------------------------------------------------
-// Visualización en modo diferido con 'glDrawElements' (usando VBOs)
+// Creación VBOs
 // -----------------------------------------------------------------------------
 
 GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero_ram){
@@ -68,19 +74,14 @@ GLuint Malla3D::crearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero
 }
 
 // -----------------------------------------------------------------------------
+// Visualización en modo diferido con 'glDrawElements' (usando VBOs)
+// -----------------------------------------------------------------------------
 
 void Malla3D::draw_ModoDiferido(int modo)
 {
-   if(vbo_v == 0 && vbo_f==0 && (vbo_c==0 || vbo_cp == 0 || vbo_cl == 0) && vbo_nv == 0){
+   if(vbo_v == 0 && vbo_f==0){
       vbo_v = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*v.size(),v.data());
       vbo_f = crearVBO(GL_ELEMENT_ARRAY_BUFFER,3*sizeof(int)*f.size(),f.data());
-      if(puntos)
-         vbo_cp = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cp.size(),cp.data());
-      if(lineas)
-         vbo_cl = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cl.size(),cl.data());
-      if(solido)
-         vbo_c = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data());
-      vbo_nv = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*nv.size(),nv.data());
    }
    glBindBuffer(GL_ARRAY_BUFFER,vbo_v);  
    glVertexPointer(3,GL_FLOAT,0,0);
@@ -88,26 +89,39 @@ void Malla3D::draw_ModoDiferido(int modo)
    glEnableClientState(GL_VERTEX_ARRAY);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_f);
    
+   if (vbo_nv == 0)
+      vbo_nv = crearVBO(GL_ARRAY_BUFFER,3*sizeof(float)*nv.size(),nv.data());
+
    glBindBuffer(GL_ARRAY_BUFFER,vbo_nv);
    glNormalPointer(GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0);
    glEnableClientState(GL_NORMAL_ARRAY);
+
+
    glEnableClientState(GL_COLOR_ARRAY);
    
    switch(modo){
       case 1:
+         if (vbo_cp == 0)
+            vbo_cp = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cp.size(),cp.data());
          glBindBuffer(GL_ARRAY_BUFFER,vbo_cp);
          break;
       case 2:
+         if (vbo_cl == 0)
+            vbo_cl = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cl.size(),cl.data());
          glBindBuffer(GL_ARRAY_BUFFER,vbo_cl);
+
          break;
       case 3:
+         if (vbo_c==0)
+            vbo_c = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*c.size(),c.data()); 
          glBindBuffer(GL_ARRAY_BUFFER,vbo_c);
          break;
    }
-   
-  
-   glDrawElements(GL_TRIANGLES,3*f.size(),GL_UNSIGNED_INT,0);
+   glColorPointer(3, GL_FLOAT, 0, 0);
+   glBindBuffer(GL_ARRAY_BUFFER,0);
+
+   glDrawElements(GL_TRIANGLES,f.size()*3,GL_UNSIGNED_INT, 0 );
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
