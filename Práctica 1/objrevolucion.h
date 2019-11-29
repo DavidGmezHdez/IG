@@ -45,12 +45,12 @@ class ObjRevolucion : public Malla3D
     bool buscarTapaSup(std::vector<Tupla3f> perfil_original);
     bool buscarTapaInf(std::vector<Tupla3f> perfil_original);
     
-    Tupla3f sacarTapaInf(std::vector<Tupla3f> perfil_original);
-    Tupla3f sacarTapaSup(std::vector<Tupla3f> perfil_original);
+    Tupla3f sacarTapaInf(std::vector<Tupla3f> &perfil_original);
+    Tupla3f sacarTapaSup(std::vector<Tupla3f> &perfil_original);
     
     
-    void crearTapaSup(std::vector<Tupla3f> perfil_original,int num_instancias);
-    void crearTapaInf(std::vector<Tupla3f> perfil_original,int num_instancias);
+    void crearTapaSup(std::vector<Tupla3f> &perfil_original,int &num_instancias);
+    void crearTapaInf(std::vector<Tupla3f> &perfil_original,int &num_instancias);
     
 } ;
 
