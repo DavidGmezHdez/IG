@@ -73,12 +73,16 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos dado en sentido contrario)
 // *****************************************************************************
 
-void ObjRevolucion::crearPuntosReversos(std::vector<Tupla3f> perfil_original){
-   this->v.clear();
-   Tupla3f aux;
-   for(int i=0,j=perfil_original.size();i<perfil_original.size()/2;i++,j--){
-      perfil_original[i] = perfil_original[j];
+std::vector<Tupla3f> ObjRevolucion::crearPuntosReversos(std::vector<Tupla3f> perfil_original){
+   std::vector<Tupla3f> reverso, aux = perfil_original;
+   reverso.reserve(perfil_original.size());
+
+   for(int i=0; i < perfil_original.size(); i++){
+      reverso.push_back(aux.back());
+      aux.pop_back();
    }
+
+   return reverso;
 }
 
 // *****************************************************************************
@@ -189,7 +193,7 @@ void ObjRevolucion::switchTapas(bool &tapas){
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf) {
    Tupla3f tapaInf, tapaSup;
    if(perfil_original[0](1) < perfil_original[perfil_original.size()-1](1))
-      this->crearPuntosReversos(perfil_original);
+      perfil_original = crearPuntosReversos(perfil_original);
    
    this->crearPuntos(perfil_original,num_instancias,tapa_sup,tapa_inf);
 

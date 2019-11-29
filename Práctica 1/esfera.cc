@@ -11,7 +11,5 @@ Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const f
 
         perfil.push_back(aux);
     }
-
-    crearPuntosReversos(perfil);
     crearMalla(perfil,num_instancias_perf,true,true);
 }

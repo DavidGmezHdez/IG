@@ -38,7 +38,7 @@ class ObjRevolucion : public Malla3D
     void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf);
     
     void crearPuntos(std::vector<Tupla3f> perfil_original,int num_instancias,bool tapaSup, bool tapaInf);
-    void crearPuntosReversos(std::vector<Tupla3f> perfil_original);
+    std::vector<Tupla3f> crearPuntosReversos(std::vector<Tupla3f> perfil_original);
     
     void crearTriangulos(std::vector<Tupla3f> perfil_original,int num_instancias);
     
