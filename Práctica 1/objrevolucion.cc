@@ -81,7 +81,7 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
 void ObjRevolucion::crearPuntosReversos(std::vector<Tupla3f> perfil_original){
    this->v.clear();
    Tupla3f aux;
-   for(int i=0,j=perfil_original.size();i<perfil_original.size();i++,j--){
+   for(int i=0,j=perfil_original.size();i<perfil_original.size()/2;i++,j--){
       perfil_original[i] = perfil_original[j];
    }
 }

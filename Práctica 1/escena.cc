@@ -72,10 +72,10 @@ void Escena::dibujar()
    peon->setMaterial(plata);
    peon2->setMaterial(negro);
    tetraedro->setMaterial(bronce);
-   cubo->setMaterial(oro);
+   cubo->setMaterial(bronce);
    hormiga->setMaterial(bronce);
    cilindro->setMaterial(plata);
-   esfera->setMaterial(oro);
+   esfera->setMaterial(plata);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING))
