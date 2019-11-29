@@ -29,8 +29,8 @@ Escena::Escena()
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
 
-   luces[0] = new LuzPosicional(GL_LIGHT1,{0, 0, 0},{0.2,0.2,0.2,0.2},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
+   luzpos = new LuzPosicional(GL_LIGHT1,{150, 150, 150},{0.2,0.2,0.2,0.2},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 }
 
 //**************************************************************************
@@ -80,6 +80,17 @@ void Escena::dibujar()
    if(luz){
       if(!glIsEnabled(GL_LIGHTING))
          glEnable(GL_LIGHTING);
+
+      if(luces[0])
+         luzpos->activar();
+      else
+         glDisable(GL_LIGHT1);
+      
+      if(luces[1])
+         luzdir->activar();
+      else
+         glDisable(GL_LIGHT2);
+      
       glShadeModel(GL_SMOOTH);
    }
    else{
@@ -226,7 +237,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       
       case 'A':
-         if(modoMenu == SELVISUALIZACION){
+         if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             ajedrez = !ajedrez;
          }
@@ -253,93 +264,62 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             luz = !luz;
          }
       case '0':
-         if(modoMenu == SELVISUALIZACION){
-            if(!glIsEnabled(this->luces[0]->getID()))
-               this->luces[0]->activar();
-            else
-               glDisable(this->luces[0]->getID());
+         if(modoMenu == SELVISUALIZACION && luz){
+            luces[0] = !luces[0];
          }
          break;
       
       case '1' :
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = false;
-         else if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[1]->getID()))
-                  this->luces[1]->activar();
-               else
-                  glDisable(this->luces[1]->getID());
-            }
+         else if(modoMenu == SELVISUALIZACION && luz)
+            luces[1] = !luces[1];
          break;
       
       case '2':
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = true;
-         else if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[2]->getID()))
-                  this->luces[2]->activar();
-               else
-                  glDisable(this->luces[2]->getID());
-            }
+         else if(modoMenu == SELVISUALIZACION && luz)
+            luces[2] = !luces[2];
          break;
       
       case '3':
-            if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[3]->getID()))
-                  this->luces[3]->activar();
-               else
-                  glDisable(this->luces[3]->getID());
-            }
+            if(modoMenu == SELVISUALIZACION && luz)
+               luces[3] = !luces[3];
          break;
       
       case '4':
-            if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[4]->getID()))
-                  this->luces[3]->activar();
-               else
-                  glDisable(this->luces[4]->getID());
-            }
+            if(modoMenu == SELVISUALIZACION && luz)
+               luces[4] = !luces[4];
          break;
       
       case '5':
-            if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[5]->getID()))
-                  this->luces[3]->activar();
-               else
-                  glDisable(this->luces[5]->getID());
-            }
+            if(modoMenu == SELVISUALIZACION && luz)
+               luces[5] = !luces[5];
          break;
       
       case '6':
-            if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[6]->getID()))
-                  this->luces[3]->activar();
-               else
-                  glDisable(this->luces[6]->getID());
-            }
+            if(modoMenu == SELVISUALIZACION && luz)
+               luces[6] = !luces[6];
          break;
       
       case '7':
-            if(modoMenu == SELVISUALIZACION){
-               if(!glIsEnabled(this->luces[7]->getID()))
-                  this->luces[3]->activar();
-               else
-                  glDisable(this->luces[7]->getID());
-            }
+            if(modoMenu == SELVISUALIZACION && luz)
+               luces[7] = !luces[7];
          break;
       
       case '>':
          if(luz && angulo && modoMenu == SELVISUALIZACION)
-            this->luces[1]->variarAnguloAlpha(-1.0);
+            this->luzdir->variarAnguloAlpha(-1.0);
          else if(luz && !angulo && modoMenu == SELVISUALIZACION)
-            this->luces[1]->variarAnguloBeta(-1.0);
+            this->luzdir->variarAnguloBeta(-1.0);
          break;
       
       case '<':
          if(luz && angulo && modoMenu == SELVISUALIZACION)
-            this->luces[1]->variarAnguloAlpha(1.0);
+            this->luzdir->variarAnguloAlpha(1.0);
          else if(luz && !angulo && modoMenu == SELVISUALIZACION)
-            this->luces[1]->variarAnguloBeta(1.0);
+            this->luzdir->variarAnguloBeta(1.0);
          break;
    }
    return salir;

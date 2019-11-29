@@ -110,7 +110,6 @@ void Malla3D::draw_ModoDiferido(int modo)
          if (vbo_cl == 0)
             vbo_cl = crearVBO(GL_ARRAY_BUFFER,3*sizeof(int)*cl.size(),cl.data());
          glBindBuffer(GL_ARRAY_BUFFER,vbo_cl);
-
          break;
       case 3:
          if (vbo_c==0)
