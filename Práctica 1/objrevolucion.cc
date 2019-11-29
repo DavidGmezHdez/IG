@@ -166,12 +166,12 @@ void ObjRevolucion::crearTapaSup(std::vector<Tupla3f> perfil_original,int num_in
 
 
 void ObjRevolucion::crearTapas(std::vector<Tupla3f> perfil_original,int num_instancias, bool sup, bool inf){
-   int a,b,tapa = v.size()-1;
+   
    if(sup)
       this->crearTapaSup(perfil_original,num_instancias);
    if(inf)
       this->crearTapaInf(perfil_original,num_instancias);
-
+   /*
    a = perfil_original.size() * num_instancias - (perfil_original.size()+1);
    b = perfil_original.size() * num_instancias-1;
    f.push_back({b,tapa,a});
@@ -179,6 +179,7 @@ void ObjRevolucion::crearTapas(std::vector<Tupla3f> perfil_original,int num_inst
    a = perfil_original.size() * num_instancias-1;
    b = perfil_original.size()-1;
    f.push_back({b,tapa,a});
+   */
 
 }
 
@@ -213,14 +214,14 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
    
    this->vnotapas = v;
    this->fnotapas = f;
-   /*
+   
    if(tapa_inf)
       this->crearTapaInf(perfil_original,num_instancias);
 
    if(tapa_sup)
       this->crearTapaSup(perfil_original,num_instancias);
-   */
-   this->crearTapas(perfil_original,num_instancias,tapa_sup,tapa_inf); 
+   
+   //this->crearTapas(perfil_original,num_instancias,tapa_sup,tapa_inf); 
    
       
    
