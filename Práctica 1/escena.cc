@@ -56,7 +56,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 //
 // función de dibujo de la escena: limpia ventana, fija cámara, dibuja ejes,
 // y dibuja los objetos
-//= 3;
+//
 // **************************************************************************
 
 void Escena::dibujar()
