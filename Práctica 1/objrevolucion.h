@@ -51,8 +51,6 @@ class ObjRevolucion : public Malla3D
     
     void crearTapaSup(std::vector<Tupla3f> perfil_original,int num_instancias);
     void crearTapaInf(std::vector<Tupla3f> perfil_original,int num_instancias);
-    void crearTapas(std::vector<Tupla3f> perfil_original,int num_instancias, bool sup, bool inf);
-
     
 } ;
 

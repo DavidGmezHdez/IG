@@ -52,6 +52,14 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
       }
 
 
+      if(tapaInf){
+         if(hayTapa_inf)
+            TuplatapaInf = this->sacarTapaInf(perfil_original);
+         else
+            TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
+
+         v.push_back(TuplatapaInf);
+      }
 
 
       if(tapaSup){
@@ -63,14 +71,6 @@ void ObjRevolucion::crearPuntos(std::vector<Tupla3f> perfil_original,int num_ins
          v.push_back(TuplatapaSup);  
       }
 
-      if(tapaInf){
-         if(hayTapa_inf)
-            TuplatapaInf = this->sacarTapaInf(perfil_original);
-         else
-            TuplatapaInf(0) = 0; TuplatapaInf(2) = 0; TuplatapaInf(1) = v[v.size()-1](1);
-
-         v.push_back(TuplatapaInf);
-      }
 }
 
 
@@ -165,24 +165,6 @@ void ObjRevolucion::crearTapaSup(std::vector<Tupla3f> perfil_original,int num_in
 }
 
 
-void ObjRevolucion::crearTapas(std::vector<Tupla3f> perfil_original,int num_instancias, bool sup, bool inf){
-   
-   if(sup)
-      this->crearTapaSup(perfil_original,num_instancias);
-   if(inf)
-      this->crearTapaInf(perfil_original,num_instancias);
-   /*
-   a = perfil_original.size() * num_instancias - (perfil_original.size()+1);
-   b = perfil_original.size() * num_instancias-1;
-   f.push_back({b,tapa,a});
-
-   a = perfil_original.size() * num_instancias-1;
-   b = perfil_original.size()-1;
-   f.push_back({b,tapa,a});
-   */
-
-}
-
 // *****************************************************************************
 // Función que activa o no las tapas
 // *****************************************************************************
@@ -220,9 +202,5 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
 
    if(tapa_sup)
       this->crearTapaSup(perfil_original,num_instancias);
-   
-   //this->crearTapas(perfil_original,num_instancias,tapa_sup,tapa_inf); 
-   
-      
    
 }
