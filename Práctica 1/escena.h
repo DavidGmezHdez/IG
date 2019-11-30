@@ -5,6 +5,7 @@
 #include "malla.h"
 #include "cubo.h"
 #include "tetraedro.h"
+#include "cabina.h"
 #include "objrevolucion.h"
 #include "objply.h"
 #include "cilindro.h"
@@ -44,9 +45,10 @@ class Escena
    menu modoMenu=NADA;
    // Objetos de la escena
    Ejes ejes;
-   Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
-   Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
+   Cubo * cubo = nullptr; 
+   Tetraedro * tetraedro= nullptr;
    Cilindro * cilindro = nullptr;
+   Cabina * cabina = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;

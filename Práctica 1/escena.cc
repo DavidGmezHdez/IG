@@ -1,6 +1,5 @@
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
-#include "malla.h" // objetos: Cubo y otros....
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -18,6 +17,7 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
+   cabina = new Cabina();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    peon2 = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
@@ -76,10 +76,12 @@ void Escena::dibujar()
    hormiga->setMaterial(bronce);
    cilindro->setMaterial(plata);
    esfera->setMaterial(plata);
+   cabina->setMaterial(plata);
    
    if(luz){
-      if(!glIsEnabled(GL_LIGHTING))
+      if(!glIsEnabled(GL_LIGHTING)){
          glEnable(GL_LIGHTING);
+      }
 
       if(luces[0])
          luzpos->activar();
@@ -166,6 +168,13 @@ void Escena::dibujar()
          peon2->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
+      case 3:
+         glPushMatrix();
+         glScalef(10.0,10.0,10.0);
+         cabina->setColor(1,0,0);
+         cabina->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         break;
    }
    glPopMatrix();
 }
@@ -213,6 +222,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'N':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 2;
+         break;
+      case 'J':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 3;
          break;
 
       case 'P':
