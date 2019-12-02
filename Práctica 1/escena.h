@@ -6,6 +6,7 @@
 #include "cubo.h"
 #include "tetraedro.h"
 #include "cabina.h"
+#include "boca.h"
 #include "objrevolucion.h"
 #include "objply.h"
 #include "cilindro.h"
@@ -15,6 +16,8 @@
 #include "luz.h"
 #include "luzdireccional.h"
 #include "luzposicional.h"
+#include "pie.h"
+
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -49,6 +52,8 @@ class Escena
    Tetraedro * tetraedro= nullptr;
    Cilindro * cilindro = nullptr;
    Cabina * cabina = nullptr;
+    Boca * boca = nullptr;
+    Pie * pie = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;

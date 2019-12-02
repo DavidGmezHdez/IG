@@ -18,6 +18,8 @@ Escena::Escena()
    cubo = new Cubo();
    tetraedro = new Tetraedro();
    cabina = new Cabina();
+   boca = new Boca();
+   pie = new Pie();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    peon2 = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
@@ -77,6 +79,8 @@ void Escena::dibujar()
    cilindro->setMaterial(plata);
    esfera->setMaterial(plata);
    cabina->setMaterial(plata);
+   boca->setMaterial(bronce);
+   pie->setMaterial(plata);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -170,9 +174,23 @@ void Escena::dibujar()
          break;
       case 3:
          glPushMatrix();
+         glTranslatef(-50,0,0);
          glScalef(10.0,10.0,10.0);
          cabina->setColor(1,0,0);
          cabina->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         glScalef(15.0,15.0,15.0);
+         pie->setColor(1,0,0);
+         pie->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         glTranslatef(50,0,0);
+         glScalef(10.0,10.0,10.0);
+         boca->setColor(0,1,0);
+         boca->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
    }
