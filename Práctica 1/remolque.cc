@@ -11,6 +11,8 @@ Remolque::Remolque(float lado){
     Tupla3f v8(-lado/4,-lado*1.5 - (lado/4),lado/4),v9(lado/4,-lado*1.5 - (lado/4),lado/4),
     v10(lado/4,-lado*1.5 - (lado/4),-lado/4),v11(-lado/4,-lado*1.5 - (lado/4),-lado/4);
 
+    Tupla3f v12(-lado/4,-lado*1.5 - (lado/4),lado),v13(lado/4,-lado*1.5 - (lado/4),lado), v14(lado/4,-lado*1.5,lado), v15(-lado/4,-lado*1.5,lado);
+
 
     v.push_back(v0);
     v.push_back(v1);
@@ -24,6 +26,10 @@ Remolque::Remolque(float lado){
     v.push_back(v9);
     v.push_back(v10);
     v.push_back(v11);
+    v.push_back(v12);
+    v.push_back(v13);
+    v.push_back(v14);
+    v.push_back(v15);
     
 
     Tupla3i f1(0,1,3),f2(1,2,3);
@@ -70,4 +76,23 @@ Remolque::Remolque(float lado){
     f.push_back(f21);
     f.push_back(f22);
     
+    Tupla3i f23(12,14,15),f24(13,14,12);
+    f.push_back(f23);
+    f.push_back(f24);
+
+    Tupla3i f25(15,14,4),f26(14,5,4);
+    f.push_back(f25);
+    f.push_back(f26);
+
+    Tupla3i f27(8,12,15),f28(15,4,8);
+    f.push_back(f27);
+    f.push_back(f28);
+
+    Tupla3i f29(13,9,14),f30(9,5,14);
+    f.push_back(f29);
+    f.push_back(f30);
+
+    Tupla3i f31(13,12,8),f32(8,9,13);
+    f.push_back(f31);
+    f.push_back(f32);
 }

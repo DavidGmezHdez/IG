@@ -17,9 +17,8 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
-   cabina = new Cabina();
-   boca = new Boca();
-   remolque = new Remolque();
+   morro = new Morro();
+   motor = new Motor();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    peon2 = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
@@ -78,9 +77,8 @@ void Escena::dibujar()
    hormiga->setMaterial(bronce);
    cilindro->setMaterial(plata);
    esfera->setMaterial(plata);
-   cabina->setMaterial(plata);
-   boca->setMaterial(bronce);
-   remolque->setMaterial(plata);
+   morro->setMaterial(plata);
+   motor->setMaterial(bronce);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -172,7 +170,7 @@ void Escena::dibujar()
          peon2->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
-      case 3:
+      case 3:/*
          glPushMatrix();
          glTranslatef(-50,0,0);
          glScalef(10.0,10.0,10.0);
@@ -191,6 +189,22 @@ void Escena::dibujar()
          glScalef(10.0,10.0,10.0);
          boca->setColor(0,1,0);
          boca->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();*/
+         glPushMatrix();
+         morro->setColorBoca(1,0,0);
+         morro->setColorTorso(0.5,0.5,0.5);
+         morro->setColorCabina(1,0,0);
+         morro->setColorRemolque(0,0,0);
+         morro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         break;
+      case 4:
+         glPushMatrix();
+         motor->setColorBase(1,0,0);
+         motor->setColorRotores(0,0,1);
+         motor->setColorAndroide(0,1,0);
+         motor->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
    }
@@ -245,7 +259,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 3;
          break;
-
+      case 'K':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 4;
+         break;
       case 'P':
          if(modoMenu == SELVISUALIZACION){
             luz = false;

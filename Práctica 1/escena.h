@@ -5,9 +5,8 @@
 #include "malla.h"
 #include "cubo.h"
 #include "tetraedro.h"
-#include "cabina.h"
-#include "boca.h"
-#include "remolque.h"
+#include "morro.h"
+#include "motor.h"
 #include "objrevolucion.h"
 #include "objply.h"
 #include "cilindro.h"
@@ -52,9 +51,8 @@ class Escena
    Cubo * cubo = nullptr; 
    Tetraedro * tetraedro= nullptr;
    Cilindro * cilindro = nullptr;
-   Cabina * cabina = nullptr;
-    Boca * boca = nullptr;
-    Remolque * remolque = nullptr;
+    Morro * morro = nullptr;
+    Motor * motor = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;
