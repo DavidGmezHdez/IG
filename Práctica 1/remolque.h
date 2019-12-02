@@ -2,21 +2,21 @@
 //
 // Informática Gráfica (Grado Informática)
 //
-// Archivo: Pie.h
+// Archivo: Remolque.h
 
 //
 // #############################################################################
 
-#ifndef PIE_H_INCLUDED
-#define PIE_H_INCLUDED
+#ifndef REMOLQUE_H_INCLUDED
+#define REMOLQUE_H_INCLUDED
 
 #include "aux.h"
 #include "malla.h"
 
-class Pie : public Malla3D
+class Remolque : public Malla3D
 {
    public:
-   Pie(float l=1);
+   Remolque(float l=1);
 } ;
 
 #endif
