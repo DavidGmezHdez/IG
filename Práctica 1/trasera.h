@@ -35,6 +35,7 @@ class Trasera : public Malla3D
         void switchAlas(float grado);
         void desplegarAlas(float incremento);
         void plegarAlas(float incremento);
+        void girarAndroide(float incremento);
 
         //Modificadores de colores
         void setColor(float R,float G,float B);

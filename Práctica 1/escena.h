@@ -22,10 +22,7 @@ typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
 {
 
-   private:
-
-   
-
+   private:   
  // ** PARÁMETROS DE LA CÁMARA (PROVISIONAL)
        
        // variables que definen la posicion de la camara en coordenadas polares
@@ -63,7 +60,7 @@ class Escena
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, objeto;
+   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, objeto,animacion, fase1,fase2,fase3;
 
    
    public:
@@ -78,6 +75,8 @@ class Escena
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );
+
+    void animarModeloJerarquico();
 
 };
 #endif

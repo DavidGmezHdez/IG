@@ -53,6 +53,8 @@ void Morro::cambiarGradoRemolque(int incremento){
         gradoRemolque+=incremento;
 }
 
+//void switchAterrizaje()
+
 //Modificadores de colores
 void Morro::setColor(float R,float G,float B){
     setColorTorso(R,G,B);

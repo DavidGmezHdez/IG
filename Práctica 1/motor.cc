@@ -1,15 +1,10 @@
 #include "motor.h"
 
 Motor::Motor(){
-    /*rotor1 = new Cilindro(50,25,10);;
-    rotor2 = new Cilindro(50,25,10);;
-    rotor3 = new Cilindro(50,25,10);;
-    rotor4 = new Cilindro(50,25,10);;
-    */
     base = new Cubo();
     cola = new Cubo();
     androide = new Esfera(50,50,10);
-
+    gradoAndroide = 0;
 }
 void Motor::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess){
 glPushMatrix();
@@ -24,37 +19,10 @@ glPushMatrix();
         glScalef(15,15,15);
         cola->draw(modoDibujado,points,lines,fill,chess);
     glPopMatrix();
-/*
-    glPushMatrix();
-        glTranslatef(-25,20.5,20.5);
-        glScalef(2,1,1);
-        glRotatef(-90,0,0,1);
-        rotor1->draw(modoDibujado,points,lines,fill,chess);
-    glPopMatrix();
-    
-    glPushMatrix();
-        glTranslatef(-25,20.5,-20.5);
-        glScalef(2,1,1);
-        glRotatef(-90,0,0,1);
-        rotor2->draw(modoDibujado,points,lines,fill,chess);
-    glPopMatrix();
 
-    glPushMatrix();
-        glTranslatef(-25,-20.5,-20.5);
-        glScalef(2,1,1);
-        glRotatef(-90,0,0,1);
-        rotor3->draw(modoDibujado,points,lines,fill,chess);
-    glPopMatrix();
-
-    glPushMatrix();
-        glTranslatef(-25,-20.5,20.5);
-        glScalef(2,1,1);
-        glRotatef(-90,0,0,1);
-        rotor4->draw(modoDibujado,points,lines,fill,chess);
-    glPopMatrix();
-*/
     glPushMatrix();
         glTranslatef(5,22,0);
+        glRotatef(gradoAndroide,0,1,0);
         glScalef(1,1,1);
         androide->draw(modoDibujado,points,lines,fill,chess);
     glPopMatrix();
@@ -62,13 +30,13 @@ glPushMatrix();
 glPopMatrix();
 }
 
+void Motor::girarAndroide(float incremento){
+    gradoAndroide+=incremento;
+}
+
+
 //Modificadores colores
 void Motor::setColor(float R,float G,float B){
-    /*rotor1->setColor(R,G,B);
-    rotor2->setColor(R,G,B);
-    rotor3->setColor(R,G,B);
-    rotor4->setColor(R,G,B);
-    */
     base->setColor(R,G,B);
     cola->setColor(R,G,B);
     androide->setColor(R,G,B);

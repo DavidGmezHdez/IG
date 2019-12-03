@@ -20,6 +20,9 @@ class AlaX : public Malla3D
     private:
         Trasera * trasera = nullptr;
         Morro * morro = nullptr;
+        Tupla3i direccion,rotacion;
+        float anguloMaxRot = 45;
+                
     public:
         AlaX();
         void draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess);
@@ -29,6 +32,15 @@ class AlaX : public Malla3D
         void desplegarAlas(float incremento);
         void plegarAlas(float incremento);
         void cambiarAterrizaje(float incremento);
+        void girarAndroide(float incremento);
+
+        Tupla3i getDireccion(){return direccion;};
+        Tupla3i getRotacion(){return rotacion;};
+        float getAnguloMax(){return anguloMaxRot;};
+
+        //Modificadores movimiento
+        void rotarNave(int angulo, int incremento);
+        void dirigirNave(int dir, int incremento);
 
         //Modificadores colores
         void setColor(float R,float G,float B);

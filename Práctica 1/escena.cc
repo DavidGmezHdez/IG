@@ -31,6 +31,8 @@ Escena::Escena()
 
    luzpos = new LuzPosicional(GL_LIGHT1,{200, 200, 200},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
+
+   animacion = fase1 = fase2 = fase3 = false;
 }
 
 //**************************************************************************
@@ -249,8 +251,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
          
       case 'J':
-         if(modoMenu == SELVISUALIZACION)
-            objeto = true;
+         if(modoMenu == SELVISUALIZACION){
+            animacion = !animacion;
+            fase1 = true;
+         }
          break;
       
       case 'K':
@@ -429,4 +433,40 @@ void Escena::change_observer()
    glTranslatef( 0.0, 0.0, -Observer_distance );
    glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+}
+
+void Escena::animarModeloJerarquico(){
+   if(animacion){
+      //alaX->desplegarAlas(1.0);
+      //alaX->plegarAlas(-1.0);
+
+      if(fase1){
+         alaX->rotarNave(0,1.0);
+         if(alaX->getRotacion()(0) == alaX->getAnguloMax() || alaX->getRotacion()(0) == -alaX->getAnguloMax())
+            fase2 = true;
+      }
+
+      if(fase2){
+         fase1 = false;
+         alaX->desplegarAlas(1.0);
+         alaX->dirigirNave(0,1.0);
+         alaX->rotarNave(0,-1.0);
+         if(alaX->getRotacion()(0) == 0)
+            fase3 = true;
+      }
+
+      if(fase3){
+         fase2 = false;
+         alaX->plegarAlas(-1.0);
+      }
+
+      
+      /*
+      alaX->dirigirNave(0,1.0);
+      alaX->dirigirNave(2,1.0);
+      alaX->cambiarAterrizaje(1.0);
+      alaX->cambiarAterrizaje(-1.0);
+      alaX->girarAndroide(1.0);
+      */
+   }
 }

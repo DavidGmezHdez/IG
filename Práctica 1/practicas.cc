@@ -87,6 +87,20 @@ void special_keys( int tecla, int x, int y )
 	glutPostRedisplay();
 }
 
+
+//***************************************************************************
+// Funcion llamada para animar el objeto jerárquico
+//
+// escena: La escena dond está ubicada el modelo jerárquico
+// 
+//******
+void funcion_idle(){
+   if( escena!= nullptr )
+      escena->animarModeloJerarquico();
+   glutPostRedisplay();
+}
+
+
 //***************************************************************************
 // Programa principal
 //
@@ -136,6 +150,9 @@ int main( int argc, char **argv )
 
    // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
    glutSpecialFunc( special_keys );
+
+   //Le decimos a escena que anime el modelo jerarquico
+   glutIdleFunc(funcion_idle);
 
    // inicialización de librería GLEW (solo en Linux)
    #ifdef LINUX

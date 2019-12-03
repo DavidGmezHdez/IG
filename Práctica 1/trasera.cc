@@ -85,7 +85,9 @@ void Trasera::switchAlas(float grado){
         plegarAlas(-grado);
 }
 
-
+void Trasera::girarAndroide(float incremento){
+    motor->girarAndroide(incremento);
+}
 
 //Modificadores de colores
 void Trasera::setColor(float R,float G,float B){
