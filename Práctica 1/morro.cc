@@ -6,6 +6,7 @@ Morro::Morro(){
     rem = new Remolque();
     cabina = new Cabina();
     gradoRemolque = 0;
+    aterrizaje = true;
 }
 
 
@@ -54,10 +55,10 @@ void Morro::cambiarGradoRemolque(int incremento){
 
 //Modificadores de colores
 void Morro::setColor(float R,float G,float B){
-    boca->setColor(R,G,B);
-    torso->setColor(R,G,B);
-    rem->setColor(R,G,B);
-    cabina->setColor(R,G,B);
+    setColorTorso(R,G,B);
+    setColorCabina(0.9,0.9,0.9);
+    setColorRemolque(0,0,0);
+    setColorBoca(0.5,0.5,0.5);
 }
 
 void Morro::setColorTorso(float R,float G,float B){

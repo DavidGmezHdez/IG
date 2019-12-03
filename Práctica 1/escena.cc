@@ -17,8 +17,7 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
-   morro = new Morro();
-   motor = new Motor();
+   alaX = new AlaX();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    peon2 = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
@@ -77,8 +76,7 @@ void Escena::dibujar()
    hormiga->setMaterial(bronce);
    cilindro->setMaterial(plata);
    esfera->setMaterial(plata);
-   morro->setMaterial(plata);
-   motor->setMaterial(bronce);
+   alaX->setMaterial(plata);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -140,14 +138,7 @@ void Escena::dibujar()
          cilindro->setColor(0,0,1);
          cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
-      /*
-         glPushMatrix();
-         glTranslatef(100,0,-100);
-         glScalef(3,3,3);
-         cono->setColor(0,1,0);
-         cono->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix(); 
-      */
+         
          glPushMatrix();
          glTranslatef(100,0,100);
          glScalef(5,5,5);
@@ -170,41 +161,10 @@ void Escena::dibujar()
          peon2->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
-      case 3:/*
+      case 3:
          glPushMatrix();
-         glTranslatef(-50,0,0);
-         glScalef(10.0,10.0,10.0);
-         cabina->setColor(1,0,0);
-         cabina->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-
-         glPushMatrix();
-         glScalef(15.0,15.0,15.0);
-         remolque->setColor(1,0,0);
-         remolque->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-
-         glPushMatrix();
-         glTranslatef(50,0,0);
-         glScalef(10.0,10.0,10.0);
-         boca->setColor(0,1,0);
-         boca->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();*/
-         glPushMatrix();
-         morro->setColorBoca(1,0,0);
-         morro->setColorTorso(0.5,0.5,0.5);
-         morro->setColorCabina(1,0,0);
-         morro->setColorRemolque(0,0,0);
-         morro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-
-         break;
-      case 4:
-         glPushMatrix();
-         motor->setColorBase(1,0,0);
-         motor->setColorRotores(0,0,1);
-         motor->setColorAndroide(0,1,0);
-         motor->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         alaX->setColor(0.7,0.7,0.7);
+         alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
    }
@@ -255,13 +215,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 2;
          break;
-      case 'J':
+      case 'X':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 3;
-         break;
-      case 'K':
-         if(modoMenu == SELOBJETO)
-            seleccionDibujo = 4;
          break;
       case 'P':
          if(modoMenu == SELVISUALIZACION){
@@ -269,7 +225,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             puntos = !puntos;
          }
          break;
-      
       case 'L':
          if(modoMenu == SELVISUALIZACION){
             luz = false;
@@ -292,7 +247,17 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(luz)
             angulo = true;
          break;
+         
+      case 'J':
+         if(modoMenu == SELVISUALIZACION)
+            objeto = true;
+         break;
       
+      case 'K':
+         if(modoMenu == SELVISUALIZACION)
+            objeto = false;
+         break;
+         
       case 'B':
          if(luz)
             angulo = false;
@@ -369,6 +334,31 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          else if(luz && !angulo && modoMenu == SELVISUALIZACION)
             this->luzdir->variarAnguloBeta(1.0);
          break;
+      
+      case 'U':
+         if(modoMenu == SELVISUALIZACION)
+            alaX->switchAlas(1.0);
+         break;
+      
+      case '+':
+         if(modoMenu == SELVISUALIZACION){
+            if(objeto)
+               alaX->desplegarAlas(1.0);
+            else
+               alaX->cambiarAterrizaje(-1.0);
+         }
+         break;
+      
+      case '-':
+         if(modoMenu == SELVISUALIZACION){
+            if(objeto)
+               alaX->plegarAlas(-1.0);
+            else
+               alaX->cambiarAterrizaje(1.0);
+         }
+         break;
+      
+
    }
    return salir;
 }

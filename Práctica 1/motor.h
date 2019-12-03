@@ -18,12 +18,14 @@
 
 class Motor : public Malla3D
 {
-    private:
+    private:/*
         Cilindro * rotor1 = nullptr;
         Cilindro * rotor2 = nullptr;
         Cilindro * rotor3 = nullptr;
         Cilindro * rotor4 = nullptr;
+        */
         Cubo * base = nullptr;
+        Cubo * cola = nullptr;
         Esfera * androide = nullptr;
     public:
         Motor();
@@ -32,13 +34,13 @@ class Motor : public Malla3D
         //Modificadores colores
         void setColor(float R,float G,float B);
         void setColorBase(float R,float G,float B);
-        void setColorRotores(float R,float G,float B);
+        void setColorCola(float R,float G,float B);
         void setColorAndroide(float R,float G,float B);
 
         //Modificadores materiales
         void setMaterial(Material mat);
         void setMaterialBase(Material mat);
-        void setMaterialRotores(Material mat);
+        void setMaterialCola(Material mat);
         void setMaterialAndroide(Material mat);
 };
 

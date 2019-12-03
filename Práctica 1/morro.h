@@ -25,6 +25,7 @@ class Morro : public Malla3D
         Remolque * rem = nullptr;
         Cabina * cabina = nullptr;
         int gradoRemolque;
+        bool aterrizaje;
    public:
         Morro();
         void draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess);

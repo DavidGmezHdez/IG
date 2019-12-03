@@ -5,8 +5,7 @@
 #include "malla.h"
 #include "cubo.h"
 #include "tetraedro.h"
-#include "morro.h"
-#include "motor.h"
+#include "alax.h"
 #include "objrevolucion.h"
 #include "objply.h"
 #include "cilindro.h"
@@ -51,8 +50,7 @@ class Escena
    Cubo * cubo = nullptr; 
    Tetraedro * tetraedro= nullptr;
    Cilindro * cilindro = nullptr;
-    Morro * morro = nullptr;
-    Motor * motor = nullptr;
+    AlaX * alaX = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;
@@ -65,7 +63,7 @@ class Escena
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo;
+   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, objeto;
 
    
    public:
