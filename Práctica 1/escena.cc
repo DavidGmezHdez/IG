@@ -441,25 +441,35 @@ void Escena::animarModeloJerarquico(){
       //alaX->plegarAlas(-1.0);
 
       if(fase1){
-         alaX->rotarNave(0,1.0);
-         if(alaX->getRotacion()(0) == alaX->getAnguloMax() || alaX->getRotacion()(0) == -alaX->getAnguloMax())
+         alaX->desplegarAlas(1.0);
+         alaX->rotarNave(0,1.0,30);
+         alaX->rotarNave(1,-1.0,30);
+         alaX->rotarNave(2,1.0,30);
+         alaX->dirigirNave(0,1,50);
+         alaX->dirigirNave(1,1,50);
+         alaX->dirigirNave(2,1,50);
+      
+         if(alaX->getDireccion()(0) == 500)
+            fase2 = true;
+      }
+/*
+      if(fase2){
+         fase1 = false;
+         alaX->rotarNave(0,1.0,30);
+         alaX->rotarNave(1,-1.0,30);
+         alaX->rotarNave(2,1.0,30);
+         alaX->dirigirNave(0,1,700);
+         alaX->dirigirNave(2,1,700);
+         
+         
+         if(alaX->getDireccion()(0) == 700)
             fase2 = true;
       }
 
-      if(fase2){
-         fase1 = false;
-         alaX->desplegarAlas(1.0);
-         alaX->dirigirNave(0,1.0);
-         alaX->rotarNave(0,-1.0);
-         if(alaX->getRotacion()(0) == 0)
-            fase3 = true;
-      }
-
       if(fase3){
-         fase2 = false;
          alaX->plegarAlas(-1.0);
+         alaX->dirigirNave(1,-1,500);
       }
-
       
       /*
       alaX->dirigirNave(0,1.0);

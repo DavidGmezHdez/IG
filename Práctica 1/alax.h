@@ -39,8 +39,10 @@ class AlaX : public Malla3D
         float getAnguloMax(){return anguloMaxRot;};
 
         //Modificadores movimiento
-        void rotarNave(int angulo, int incremento);
-        void dirigirNave(int dir, int incremento);
+        void rotarNave(int angulo, int incremento,int max);
+        void dirigirNave(int dir, int incremento, int posicionFinal);
+
+        void puntoSalida(int x,int y,int z){direccion(0) = x; direccion(1) = y; direccion(2) = z;};
 
         //Modificadores colores
         void setColor(float R,float G,float B);

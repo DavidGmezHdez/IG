@@ -11,6 +11,7 @@ void AlaX::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess){
 glPushMatrix();
 
     glTranslatef(direccion(0),direccion(1),direccion(2));
+    //glTranslatef(-700,700,-700);
     glRotatef(rotacion(0),1,0,0);
     glRotatef(rotacion(1),0,1,0);
     glRotatef(rotacion(2),0,0,1);
@@ -47,34 +48,58 @@ void AlaX::girarAndroide(float incremento){
     trasera->girarAndroide(incremento);
 }
 
-void AlaX::rotarNave(int angulo, int incremento){
+void AlaX::rotarNave(int angulo, int incremento,int max){
 
     switch(angulo){
         case 0:
-            rotacion(0)=(rotacion(0)+incremento)%360;
+                if(rotacion(0)+incremento > max)
+                    rotacion(0) = max;
+                else if(rotacion(0)+incremento < -max)
+                    rotacion(0)= -max;
+                else
+                    rotacion(0) = (rotacion(0)+incremento)%360;
             break;
         case 1:
-            rotacion(1)=(rotacion(1)+incremento)%360;
+                if(rotacion(1)+incremento > max)
+                    rotacion(1) = max;
+                else if(rotacion(1)+incremento < -max)
+                    rotacion(1)= -max;
+                else
+                    rotacion(1) = (rotacion(1)+incremento)%360;
             break;
         case 2:
-            rotacion(2)=(rotacion(2)+incremento)%360;
+                if(rotacion(2)+incremento > max)
+                    rotacion(2) = max;
+                else if(rotacion(2)+incremento < -max)
+                    rotacion(2)= -max;
+                else
+                    rotacion(2) = (rotacion(2)+incremento)%360;
         break;
     }
 }
 
-void AlaX::dirigirNave(int dir, int incremento){
+
+void AlaX::dirigirNave(int dir, int incremento, int posicionFinal){
     switch(dir){
         case 0:
-            direccion(0)= direccion(0)+incremento;
+                if(direccion(0)+incremento==posicionFinal)
+                    direccion(0) = posicionFinal;
+                else
+                    direccion(0)= direccion(0)+incremento;
             break;
         case 1:
-            direccion(1)=direccion(1)+incremento;
+                if(direccion(1)+incremento==posicionFinal)
+                    direccion(1) = posicionFinal;
+                else
+                    direccion(1)= direccion(1)+incremento;
             break;
         case 2:
-            direccion(2)=direccion(2)+incremento;
+                if(direccion(2)+incremento==posicionFinal)
+                    direccion(2) = posicionFinal;
+                else
+                    direccion(2)= direccion(2)+incremento;
             break;
     }
-
 
 }
 
