@@ -60,7 +60,10 @@ class Escena
    bool metodoDibujado;
    int seleccionDibujo;
    int modoVisualizacion;
-   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, objeto,animacion, fase1,fase2,fase3;
+   float velocidad = 1.0;
+   int grado; float inc;
+   bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, 
+   objeto,animacionAutomatica,animacionManual;
 
    
    public:
@@ -77,6 +80,7 @@ class Escena
 	void teclaEspecial( int Tecla1, int x, int y );
 
     void animarModeloJerarquico();
+    void animarManual();
 
 };
 #endif

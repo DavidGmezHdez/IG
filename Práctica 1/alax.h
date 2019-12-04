@@ -22,6 +22,7 @@ class AlaX : public Malla3D
         Morro * morro = nullptr;
         Tupla3i direccion,rotacion;
         float anguloMaxRot = 45;
+        int fase = 0;
                 
     public:
         AlaX();
@@ -46,6 +47,10 @@ class AlaX : public Malla3D
         void dirigirNave(int dir, int incremento, int posicionFinal);
 
         void puntoSalida(int x,int y,int z){direccion(0) = x; direccion(1) = y; direccion(2) = z;};
+
+        //Animaciones
+        void aterrizar();
+        void animacionManual(int grado, float incremento);
 
         //Modificadores colores
         void setColor(float R,float G,float B);

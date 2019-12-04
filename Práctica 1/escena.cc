@@ -32,7 +32,7 @@ Escena::Escena()
    luzpos = new LuzPosicional(GL_LIGHT1,{200, 200, 200},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
-   animacion = fase1 = fase2 = fase3 = false;
+   animacionAutomatica = animacionManual = false;
 }
 
 //**************************************************************************
@@ -173,6 +173,25 @@ void Escena::dibujar()
    glPopMatrix();
 }
 
+
+
+//**************************************************************************
+// Funcion que anima automaticamente el modelo
+//**************************************************************************
+
+void Escena::animarModeloJerarquico(){
+   if(animacionAutomatica){
+         alaX->puntoSalida(-700,700,-700);
+         alaX->aterrizar();
+   }
+}
+
+
+
+void Escena::animarManual(){
+   alaX->animacionManual(grado,inc);
+}
+
 //**************************************************************************
 //
 // función que se invoca cuando se pulsa una tecla
@@ -203,6 +222,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
+
+         if(modoMenu = SELVISUALIZACION)
+            animacionManual = !animacionManual;
          break ;
       case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -251,10 +273,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
          
       case 'J':
-         if(modoMenu == SELVISUALIZACION){
-            animacion = !animacion;
-            fase1 = true;
-         }
+         if(modoMenu == SELVISUALIZACION)
+            animacionAutomatica = !animacionAutomatica;
          break;
       
       case 'K':
@@ -284,6 +304,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION && luz){
             luces[0] = !luces[0];
          }
+         else if(!luz && animacionManual)
+            grado = 0;
          break;
       
       case '1' :
@@ -291,6 +313,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             metodoDibujado = false;
          else if(modoMenu == SELVISUALIZACION && luz)
             luces[1] = !luces[1];
+         else if(!luz && animacionManual)
+            grado = 1;
          break;
       
       case '2':
@@ -298,31 +322,43 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             metodoDibujado = true;
          else if(modoMenu == SELVISUALIZACION && luz)
             luces[2] = !luces[2];
+         else if(!luz && animacionManual)
+            grado = 2;
          break;
       
       case '3':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[3] = !luces[3];
+            else if(!luz && animacionManual)
+               grado = 3;
          break;
       
       case '4':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[4] = !luces[4];
+            else if(!luz && animacionManual)
+               grado = 4;
          break;
       
       case '5':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[5] = !luces[5];
+            else if(!luz && animacionManual)
+               grado = 5;
          break;
       
       case '6':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[6] = !luces[6];
+            else if(!luz && animacionManual)
+               grado = 6;
          break;
       
       case '7':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[7] = !luces[7];
+            else if(!luz && animacionManual)
+               grado = 7;
          break;
       
       case '>':
@@ -346,15 +382,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       
       case '+':
          if(modoMenu == SELVISUALIZACION){
-            if(objeto)
-               alaX->desplegarAlas(1.0);
+            if(animacionManual)
+               inc = 1.0;
          }
          break;
       
       case '-':
          if(modoMenu == SELVISUALIZACION){
-            if(objeto)
-               alaX->plegarAlas(-1.0);
+            if(animacionManual)
+               inc = -1.0;
          }
          break;
       
@@ -431,57 +467,3 @@ void Escena::change_observer()
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
 }
 
-void Escena::animarModeloJerarquico(){
-   if(animacion){
-
-      /*
-      Angulo 0:   
-                  +30 --> derecha
-                  -30 -->izquierda
-      Angulo 1:
-                  +30 --> izquierda
-                  -30 --> derecha
-      
-      Angulo 2:   +30 --> arriba
-                  -30 --> abajo
-      */
-
-      if(fase1){
-         alaX->desplegarAlas(1.0);
-         alaX->guardarTrenAterrizaje(1.0);
-         alaX->rotarNave(0,1.0,30);
-         alaX->rotarNave(1,-1.0,-40);
-         alaX->rotarNave(2,-1.0,-20);
-         alaX->dirigirNave(0,1,-200);
-         alaX->dirigirNave(1,-1,200);
-         alaX->dirigirNave(2,1,-200);
-         
-         
-
-         //std::cout<<alaX->getDireccion()(0)<<"\n";
-         //alaX->dirigirNave(0,1,0);
-         if(alaX->getDireccion()(0) == -201)
-            fase2 = true;
-      }
-
-      if(fase2){
-         fase1 = false;
-         alaX->rotarNave(0,-1.0,0);
-         alaX->rotarNave(1,1.0,0);
-         alaX->rotarNave(2,1.0,0);
-         alaX->dirigirNave(0,1,0);
-         alaX->dirigirNave(2,1,0);
-         
-         //std::cout<<alaX->getDireccion()(0)<<"\n";
-         if(alaX->getDireccion()(0) == -1)
-            fase3 = true;
-      }
-
-      if(fase3){
-         alaX->plegarAlas(-1.0);
-         alaX->sacarTrenAterrizaje(-1.0);
-         alaX->dirigirNave(1,-1,17);
-      }
-      
-   }
-}
