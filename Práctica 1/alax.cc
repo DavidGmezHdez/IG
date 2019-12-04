@@ -3,7 +3,7 @@
 AlaX::AlaX(){
     morro = new Morro();
     trasera = new Trasera();
-    direccion = {0,0,0};
+    direccion = {-700,700,-700};
     rotacion = {0,0,0};
 }
 
@@ -11,7 +11,6 @@ void AlaX::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess){
 glPushMatrix();
 
     glTranslatef(direccion(0),direccion(1),direccion(2));
-    //glTranslatef(-700,700,-700);
     glRotatef(rotacion(0),1,0,0);
     glRotatef(rotacion(1),0,1,0);
     glRotatef(rotacion(2),0,0,1);
@@ -40,8 +39,13 @@ void AlaX::plegarAlas(float incremento){
     trasera->plegarAlas(incremento);
 }
 
-void AlaX::cambiarAterrizaje(float incremento){
-    morro->cambiarGradoRemolque(incremento);
+
+void AlaX::sacarTrenAterrizaje(int incremento){
+    morro->sacarTrenAterrizaje(incremento);
+}
+
+void AlaX::guardarTrenAterrizaje(int incremento){
+    morro->guardarTrenAterrizaje(incremento);
 }
 
 void AlaX::girarAndroide(float incremento){
@@ -49,12 +53,12 @@ void AlaX::girarAndroide(float incremento){
 }
 
 void AlaX::rotarNave(int angulo, int incremento,int max){
-
+/*
     switch(angulo){
         case 0:
                 if(rotacion(0)+incremento > max)
                     rotacion(0) = max;
-                else if(rotacion(0)+incremento < -max)
+                else if(rotacion(0)+incremento < -max) 
                     rotacion(0)= -max;
                 else
                     rotacion(0) = (rotacion(0)+incremento)%360;
@@ -76,27 +80,38 @@ void AlaX::rotarNave(int angulo, int incremento,int max){
                     rotacion(2) = (rotacion(2)+incremento)%360;
         break;
     }
+*/
+
+    switch(angulo){
+        case 0:
+                if(rotacion(0)+incremento!=max)
+                    rotacion(0) = (rotacion(0)+incremento)%360;
+            break;
+        case 1:
+                if(rotacion(1)+incremento!=max)
+                    rotacion(1) = (rotacion(1)+incremento)%360;
+            break;
+        case 2:
+                if(rotacion(2)+incremento!=max)
+                    rotacion(2) = (rotacion(2)+incremento)%360;
+        break;
+    }
+
 }
 
 
 void AlaX::dirigirNave(int dir, int incremento, int posicionFinal){
     switch(dir){
         case 0:
-                if(direccion(0)+incremento==posicionFinal)
-                    direccion(0) = posicionFinal;
-                else
+                if(direccion(0)+incremento!=posicionFinal)
                     direccion(0)= direccion(0)+incremento;
             break;
         case 1:
-                if(direccion(1)+incremento==posicionFinal)
-                    direccion(1) = posicionFinal;
-                else
+                if(direccion(1)+incremento!=posicionFinal)
                     direccion(1)= direccion(1)+incremento;
             break;
         case 2:
-                if(direccion(2)+incremento==posicionFinal)
-                    direccion(2) = posicionFinal;
-                else
+                if(direccion(2)+incremento!=posicionFinal)
                     direccion(2)= direccion(2)+incremento;
             break;
     }

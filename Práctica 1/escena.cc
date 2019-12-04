@@ -348,8 +348,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             if(objeto)
                alaX->desplegarAlas(1.0);
-            else
-               alaX->cambiarAterrizaje(-1.0);
          }
          break;
       
@@ -357,8 +355,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             if(objeto)
                alaX->plegarAlas(-1.0);
-            else
-               alaX->cambiarAterrizaje(1.0);
          }
          break;
       
@@ -437,46 +433,55 @@ void Escena::change_observer()
 
 void Escena::animarModeloJerarquico(){
    if(animacion){
-      //alaX->desplegarAlas(1.0);
-      //alaX->plegarAlas(-1.0);
+
+      /*
+      Angulo 0:   
+                  +30 --> derecha
+                  -30 -->izquierda
+      Angulo 1:
+                  +30 --> izquierda
+                  -30 --> derecha
+      
+      Angulo 2:   +30 --> arriba
+                  -30 --> abajo
+      */
 
       if(fase1){
          alaX->desplegarAlas(1.0);
+         alaX->guardarTrenAterrizaje(1.0);
          alaX->rotarNave(0,1.0,30);
-         alaX->rotarNave(1,-1.0,30);
-         alaX->rotarNave(2,1.0,30);
-         alaX->dirigirNave(0,1,50);
-         alaX->dirigirNave(1,1,50);
-         alaX->dirigirNave(2,1,50);
-      
-         if(alaX->getDireccion()(0) == 500)
+         alaX->rotarNave(1,-1.0,-40);
+         alaX->rotarNave(2,-1.0,-20);
+         alaX->dirigirNave(0,1,-200);
+         alaX->dirigirNave(1,-1,200);
+         alaX->dirigirNave(2,1,-200);
+         
+         
+
+         //std::cout<<alaX->getDireccion()(0)<<"\n";
+         //alaX->dirigirNave(0,1,0);
+         if(alaX->getDireccion()(0) == -201)
             fase2 = true;
       }
-/*
+
       if(fase2){
          fase1 = false;
-         alaX->rotarNave(0,1.0,30);
-         alaX->rotarNave(1,-1.0,30);
-         alaX->rotarNave(2,1.0,30);
-         alaX->dirigirNave(0,1,700);
-         alaX->dirigirNave(2,1,700);
+         alaX->rotarNave(0,-1.0,0);
+         alaX->rotarNave(1,1.0,0);
+         alaX->rotarNave(2,1.0,0);
+         alaX->dirigirNave(0,1,0);
+         alaX->dirigirNave(2,1,0);
          
-         
-         if(alaX->getDireccion()(0) == 700)
-            fase2 = true;
+         //std::cout<<alaX->getDireccion()(0)<<"\n";
+         if(alaX->getDireccion()(0) == -1)
+            fase3 = true;
       }
 
       if(fase3){
          alaX->plegarAlas(-1.0);
-         alaX->dirigirNave(1,-1,500);
+         alaX->sacarTrenAterrizaje(-1.0);
+         alaX->dirigirNave(1,-1,17);
       }
       
-      /*
-      alaX->dirigirNave(0,1.0);
-      alaX->dirigirNave(2,1.0);
-      alaX->cambiarAterrizaje(1.0);
-      alaX->cambiarAterrizaje(-1.0);
-      alaX->girarAndroide(1.0);
-      */
    }
 }

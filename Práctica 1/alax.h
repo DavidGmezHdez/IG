@@ -31,7 +31,10 @@ class AlaX : public Malla3D
         void switchAlas(float grado);
         void desplegarAlas(float incremento);
         void plegarAlas(float incremento);
-        void cambiarAterrizaje(float incremento);
+
+        void sacarTrenAterrizaje(int incremento);
+        void guardarTrenAterrizaje(int incremento);
+
         void girarAndroide(float incremento);
 
         Tupla3i getDireccion(){return direccion;};

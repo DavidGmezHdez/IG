@@ -29,7 +29,8 @@ class Morro : public Malla3D
    public:
         Morro();
         void draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess);
-        void cambiarGradoRemolque(int incremento);
+        void sacarTrenAterrizaje(int incremento);
+        void guardarTrenAterrizaje(int incremento);
         //Modificadores de colores
         void setColor(float R,float G,float B);
         void setColorTorso(float R,float G,float B);

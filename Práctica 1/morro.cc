@@ -44,13 +44,19 @@ void Morro::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess)
 }
 
 
-void Morro::cambiarGradoRemolque(int incremento){
-    if(gradoRemolque+incremento > 90)
-        gradoRemolque = 90;
-    else if(gradoRemolque+incremento < 0)
-        gradoRemolque = 0;
-    else
+void Morro::sacarTrenAterrizaje(int incremento){
+    if(gradoRemolque != 0)
         gradoRemolque+=incremento;
+    else
+        gradoRemolque = 0;
+}
+
+void Morro::guardarTrenAterrizaje(int incremento){
+    if(gradoRemolque != 90)
+        gradoRemolque+=incremento;
+    else
+        gradoRemolque = 90;
+
 }
 
 //void switchAterrizaje()
