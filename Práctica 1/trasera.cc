@@ -97,23 +97,23 @@ void Trasera::setColor(float R,float G,float B){
 
 void Trasera::setColorAlas(float R,float G,float B){
     alaSupDer->setColorBase(R,G,B);
-    alaSupDer->setColorRotor(0,0,1);
-    alaSupDer->setColorLaser(0,1,0);
+    alaSupDer->setColorRotor(1,0,0);
+    alaSupDer->setColorLaser(0.2,0.2,0.2);
     alaSupDer->setColorCanon(0,0,0);
 
     alaSupIzq->setColorBase(R,G,B);
-    alaSupIzq->setColorRotor(0,0,1);
-    alaSupIzq->setColorLaser(0,1,0);
+    alaSupIzq->setColorRotor(1,0,0);
+    alaSupIzq->setColorLaser(0.2,0.2,0.2);
     alaSupIzq->setColorCanon(0,0,0);
     
     alaInfDer->setColorBase(R,G,B);
-    alaInfDer->setColorRotor(0,0,1);
-    alaInfDer->setColorLaser(0,1,0);
+    alaInfDer->setColorRotor(1,0,0);
+    alaInfDer->setColorLaser(0.2,0.2,0.2);
     alaInfDer->setColorCanon(0,0,0);
 
     alaInfIzq->setColorBase(R,G,B);
-    alaInfIzq->setColorRotor(0,0,1);
-    alaInfIzq->setColorLaser(0,1,0);
+    alaInfIzq->setColorRotor(1,0,0);
+    alaInfIzq->setColorLaser(0.2,0.2,0.2);
     alaInfIzq->setColorCanon(0,0,0);
 
 }
