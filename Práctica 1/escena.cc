@@ -369,11 +369,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             this->luzdir->variarAnguloBeta(1.0);
          break;
       
-      case 'U':
-         if(modoMenu == SELVISUALIZACION)
-            alaX->switchAlas(1.0);
-         break;
-      
       case '+':
          if(modoMenu == SELVISUALIZACION){
             if(!animacionAutomatica){

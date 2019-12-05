@@ -24,7 +24,7 @@ class AlaX : public Malla3D
         Morro * morro = nullptr;
         Tupla3i direccion,rotacion;
         float anguloMaxRot = 45;
-        int fase = 0, gradoModelo = -1;
+        int fase = 0;
                 
     public:
         AlaX();

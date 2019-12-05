@@ -161,6 +161,36 @@ void AlaX::animacionManual(int grado, float incremento){
             else
                 rotarNave(0,incremento,-360);
             break;
+        case 3:
+            if(incremento>0)
+                rotarNave(1,incremento,360);
+            else
+                rotarNave(1,incremento,-360);
+            break;
+        case 4:
+            if(incremento>0)
+                rotarNave(2,incremento,360);
+            else
+                rotarNave(2,incremento,-360);
+            break;
+        case 5:
+            if(incremento>0)
+                dirigirNave(0,incremento,700);
+            else
+                dirigirNave(0,incremento,-700);
+            break;
+        case 6:
+            if(incremento>0)
+                dirigirNave(1,incremento,700);
+            else
+                dirigirNave(1,incremento,-700);
+           break;
+        case 7:
+            if(incremento>0)
+                dirigirNave(2,incremento,700);
+            else
+                dirigirNave(2,incremento,-700);
+            break;
     }
 }
 
