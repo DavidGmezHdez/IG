@@ -15,6 +15,8 @@
 #include "morro.h"
 #include "trasera.h"
 
+
+using namespace std;
 class AlaX : public Malla3D
 {
     private:
@@ -22,7 +24,7 @@ class AlaX : public Malla3D
         Morro * morro = nullptr;
         Tupla3i direccion,rotacion;
         float anguloMaxRot = 45;
-        int fase = 0;
+        int fase = 0, gradoModelo = -1;
                 
     public:
         AlaX();

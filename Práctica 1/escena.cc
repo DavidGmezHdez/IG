@@ -33,6 +33,7 @@ Escena::Escena()
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    animacionAutomatica = animacionManual = false;
+   grado = -1;
 }
 
 //**************************************************************************
@@ -180,17 +181,10 @@ void Escena::dibujar()
 //**************************************************************************
 
 void Escena::animarModeloJerarquico(){
-   if(animacionAutomatica){
-         alaX->puntoSalida(-700,700,-700);
-         alaX->aterrizar();
-   }
+   if(animacionAutomatica)
+      alaX->aterrizar();
 }
 
-
-
-void Escena::animarManual(){
-   alaX->animacionManual(grado,inc);
-}
 
 //**************************************************************************
 //
@@ -222,9 +216,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
-
-         if(modoMenu = SELVISUALIZACION)
-            animacionManual = !animacionManual;
          break ;
       case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -273,13 +264,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
          
       case 'J':
-         if(modoMenu == SELVISUALIZACION)
+         if(modoMenu == SELVISUALIZACION){
             animacionAutomatica = !animacionAutomatica;
+            alaX->puntoSalida(-700,700,-700);
+         }
          break;
       
       case 'K':
          if(modoMenu == SELVISUALIZACION)
-            objeto = false;
+            animacionAutomatica = false;
          break;
          
       case 'B':
@@ -304,8 +297,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION && luz){
             luces[0] = !luces[0];
          }
-         else if(!luz && animacionManual)
+         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
             grado = 0;
+            cout<<grado<<endl;
          break;
       
       case '1' :
@@ -313,7 +307,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             metodoDibujado = false;
          else if(modoMenu == SELVISUALIZACION && luz)
             luces[1] = !luces[1];
-         else if(!luz && animacionManual)
+         else if(modoMenu == SELVISUALIZACION &&!luz && !animacionAutomatica)
             grado = 1;
          break;
       
@@ -322,42 +316,42 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             metodoDibujado = true;
          else if(modoMenu == SELVISUALIZACION && luz)
             luces[2] = !luces[2];
-         else if(!luz && animacionManual)
+         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
             grado = 2;
          break;
       
       case '3':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[3] = !luces[3];
-            else if(!luz && animacionManual)
+            else if(!luz && !animacionAutomatica)
                grado = 3;
          break;
       
       case '4':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[4] = !luces[4];
-            else if(!luz && animacionManual)
+            else if(!luz && !animacionAutomatica)
                grado = 4;
          break;
       
       case '5':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[5] = !luces[5];
-            else if(!luz && animacionManual)
+            else if(!luz && !animacionAutomatica)
                grado = 5;
          break;
       
       case '6':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[6] = !luces[6];
-            else if(!luz && animacionManual)
+            else if(!luz && !animacionAutomatica)
                grado = 6;
          break;
       
       case '7':
             if(modoMenu == SELVISUALIZACION && luz)
                luces[7] = !luces[7];
-            else if(!luz && animacionManual)
+            else if(!luz && !animacionAutomatica)
                grado = 7;
          break;
       
@@ -382,15 +376,19 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       
       case '+':
          if(modoMenu == SELVISUALIZACION){
-            if(animacionManual)
+            if(!animacionAutomatica){
                inc = 1.0;
+               alaX->animacionManual(grado,inc);
+            }
          }
          break;
       
       case '-':
          if(modoMenu == SELVISUALIZACION){
-            if(animacionManual)
+            if(!animacionAutomatica){
                inc = -1.0;
+               alaX->animacionManual(grado,inc);
+            }
          }
          break;
       

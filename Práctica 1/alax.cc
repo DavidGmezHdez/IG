@@ -116,6 +116,7 @@ void AlaX::aterrizar(){
                 dirigirNave(0,1,-200);
                 dirigirNave(1,-1,200);
                 dirigirNave(2,1,-200);
+                cout<<direccion(0)<<endl;
             }
             else
                 fase = 1;
@@ -147,18 +148,19 @@ void AlaX::animacionManual(int grado, float incremento){
                 desplegarAlas(incremento);
             else
                 plegarAlas(incremento);
-        
+            break;
         case 1:
             if(incremento>0)
                 guardarTrenAterrizaje(incremento);
             else
                 sacarTrenAterrizaje(incremento);
-
+            break;
         case 2:
             if(incremento>0)
                 rotarNave(0,incremento,360);
             else
                 rotarNave(0,incremento,-360);
+            break;
     }
 }
 
