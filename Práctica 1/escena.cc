@@ -17,6 +17,7 @@ Escena::Escena()
 
    cubo = new Cubo();
    tetraedro = new Tetraedro();
+   cuadro = new Cuadro();
    alaX = new AlaX();
    hormiga = new ObjPLY("plys/ant.ply");
    peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
@@ -28,6 +29,8 @@ Escena::Escena()
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
+
+   madera = Textura("archivosP5/text-madera.jpg",1);
 
    luzpos = new LuzPosicional(GL_LIGHT1,{200, 200, 200},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
@@ -80,6 +83,9 @@ void Escena::dibujar()
    cilindro->setMaterial(plata);
    esfera->setMaterial(plata);
    alaX->setMaterial(plata);
+   cuadro->setMaterial(bronce);
+   madera.activar();
+   cuadro->setTextura(madera);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -103,6 +109,8 @@ void Escena::dibujar()
          glDisable(GL_LIGHTING);
       glShadeModel(GL_FLAT);
    }
+
+   glEnable(GL_TEXTURE_2D);
 
    glPushMatrix();
    glPointSize(6);
@@ -170,6 +178,11 @@ void Escena::dibujar()
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
+      case 4:
+         glPushMatrix();
+         cuadro->setColor(1.0,1.0,1.0);
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
    }
    glPopMatrix();
 }
@@ -233,6 +246,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'X':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 3;
+         break;
+      case 'U':
+         if(modoMenu == SELOBJETO)
+            seleccionDibujo = 4;
          break;
       case 'P':
          if(modoMenu == SELVISUALIZACION){

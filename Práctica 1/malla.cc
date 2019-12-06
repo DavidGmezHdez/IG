@@ -40,6 +40,13 @@ void Malla3D::draw_ModoInmediato(int modo)
    glVertexPointer(3,GL_FLOAT,0,v.data());
    glEnableClientState(GL_NORMAL_ARRAY);
    glNormalPointer(GL_FLOAT,0,nv.data());
+/*
+   if(!ct.empty()){
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+      glTexCoordPointer(2,GL_FLOAT,0,ct.data());
+   }
+*/
+
    glEnableClientState(GL_COLOR_ARRAY);
 
    switch(modo){
@@ -54,8 +61,10 @@ void Malla3D::draw_ModoInmediato(int modo)
          break;
    }
 
+
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
    glDisableClientState(GL_COLOR_ARRAY);
+   //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
    glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -97,6 +106,15 @@ void Malla3D::draw_ModoDiferido(int modo)
    glBindBuffer(GL_ARRAY_BUFFER,0);
    glEnableClientState(GL_NORMAL_ARRAY);
 
+   /*
+   if(vbo_ct == 0)
+      vbo_ct = crearVBO(GL_ARRAY_BUFFER,2*sizeof(float)*ct.size(),ct.data());
+   
+   glBindBuffer(GL_ARRAY_BUFFER,vbo_ct);
+   glTexCoordPointer(2,GL_FLOAT,0,0);
+   glBindBuffer(GL_ARRAY_BUFFER,0);
+   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+   */
 
    glEnableClientState(GL_COLOR_ARRAY);
    
@@ -123,6 +141,7 @@ void Malla3D::draw_ModoDiferido(int modo)
    glDrawElements(GL_TRIANGLES,f.size()*3,GL_UNSIGNED_INT, 0 );
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
    glDisableClientState(GL_COLOR_ARRAY);
+   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
    glDisableClientState(GL_VERTEX_ARRAY); 
 }
@@ -218,6 +237,20 @@ void Malla3D::setMaterial(Material mat){
    this->m = new Material(mat);
 }
 
+
+void Malla3D::setTextura(Textura tex){
+   this->t = new Textura(tex);
+}
+
+// -----------------------------------------------------------------------------
+// Función que calcula las coordenadas para las texturas
+// -----------------------------------------------------------------------------
+
+void Malla3D::calcularCoordenadas(){
+   Tupla2f c0(0,0),c1(t->getAncho(),0),c2(0,t->getAlto()),c3(t->getAncho(),t->getAlto());
+   ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
+}
+
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
@@ -229,9 +262,15 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
    lineas = lines;
    solido = fill;
    ajedrez = chess;
-   m->aplicar();
+
+   if(m!=nullptr)
+      m->aplicar();
+   
    if(nv.empty())
       this->calcularNormales();
+
+   if(ct.empty())
+      this->calcularCoordenadas();
 
    if(puntos){
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);

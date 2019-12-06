@@ -15,7 +15,8 @@
 #include "luz.h"
 #include "luzdireccional.h"
 #include "luzposicional.h"
-
+#include "textura.h"
+#include "cuadro.h"
 
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
@@ -48,12 +49,14 @@ class Escena
    Tetraedro * tetraedro= nullptr;
    Cilindro * cilindro = nullptr;
     AlaX * alaX = nullptr;
+    Cuadro * cuadro = nullptr;
    Cono * cono = nullptr;
    Esfera * esfera = nullptr;
    ObjPLY * hormiga = nullptr;
    ObjRevolucion * peon = nullptr;
    ObjRevolucion * peon2 = nullptr;
    Material oro,plata,bronce,negro;
+   Textura  madera;
    LuzPosicional *luzpos = nullptr;
    LuzDireccional *luzdir = nullptr;
    bool luces[8] = {false};
