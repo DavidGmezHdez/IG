@@ -25,6 +25,7 @@ class Textura{
         Textura(){};
         Textura(std::string archivo,GLuint id);
         void activar();
+        inline GLuint getID(){return textura_id;};
         inline int getAncho(){return ancho;};
         inline int getAlto(){return alto;};
 };

@@ -84,7 +84,6 @@ void Escena::dibujar()
    esfera->setMaterial(plata);
    alaX->setMaterial(plata);
    cuadro->setMaterial(bronce);
-   madera.activar();
    cuadro->setTextura(madera);
    
    if(luz){
@@ -111,6 +110,7 @@ void Escena::dibujar()
    }
 
    glEnable(GL_TEXTURE_2D);
+   madera.activar();
 
    glPushMatrix();
    glPointSize(6);
@@ -159,17 +159,7 @@ void Escena::dibujar()
          break;
       case 2:
          glPushMatrix();
-         glTranslatef(-50,0,0);
-         glScalef(25.0,25.0,25.0);
-         peon->setColor(1,0,0);
-         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-
-         glPushMatrix();
-         glTranslatef(50,0,0);
-         glScalef(25.0,25.0,25.0);
-         peon2->setColor(1,0,0);
-         peon2->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
       case 3:
@@ -178,11 +168,6 @@ void Escena::dibujar()
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
-      case 4:
-         glPushMatrix();
-         cuadro->setColor(1.0,1.0,1.0);
-         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
    }
    glPopMatrix();
 }
@@ -246,10 +231,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'X':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 3;
-         break;
-      case 'U':
-         if(modoMenu == SELOBJETO)
-            seleccionDibujo = 4;
          break;
       case 'P':
          if(modoMenu == SELVISUALIZACION){

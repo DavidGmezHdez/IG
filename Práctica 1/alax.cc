@@ -116,7 +116,6 @@ void AlaX::aterrizar(){
                 dirigirNave(0,1,-200);
                 dirigirNave(1,-1,200);
                 dirigirNave(2,1,-200);
-                cout<<direccion(0)<<endl;
             }
             else
                 fase = 1;

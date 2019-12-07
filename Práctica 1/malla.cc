@@ -40,12 +40,12 @@ void Malla3D::draw_ModoInmediato(int modo)
    glVertexPointer(3,GL_FLOAT,0,v.data());
    glEnableClientState(GL_NORMAL_ARRAY);
    glNormalPointer(GL_FLOAT,0,nv.data());
-/*
+
    if(!ct.empty()){
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glTexCoordPointer(2,GL_FLOAT,0,ct.data());
    }
-*/
+
 
    glEnableClientState(GL_COLOR_ARRAY);
 
@@ -64,7 +64,7 @@ void Malla3D::draw_ModoInmediato(int modo)
 
    glDrawElements(GL_TRIANGLES, 3*f.size(),GL_UNSIGNED_INT,f.data());
    glDisableClientState(GL_COLOR_ARRAY);
-   //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
    glDisableClientState(GL_NORMAL_ARRAY);
    glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -106,7 +106,7 @@ void Malla3D::draw_ModoDiferido(int modo)
    glBindBuffer(GL_ARRAY_BUFFER,0);
    glEnableClientState(GL_NORMAL_ARRAY);
 
-   /*
+   
    if(vbo_ct == 0)
       vbo_ct = crearVBO(GL_ARRAY_BUFFER,2*sizeof(float)*ct.size(),ct.data());
    
@@ -114,7 +114,7 @@ void Malla3D::draw_ModoDiferido(int modo)
    glTexCoordPointer(2,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-   */
+   
 
    glEnableClientState(GL_COLOR_ARRAY);
    
@@ -240,6 +240,7 @@ void Malla3D::setMaterial(Material mat){
 
 void Malla3D::setTextura(Textura tex){
    this->t = new Textura(tex);
+   this->calcularCoordenadas();
 }
 
 // -----------------------------------------------------------------------------
@@ -265,12 +266,12 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
 
    if(m!=nullptr)
       m->aplicar();
-   
-   if(nv.empty())
-      this->calcularNormales();
 
    if(ct.empty())
       this->calcularCoordenadas();
+ 
+   if(nv.empty())
+      this->calcularNormales();
 
    if(puntos){
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
