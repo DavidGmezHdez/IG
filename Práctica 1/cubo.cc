@@ -66,6 +66,12 @@ Cubo::Cubo(float lado)
 
 }
 
+void Cubo::calcularCoordenadas(){
+    Tupla2f c0(0,0),c1(1.0,0.0),c2(0.0,1.0),c3(1.0,1.0),c4(0,0),c5(1.0,0.0),c6(0.0,1.0),c7(1.0,1.0) ;
+    ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
+    ct.push_back(c4); ct.push_back(c5); ct.push_back(c6); ct.push_back(c7);
+}
+
 
 
 

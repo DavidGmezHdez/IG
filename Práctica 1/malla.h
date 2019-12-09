@@ -50,7 +50,7 @@ class Malla3D
 
    void calcularNormales();
 
-   void calcularCoordenadas();
+   
 
    void setMaterial(Material mat);
 

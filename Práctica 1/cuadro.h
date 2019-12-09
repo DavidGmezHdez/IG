@@ -17,6 +17,7 @@ class Cuadro : public Malla3D
 {
     public:
         Cuadro();
+        void calcularCoordenadas();
 };
 
 #endif

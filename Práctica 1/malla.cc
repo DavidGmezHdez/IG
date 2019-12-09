@@ -41,7 +41,7 @@ void Malla3D::draw_ModoInmediato(int modo)
    glEnableClientState(GL_NORMAL_ARRAY);
    glNormalPointer(GL_FLOAT,0,nv.data());
 
-   if(!ct.empty()){
+   if(!ct.empty() && t!=nullptr){
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glTexCoordPointer(2,GL_FLOAT,0,ct.data());
    }
@@ -240,17 +240,11 @@ void Malla3D::setMaterial(Material mat){
 
 void Malla3D::setTextura(Textura tex){
    this->t = new Textura(tex);
-   this->calcularCoordenadas();
 }
 
 // -----------------------------------------------------------------------------
 // Función que calcula las coordenadas para las texturas
 // -----------------------------------------------------------------------------
-
-void Malla3D::calcularCoordenadas(){
-   Tupla2f c0(0,0),c1(t->getAncho(),0),c2(0,t->getAlto()),c3(t->getAncho(),t->getAlto());
-   ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
-}
 
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -266,10 +260,10 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
 
    if(m!=nullptr)
       m->aplicar();
-/*
-   if(ct.empty())
-      this->calcularCoordenadas();
- */
+
+   if(t!=nullptr)
+      t->activar();
+ 
    if(nv.empty())
       this->calcularNormales();
 

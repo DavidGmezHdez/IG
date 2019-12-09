@@ -21,3 +21,8 @@ Cuadro::Cuadro(){
     c.push_back(c3);
 
 }
+
+void Cuadro::calcularCoordenadas(){   
+    Tupla2f c0(0,0),c1(1.0,0.0),c2(0.0,1.0),c3(1.0,1.0);
+    ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
+}

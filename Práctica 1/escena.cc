@@ -84,7 +84,11 @@ void Escena::dibujar()
    esfera->setMaterial(plata);
    alaX->setMaterial(plata);
    cuadro->setMaterial(bronce);
+   
+   cuadro->calcularCoordenadas();
    cuadro->setTextura(madera);
+   cubo->calcularCoordenadas();
+   cubo->setTextura(madera);
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -109,8 +113,7 @@ void Escena::dibujar()
       glShadeModel(GL_FLAT);
    }
 
-   glEnable(GL_TEXTURE_2D);
-   madera.activar();
+
 
    glPushMatrix();
    glPointSize(6);
@@ -158,9 +161,17 @@ void Escena::dibujar()
          glPopMatrix();
          break;
       case 2:
+         glEnable(GL_TEXTURE_2D);
          glPushMatrix();
          cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
+         
+         glTranslatef(-100,0,100);
+         glScalef(25,25,25);
+         cubo->setColor(0,1,0);
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+
+         glDisable(GL_TEXTURE_2D);
          break;
       case 3:
          glPushMatrix();
