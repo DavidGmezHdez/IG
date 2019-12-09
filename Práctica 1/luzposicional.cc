@@ -34,5 +34,6 @@ void LuzPosicional::moverLuz(int dir, int incremento, int posicionFinal){
 void LuzPosicional::animarLuz(){
 glPushMatrix();
     moverLuz(0,1.0,700);
+    moverLuz(2,1.0,-700);
 glPopMatrix();
 }

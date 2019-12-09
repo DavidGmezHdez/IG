@@ -32,11 +32,27 @@ Escena::Escena()
 
    madera = Textura("archivosP5/text-madera.jpg",1);
 
-   luzpos = new LuzPosicional(GL_LIGHT1,{-700, 700, -700},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luzpos = new LuzPosicional(GL_LIGHT1,{-700, 700, 700},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    animacionAutomatica = animacionManual = false;
    grado = -1;
+
+
+   peon->setMaterial(plata);
+   peon2->setMaterial(negro);
+   tetraedro->setMaterial(bronce);
+   cubo->setMaterial(bronce);
+   hormiga->setMaterial(bronce);
+   cilindro->setMaterial(plata);
+   esfera->setMaterial(plata);
+   alaX->setMaterial(plata);
+   cuadro->setMaterial(bronce);
+   
+   cuadro->calcularCoordenadas();
+   cuadro->setTextura(madera);
+   cubo->calcularCoordenadas();
+   cubo->setTextura(madera);
 }
 
 //**************************************************************************
@@ -75,20 +91,7 @@ void Escena::dibujar()
 	change_observer();
    ejes.draw();
    
-   peon->setMaterial(plata);
-   peon2->setMaterial(negro);
-   tetraedro->setMaterial(bronce);
-   cubo->setMaterial(bronce);
-   hormiga->setMaterial(bronce);
-   cilindro->setMaterial(plata);
-   esfera->setMaterial(plata);
-   alaX->setMaterial(plata);
-   cuadro->setMaterial(bronce);
-   
-   cuadro->calcularCoordenadas();
-   cuadro->setTextura(madera);
-   cubo->calcularCoordenadas();
-   cubo->setTextura(madera);
+
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -175,12 +178,6 @@ void Escena::dibujar()
          break;
       case 3:
          glPushMatrix();
-         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-         glDisable(GL_TEXTURE_2D);
-
-         glPushMatrix();
-         glTranslatef(-100,0,0);
          alaX->setColor(0.7,0.7,0.7);
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
