@@ -32,7 +32,7 @@ Escena::Escena()
 
    madera = Textura("archivosP5/text-madera.jpg",1);
 
-   luzpos = new LuzPosicional(GL_LIGHT1,{200, 200, 200},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luzpos = new LuzPosicional(GL_LIGHT1,{-700, 700, -700},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    animacionAutomatica = animacionManual = false;
@@ -164,6 +164,12 @@ void Escena::dibujar()
          break;
       case 3:
          glPushMatrix();
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         glDisable(GL_TEXTURE_2D);
+
+         glPushMatrix();
+         glTranslatef(-100,0,0);
          alaX->setColor(0.7,0.7,0.7);
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
@@ -179,8 +185,10 @@ void Escena::dibujar()
 //**************************************************************************
 
 void Escena::animarModeloJerarquico(){
-   if(animacionAutomatica)
+   if(animacionAutomatica){
       alaX->aterrizar();
+      luzpos->animarLuz();
+   }
 }
 
 

@@ -266,10 +266,10 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
 
    if(m!=nullptr)
       m->aplicar();
-
+/*
    if(ct.empty())
       this->calcularCoordenadas();
- 
+ */
    if(nv.empty())
       this->calcularNormales();
 
