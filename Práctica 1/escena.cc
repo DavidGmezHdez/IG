@@ -32,7 +32,7 @@ Escena::Escena()
 
    madera = Textura("archivosP5/text-madera.jpg",1);
 
-   luzpos = new LuzPosicional(GL_LIGHT1,{-700, 700, 700},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luzpos = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    animacionAutomatica = animacionManual = false;

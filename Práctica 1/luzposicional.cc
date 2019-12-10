@@ -11,6 +11,10 @@ LuzPosicional::LuzPosicional(GLenum id,Tupla3f posicion,Tupla4f ambiente,Tupla4f
     this->posicion(1) = posicion(1);
     this->posicion(2) = posicion(2);
     this->posicion(3) = 1;
+
+    glPushMatrix();
+        glTranslatef(posicion(0),posicion(1),posicion(2));
+    glPopMatrix();
 }
 
 
@@ -33,7 +37,7 @@ void LuzPosicional::moverLuz(int dir, int incremento, int posicionFinal){
 
 void LuzPosicional::animarLuz(){
 glPushMatrix();
-    moverLuz(0,1.0,700);
-    moverLuz(2,1.0,-700);
-glPopMatrix();
+    moverLuz(0,1.0,100);
+    moverLuz(2,-1.0,-100);
+
 }
