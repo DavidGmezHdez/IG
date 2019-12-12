@@ -66,7 +66,7 @@ class Escena
     float velocidad = 1.0;
     int grado; float inc;
     bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, 
-    objeto,animacionAutomatica,animacionManual;
+    objeto,animacionAutomatica,animacionManual,animacionLuz;
 
     public:
 

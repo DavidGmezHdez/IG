@@ -35,7 +35,7 @@ Escena::Escena()
    luzpos = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
-   animacionAutomatica = animacionManual = false;
+   animacionAutomatica = animacionManual = animacionLuz = false;
    grado = -1;
 
 
@@ -193,10 +193,13 @@ void Escena::dibujar()
 //**************************************************************************
 
 void Escena::animarModeloJerarquico(){
-   if(animacionAutomatica){
+   if(animacionAutomatica)
       alaX->aterrizar();
+
+   if(animacionLuz)
       luzpos->animarLuz();
-   }
+   
+   
 }
 
 
@@ -249,10 +252,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             seleccionDibujo = 3;
          break;
       case 'P':
-         if(modoMenu == SELVISUALIZACION){
+         if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             puntos = !puntos;
          }
+         else if(modoMenu == SELVISUALIZACION && luz)
+            animacionLuz = true;
          break;
       case 'L':
          if(modoMenu == SELVISUALIZACION){
@@ -273,18 +278,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             luz = false;
             ajedrez = !ajedrez;
          }
+         else{
+            animacionAutomatica = !animacionAutomatica;
+            alaX->puntoSalida(-700,700,-700);
+         }
          if(luz)
             angulo = true;
          break;
          
-      case 'J':
-         if(modoMenu == SELVISUALIZACION){
-            animacionAutomatica = !animacionAutomatica;
-            alaX->puntoSalida(-700,700,-700);
-         }
-         break;
       
-      case 'K':
+      case 'M':
          if(modoMenu == SELVISUALIZACION)
             animacionAutomatica = false;
          break;
