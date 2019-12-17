@@ -17,7 +17,10 @@
 #include "luzposicional.h"
 #include "textura.h"
 #include "cuadro.h"
+#include "camara.h"
 
+
+using namespace std;
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -57,26 +60,41 @@ class Escena
     ObjRevolucion * peon2 = nullptr;
     Material oro,plata,bronce,negro;
     Textura  madera;
-    LuzPosicional *luzpos = nullptr;
-    LuzDireccional *luzdir = nullptr;
 
     //Luces
     Luz*  luces[8] = {nullptr};
     bool switchLuces[8] = {false};
 
+    //Camaras
+    Camara* camaras[8] = {nullptr};
+    bool switchCamaras[8] = {false};
+    int numCamaraActiva = 0;
+
     bool metodoDibujado;
     int seleccionDibujo;
     int modoVisualizacion;
-    float velocidad = 1.0;
+
+    //Variables modelo jerarquico
     int grado; float inc;
-    bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, angulo, 
-    objeto,animacionAutomatica,animacionManual,animacionLuz;
+    
+    //Modos visualuzacion
+    bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, camara = false;
+    bool angulo,objeto,animacionAutomatica,animacionManual,animacionLuz;
+
+    //Parametros raton
+    bool boton; //false->derecho, true->izquierdo
+    int xraton, yraton;
 
     public:
 
         Escena();
         void inicializar( int UI_window_width, int UI_window_height );
         void redimensionar( int newWidth, int newHeight ) ;
+
+        //Funciones para las camaras
+        void clickRaton(int boton, int estado, int x, int y);
+
+        void ratonMovido(int x, int y);
 
         // Dibujar
         void dibujar() ;

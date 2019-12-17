@@ -134,7 +134,15 @@ void Camara::mover(float x, float y, float z){
     this->eye(1) = y;
     this->eye(2) = z;
 }
-void Camara::zoom(float factor){}
+void Camara::zoom(float factor){
+
+    if(fov-factor>=1 && fov-factor<=180)
+        fov-=factor;
+    
+    left = tan((fov/2)*(MI_PI/180))*near;
+    top = left*aspect;
+
+}
         
 void Camara::setObserver(){
     gluLookAt(eye(0),eye(1),eye(2), at(0),at(1),at(2), up(0),up(1),up(2));

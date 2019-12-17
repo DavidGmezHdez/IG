@@ -35,6 +35,8 @@ Escena::Escena()
    luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
+   camaras[0] = new Camara({100,100,500},{0,0,0},{0,1,0},1,50,50);
+
    animacionAutomatica = animacionManual = animacionLuz = false;
    grado = -1;
 
@@ -197,6 +199,52 @@ void Escena::animarModeloJerarquico(){
       luces[0]->animarLuz();
    
    
+}
+
+
+//**************************************************************************
+// Funcion que controla si se ha pulsado alguna tecla del raton
+//**************************************************************************
+
+void Escena::clickRaton(int boton, int estado, int x, int y){
+   switch(boton){
+      case GLUT_RIGHT_BUTTON:
+         if(estado == GLUT_DOWN){
+            boton = false;
+            xraton = x;
+            yraton = y;
+         }
+         break;
+      case GLUT_LEFT_BUTTON:
+         boton = true;
+         break;
+      case 3:
+         if(estado == GLUT_UP)
+            camaras[numCamaraActiva]->zoom(1);
+         break;
+      case 4:
+         if(estado == GLUT_DOWN)
+            camaras[numCamaraActiva]->zoom(-1);
+         break;
+   }
+
+}
+
+
+//**************************************************************************
+// Funcion que controla si se ha pulsado el boton derecho
+//**************************************************************************
+void Escena::ratonMovido(int x, int y){
+   if(!boton){
+      camaras[numCamaraActiva]->rotarXPrimeraPersona((x-xraton)*0.1);
+      camaras[numCamaraActiva]->rotarYPrimeraPersona((y-yraton)*0.1);
+      xraton = x;
+      yraton = y;
+   }
+   else{
+      
+   }
+
 }
 
 

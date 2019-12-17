@@ -8,8 +8,8 @@
 // #############################################################################
 
 
-#ifndef CUADRO_H_INCLUDED
-#define CUADRO_H_INCLUDED
+#ifndef CAMARA_H_INCLUDED
+#define CAMARA_H_INCLUDED
 
 #include "aux.h"
 
@@ -32,11 +32,7 @@ class Camara
         Tupla3f cambiarMatriz(Tupla3f eje, Tupla3f vector, float angulo);
         void rotarPP(float angulo, int eje);
         void rotarE(float angulo, int eje);
-         
-
-
-
-    
+        
     public:
         Camara(){};
         Camara(Tupla3f e, Tupla3f a, Tupla3f u, int t, float ancho, float alto);
