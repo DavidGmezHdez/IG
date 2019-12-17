@@ -273,15 +273,18 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break ;
       case 'O' :
          // ESTAMOS EN MODO SELECCION DE OBJETO
-         modoMenu=SELOBJETO; 
+         modoMenu=SELOBJETO;
+         cout<<"Entrando en modo selección objeto"<<endl; 
          break ;
       case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
+         cout<<"Entrando en modo selección visualización"<<endl; 
          break ;
       case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
          modoMenu=SELDIBUJADO;
+         cout<<"Entrando en modo selección dibujado"<<endl; 
          break ;
          // COMPLETAR con los diferentes opciones de teclado
       case 'Y':
@@ -291,23 +294,28 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'N':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 2;
+            cout<<"Dibujando objetos texturas"<<endl; 
          break;
       case 'X':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 3;
+            cout<<"Dibujando modelo jerárquico"<<endl; 
          break;
       case 'P':
          if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             puntos = !puntos;
+            cout<<"Entrando en modo puntos"<<endl; 
          }
          else if(modoMenu == SELVISUALIZACION && luz)
             animacionLuz = true;
+            cout<<"Animando luz puntual automáticamente"<<endl; 
          break;
       case 'L':
          if(modoMenu == SELVISUALIZACION){
             luz = false;
             lineas = !lineas;
+            cout<<"Entrando en modo lineas"<<endl; 
          }
          break;
       
@@ -315,6 +323,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             luz = false;
             solido = !solido;
+            cout<<"Entrando en modo caras"<<endl; 
          }
          break;
       
@@ -322,24 +331,32 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             ajedrez = !ajedrez;
+            cout<<"Entrando en modo ajedrez"<<endl; 
+         }
+         else if(modoMenu == SELVISUALIZACION && luz){
+            angulo = true;
+            cout<<"Seleccion del angulo ALPHA"<<endl; 
          }
          else{
             animacionAutomatica = !animacionAutomatica;
             alaX->puntoSalida(-700,700,-700);
+            cout<<"Animando modelo jerárquico automáticamente"<<endl; 
          }
-         if(luz)
-            angulo = true;
          break;
          
       
       case 'M':
-         if(modoMenu == SELVISUALIZACION)
+         if(modoMenu == SELVISUALIZACION){
             animacionAutomatica = false;
+            cout<<"Selección de animación manual del modelo jerárquico"<<endl; 
+         }
          break;
          
       case 'B':
-         if(luz)
+         if(luz){
             angulo = false;
+            cout<<"Entrando en modo selección objeto"<<endl; 
+         }
          break;
       
       case 'T':
@@ -348,87 +365,151 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             cilindro->switchTapas(tapas);
             cono->switchTapas(tapas);
             peon2->switchTapas(tapas);
+            cout<<"Activando/Desactivando tapas"<<endl; 
          }
          break;
       
       case 'I':
          if(modoMenu == SELVISUALIZACION){
             luz = !luz;
+            cout<<"Activando modo iluminación"<<endl; 
          }
       case '0':
          if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[0] = !switchLuces[0];
+            if(switchLuces[0])
+               cout<<"Activando luz 0"<<endl; 
+            else
+               cout<<"Desactivando luz 0"<<endl; 
          }
-         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
+         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica){
             grado = 0;
-            cout<<grado<<endl;
+            cout<<"Seleccion del grado 0"<<endl; 
+         }
          break;
       
       case '1' :
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = false;
-         else if(modoMenu == SELVISUALIZACION && luz)
+         else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[1] = !switchLuces[1];
-         else if(modoMenu == SELVISUALIZACION &&!luz && !animacionAutomatica)
+            if(switchLuces[1])
+               cout<<"Activando luz 1"<<endl; 
+            else
+               cout<<"Desactivando luz 1"<<endl; 
+         }
+         else if(modoMenu == SELVISUALIZACION &&!luz && !animacionAutomatica){
             grado = 1;
+            cout<<"Seleccion del grado 1"<<endl; 
+         }
          break;
       
       case '2':
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = true;
-         else if(modoMenu == SELVISUALIZACION && luz)
+         else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[2] = !switchLuces[2];
-         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
+            if(switchLuces[0])
+               cout<<"Activando luz 2"<<endl; 
+            else
+               cout<<"Desactivando luz 2"<<endl; 
+         }
+         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica){
             grado = 2;
+            cout<<"Seleccion del grado 2"<<endl; 
+         }
          break;
       
       case '3':
-            if(modoMenu == SELVISUALIZACION && luz)
+            if(modoMenu == SELVISUALIZACION && luz){
                switchLuces[3] = !switchLuces[3];
-            else if(!luz && !animacionAutomatica)
+               if(switchLuces[3])
+                  cout<<"Activando luz 3"<<endl; 
+               else
+                  cout<<"Desactivando luz 3"<<endl; 
+            }
+            else if(!luz && !animacionAutomatica){
                grado = 3;
+               cout<<"Seleccion del grado 3"<<endl; 
+            }
          break;
       
       case '4':
-            if(modoMenu == SELVISUALIZACION && luz)
+            if(modoMenu == SELVISUALIZACION && luz){
                switchLuces[4] = !switchLuces[4];
-            else if(!luz && !animacionAutomatica)
+               if(switchLuces[4])
+                  cout<<"Activando luz 4"<<endl; 
+               else
+                  cout<<"Desactivando luz 4"<<endl; 
+            }
+            else if(!luz && !animacionAutomatica){
                grado = 4;
+               cout<<"Seleccion del grado 4"<<endl; 
+            }
          break;
       
       case '5':
-            if(modoMenu == SELVISUALIZACION && luz)
+            if(modoMenu == SELVISUALIZACION && luz){
                switchLuces[5] = !switchLuces[5];
-            else if(!luz && !animacionAutomatica)
+               if(switchLuces[5])
+                  cout<<"Activando luz 5"<<endl; 
+               else
+                  cout<<"Desactivando luz 5"<<endl; 
+            }
+            else if(!luz && !animacionAutomatica){
                grado = 5;
+               cout<<"Seleccion del grado 5"<<endl; 
+            }
          break;
       
       case '6':
-            if(modoMenu == SELVISUALIZACION && luz)
+            if(modoMenu == SELVISUALIZACION && luz){
                switchLuces[6] = !switchLuces[6];
-            else if(!luz && !animacionAutomatica)
+               if(switchLuces[6])
+                  cout<<"Activando luz 6"<<endl; 
+               else
+                  cout<<"Desactivando luz 6"<<endl; 
+            }
+            else if(!luz && !animacionAutomatica){
                grado = 6;
+               cout<<"Seleccion del grado 6"<<endl; 
+            }
          break;
       
       case '7':
-            if(modoMenu == SELVISUALIZACION && luz)
+            if(modoMenu == SELVISUALIZACION && luz){
                switchLuces[7] = !switchLuces[7];
-            else if(!luz && !animacionAutomatica)
+               if(switchLuces[7])
+                  cout<<"Activando luz 7"<<endl; 
+               else
+                  cout<<"Desactivando luz 7"<<endl; 
+            }
+            else if(!luz && !animacionAutomatica){
                grado = 7;
+               cout<<"Seleccion del grado 7"<<endl; 
+            }
          break;
       
       case '>':
-         if(luz && angulo && modoMenu == SELVISUALIZACION)
+         if(luz && angulo && modoMenu == SELVISUALIZACION){
             this->luces[1]->variarAnguloAlpha(-1.0);
-         else if(luz && !angulo && modoMenu == SELVISUALIZACION)
+            cout<<"Variando > del angulo alfa"<<endl; 
+         }
+         else if(luz && !angulo && modoMenu == SELVISUALIZACION){
             this->luces[1]->variarAnguloBeta(-1.0);
+            cout<<"Variando > del angulo beta"<<endl;  
+         }
          break;
       
       case '<':
-         if(luz && angulo && modoMenu == SELVISUALIZACION)
+         if(luz && angulo && modoMenu == SELVISUALIZACION){
             this->luces[1]->variarAnguloAlpha(1.0);
-         else if(luz && !angulo && modoMenu == SELVISUALIZACION)
+            cout<<"Variando < del angulo alfa"<<endl;  
+         }
+         else if(luz && !angulo && modoMenu == SELVISUALIZACION){
             this->luces[1]->variarAnguloBeta(1.0);
+            cout<<"Variando < del angulo beta"<<endl;  
+         }
          break;
       
       case '+':

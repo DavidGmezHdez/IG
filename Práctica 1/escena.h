@@ -1,6 +1,8 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
+#include "aux.h"
+#include "iostream"
 #include "ejes.h"
 #include "malla.h"
 #include "cubo.h"

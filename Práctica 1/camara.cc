@@ -139,7 +139,7 @@ void Camara::zoom(float factor){
     if(fov-factor>=1 && fov-factor<=180)
         fov-=factor;
     
-    left = tan((fov/2)*(MI_PI/180))*near;
+    left = tan((fov/2)*(M_PI/180))*near;
     top = left*aspect;
 
 }
