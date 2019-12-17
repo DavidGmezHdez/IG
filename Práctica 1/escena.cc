@@ -32,8 +32,8 @@ Escena::Escena()
 
    madera = Textura("archivosP5/text-madera.jpg",1);
 
-   luzpos = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
-   luzdir = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
+   luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
+   luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    animacionAutomatica = animacionManual = animacionLuz = false;
    grado = -1;
@@ -98,15 +98,12 @@ void Escena::dibujar()
          glEnable(GL_LIGHTING);
       }
 
-      if(luces[0])
-         luzpos->activar();
-      else
-         glDisable(GL_LIGHT1);
-      
-      if(luces[1])
-         luzdir->activar();
-      else
-         glDisable(GL_LIGHT2);
+      for(int i=0;i<8;i++){
+         if(luces[i]!=nullptr && switchLuces[i])
+            luces[i]->activar();
+         else if(luces[i]!=nullptr && !switchLuces[i])
+            glDisable(luces[i]->getID());
+      }
       
       glShadeModel(GL_SMOOTH);
    }
@@ -197,7 +194,7 @@ void Escena::animarModeloJerarquico(){
       alaX->aterrizar();
 
    if(animacionLuz)
-      luzpos->animarLuz();
+      luces[0]->animarLuz();
    
    
 }
@@ -312,7 +309,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          }
       case '0':
          if(modoMenu == SELVISUALIZACION && luz){
-            luces[0] = !luces[0];
+            switchLuces[0] = !switchLuces[0];
          }
          else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
             grado = 0;
@@ -323,7 +320,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = false;
          else if(modoMenu == SELVISUALIZACION && luz)
-            luces[1] = !luces[1];
+            switchLuces[1] = !switchLuces[1];
          else if(modoMenu == SELVISUALIZACION &&!luz && !animacionAutomatica)
             grado = 1;
          break;
@@ -332,58 +329,58 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELDIBUJADO)
             metodoDibujado = true;
          else if(modoMenu == SELVISUALIZACION && luz)
-            luces[2] = !luces[2];
+            switchLuces[2] = !switchLuces[2];
          else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica)
             grado = 2;
          break;
       
       case '3':
             if(modoMenu == SELVISUALIZACION && luz)
-               luces[3] = !luces[3];
+               switchLuces[3] = !switchLuces[3];
             else if(!luz && !animacionAutomatica)
                grado = 3;
          break;
       
       case '4':
             if(modoMenu == SELVISUALIZACION && luz)
-               luces[4] = !luces[4];
+               switchLuces[4] = !switchLuces[4];
             else if(!luz && !animacionAutomatica)
                grado = 4;
          break;
       
       case '5':
             if(modoMenu == SELVISUALIZACION && luz)
-               luces[5] = !luces[5];
+               switchLuces[5] = !switchLuces[5];
             else if(!luz && !animacionAutomatica)
                grado = 5;
          break;
       
       case '6':
             if(modoMenu == SELVISUALIZACION && luz)
-               luces[6] = !luces[6];
+               switchLuces[6] = !switchLuces[6];
             else if(!luz && !animacionAutomatica)
                grado = 6;
          break;
       
       case '7':
             if(modoMenu == SELVISUALIZACION && luz)
-               luces[7] = !luces[7];
+               switchLuces[7] = !switchLuces[7];
             else if(!luz && !animacionAutomatica)
                grado = 7;
          break;
       
       case '>':
          if(luz && angulo && modoMenu == SELVISUALIZACION)
-            this->luzdir->variarAnguloAlpha(-1.0);
+            this->luces[1]->variarAnguloAlpha(-1.0);
          else if(luz && !angulo && modoMenu == SELVISUALIZACION)
-            this->luzdir->variarAnguloBeta(-1.0);
+            this->luces[1]->variarAnguloBeta(-1.0);
          break;
       
       case '<':
          if(luz && angulo && modoMenu == SELVISUALIZACION)
-            this->luzdir->variarAnguloAlpha(1.0);
+            this->luces[1]->variarAnguloAlpha(1.0);
          else if(luz && !angulo && modoMenu == SELVISUALIZACION)
-            this->luzdir->variarAnguloBeta(1.0);
+            this->luces[1]->variarAnguloBeta(1.0);
          break;
       
       case '+':

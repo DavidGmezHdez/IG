@@ -18,6 +18,10 @@ class Luz
         GLenum id;
     public:
         void activar();
+        virtual void variarAnguloAlpha(float incremento){};
+        virtual void variarAnguloBeta(float incremento){};
+        virtual void setPosicion(Tupla3f posicion){};
+        virtual void animarLuz(){};
         inline GLenum getID(){return id;};
 };
 

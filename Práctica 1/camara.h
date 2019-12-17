@@ -23,18 +23,30 @@ class Camara
 
         int tipo; //0 = ortogonal | 1 = perspectiva
 
-        float fov,aspect,near,far;
+        float fov,aspect,near,far,top,left;
+
+        //Vectores de direccion y ejes de la cámara
+        Tupla3f vectorDir, vectorX, vectorY;
+
+        //Funciones sobre la matriz
+        Tupla3f cambiarMatriz(Tupla3f eje, Tupla3f vector, float angulo);
+        void rotarPP(float angulo, int eje);
+        void rotarE(float angulo, int eje);
+         
+
+
+
     
     public:
         Camara(){};
-        Camara(Tupla3f e, Tupla3f a, Tupla3f u, int t, float f, float as, float n, float fa);
+        Camara(Tupla3f e, Tupla3f a, Tupla3f u, int t, float ancho, float alto);
         void rotarXExaminar(float angulo);
         void rotarYExaminar(float angulo);
-        void rotarZExaminar(float angulo);
+        //void rotarZExaminar(float angulo);
         
         void rotarXPrimeraPersona(float angulo);
         void rotarYPrimeraPersona(float angulo);
-        void rotarZPrimeraPersona(float angulo);
+        //void rotarZPrimeraPersona(float angulo);
 
         void mover(float x, float y, float z);
         void zoom(float factor);

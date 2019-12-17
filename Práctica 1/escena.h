@@ -59,7 +59,11 @@ class Escena
     Textura  madera;
     LuzPosicional *luzpos = nullptr;
     LuzDireccional *luzdir = nullptr;
-    bool luces[8] = {false};
+
+    //Luces
+    Luz*  luces[8] = {nullptr};
+    bool switchLuces[8] = {false};
+
     bool metodoDibujado;
     int seleccionDibujo;
     int modoVisualizacion;
