@@ -5,7 +5,7 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
     this->eye = e;
     this->at = a;
     this->up = u.normalized();
-    this->fov = atan(left/near)*(180*M_PI)*2;
+    this->fov = atan(left/near)*(180/M_PI)*2;
     this->aspect = ancho/alto;
 
     this->left = alto/2;
@@ -32,22 +32,22 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
 
 Tupla3f Camara::cambiarMatriz(Tupla3f eje, Tupla3f vector, float angulo){
     Tupla3f rotacion;
+    rotacion(0) = (cos(angulo) + eje(0) * eje(0) *(1-cos(angulo))) * vector(0) +
+                  (eje(0) * eje(1)*(1-cos(angulo)) - eje(2)*sin(angulo)) * vector(1) +
+                  (eje(0) * eje(2)*(1-cos(angulo)) + eje(1)*sin(angulo)) * vector(2);
 
-    rotacion(0) = (cos(angulo) + eje(0) * (eje(0) *(1-cos(angulo)))) * vector(0) +
-                  (eje(0) * (eje(1)*(1-cos(angulo))) - (eje(2)*sin(angulo))) * vector(1) +
-                  (eje(0) * (eje(2)*(1-cos(angulo))) - (eje(1)*sin(angulo))) * vector(2);
+    rotacion(1) = (eje(1) * eje(0)*(1-cos(angulo)) + eje(2)*sin(angulo)) * vector(0) +
+                  (cos(angulo) + eje(1) * eje(1) *(1-cos(angulo))) * vector(1) +
+                  (eje(1) * eje(2)*(1-cos(angulo)) - eje(0)*sin(angulo)) * vector(2);
 
-    rotacion(1) = (eje(1) * (eje(0)*(1-cos(angulo))) - (eje(2)*sin(angulo))) * vector(0) +
-                  (cos(angulo) + eje(1) * (eje(1) *(1-cos(angulo)))) * vector(1) +
-                  (eje(1) * (eje(2)*(1-cos(angulo))) - (eje(0)*sin(angulo))) * vector(2);
-
-    rotacion(1) = (eje(2) * (eje(0)*(1-cos(angulo))) - (eje(2)*sin(angulo))) * vector(0) +
-                  (eje(2) * (eje(1)*(1-cos(angulo))) - (eje(0)*sin(angulo))) * vector(1);
-                  (cos(angulo) + eje(2) * (eje(2) *(1-cos(angulo)))) * vector(2);
-
+    rotacion(2) = (eje(2) * eje(0)*(1-cos(angulo)) - eje(1)*sin(angulo)) * vector(0) +
+                  (eje(2) * eje(1)*(1-cos(angulo)) + eje(0)*sin(angulo)) * vector(1) +
+                  (cos(angulo) + eje(2) * eje(2) *(1-cos(angulo))) * vector(2);
+    
     return rotacion;
-
 }
+
+
 
 void Camara::rotarPP(float angulo, int eje){
 
@@ -59,8 +59,8 @@ void Camara::rotarPP(float angulo, int eje){
 
     switch(eje){
         case 0:
-            auxAt = cambiarMatriz(vectorX,vectorDir,angulo);
-            auxUp = cambiarMatriz(vectorX,up,angulo);
+            auxAt = cambiarMatriz(vectorY,vectorDir,angulo);
+            auxUp = cambiarMatriz(vectorY,up,angulo);
             vectorX = cambiarMatriz(vectorY,vectorX,angulo);
             break;
         case 1:
@@ -79,7 +79,7 @@ void Camara::rotarPP(float angulo, int eje){
 }
 
 void Camara::rotarE(float angulo, int eje){
-    Tupla3f auxVectorDir , auxUp;
+    Tupla3f auxVectorDir , auxUp, auxAt;
 
     auxVectorDir = {eye(0) - at(0), eye(1) - at(1), eye(2) - at(2)};
 

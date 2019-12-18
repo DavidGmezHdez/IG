@@ -15,6 +15,7 @@ Escena::Escena()
 
    ejes.changeAxisSize( 5000 );
 
+   //Creacion de objetos
    cubo = new Cubo();
    tetraedro = new Tetraedro();
    cuadro = new Cuadro();
@@ -25,27 +26,33 @@ Escena::Escena()
    cilindro = new Cilindro(50,25,10);
    cono = new Cono(50,25,10);
    esfera = new Esfera(50,50,10);
+
+   //Creacion de materiales
    plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.0, 0.0,0.0, 1.0},128.0);//Sin brillos especulares
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
 
+   //Creacion de texturas
    madera = Textura("archivosP5/text-madera.jpg",1);
 
+   //Creacion de luces
    luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
-   camaras[0] = new Camara(1,{50,50,50},{0,0,0},{0,1,0},50,50);
+   //Creacion de cámaras
+   camaras[0] = new Camara(1,{50,50,50},{0,0,0},{0,1,0},100,100);
    camaras[1] = new Camara(1,{-50,-50,-50}, {0,0,0},{0,1,0},200, 200);
    camaras[2] = new Camara(1,{50,0,0}, {0,0,0}, {0,1,0},300, 300);
    camaras[3] = new Camara(0, {-50,0,0}, {0,0,0}, {0,1,0}, 400, 400);
    
    numCamaraActiva = 0;
 
+   //Modificando los parámetros para la animacion
    animacionAutomatica = animacionManual = animacionLuz = false;
    grado = -1;
 
-
+   //Aplicacion de materiales
    peon->setMaterial(plata);
    peon2->setMaterial(negro);
    tetraedro->setMaterial(bronce);
@@ -56,6 +63,7 @@ Escena::Escena()
    alaX->setMaterial(plata);
    cuadro->setMaterial(bronce);
    
+   //Aplicacion de texturas
    cuadro->calcularCoordenadas();
    cuadro->setTextura(madera);
    cubo->calcularCoordenadas();
@@ -224,30 +232,15 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
          boton = true;
          break;
       case 3:
-         camaras[numCamaraActiva]->zoom(1);
+         if(estado == GLUT_UP)
+            camaras[numCamaraActiva]->zoom(1);
          break;
       case 4:
-         camaras[numCamaraActiva]->zoom(-1);
+         if(estado == GLUT_DOWN)
+            camaras[numCamaraActiva]->zoom(-1);
          break;
    }
 
-   
-  /*
-  if(boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN){
-     boton = false;
-     xraton = x;
-     yraton = y;
-  }
-  else if(boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN){
-     boton = true;
-  }
-  else if(boton = 3){
-     camaras[numCamaraActiva]->zoom(1);
-  }
-   else if(boton = 4){
-     camaras[numCamaraActiva]->zoom(1);
-  }
-  */
 
 }
 
@@ -690,7 +683,8 @@ void Escena::change_projection( const float ratio_xy )
    /*const float wx = float(Height)*ratio_xy ;
    glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
    */
-  camaras[numCamaraActiva]->setProyeccion();
+   if(camaras[numCamaraActiva]!=nullptr)
+      camaras[numCamaraActiva]->setProyeccion();
 }
 //**************************************************************************
 // Funcion que se invoca cuando cambia el tamaño de la ventana
@@ -717,6 +711,7 @@ void Escena::change_observer()
    glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
    */
-  camaras[numCamaraActiva]->setObserver();
+   if(camaras[numCamaraActiva]!=nullptr)
+     camaras[numCamaraActiva]->setObserver();
 }
 
