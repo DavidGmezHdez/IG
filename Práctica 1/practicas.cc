@@ -91,12 +91,31 @@ void special_keys( int tecla, int x, int y )
 //***************************************************************************
 // Funcion llamada para animar el objeto jerárquico
 //
-// escena: La escena dond está ubicada el modelo jerárquico
+// escena: La escena donde está ubicada el modelo jerárquico
 // 
 //******
 void funcion_idle(){
    if( escena!= nullptr )
       escena->animarModeloJerarquico();
+   glutPostRedisplay();
+}
+
+
+//***************************************************************************
+// Funcion llamada al hacer click
+//***************************************************************************
+void clickRaton(int boton, int estado, int x, int y){
+   if(escena!=nullptr)
+      escena->clickRaton(boton,estado,x,y);
+   glutPostRedisplay();
+}
+
+//***************************************************************************
+// Funcion llamada mover el raton
+//***************************************************************************
+void ratonMovido(int x, int y){
+   if(escena!=nullptr)
+      escena->ratonMovido(x,y);
    glutPostRedisplay();
 }
 
@@ -138,6 +157,10 @@ int main( int argc, char **argv )
    // llamada para crear la ventana, indicando el titulo
    // SUSTITUIR EL NOMBRE DEL ALUMNO
    glutCreateWindow("Practicas IG: David Gómez Hernández");
+
+   //Funciones para la deteccion de click y movimiento del raton
+   glutMouseFunc(clickRaton);
+   glutMotionFunc(ratonMovido);
 
    // asignación de la funcion llamada "dibujar" al evento de dibujo
    glutDisplayFunc( draw_scene );

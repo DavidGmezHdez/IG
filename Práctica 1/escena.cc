@@ -35,7 +35,12 @@ Escena::Escena()
    luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
    luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
-   camaras[0] = new Camara({100,100,500},{0,0,0},{0,1,0},1,50,50);
+   camaras[0] = new Camara(1,{50,50,50},{0,0,0},{0,1,0},50,50);
+   camaras[1] = new Camara(1,{-50,-50,-50}, {0,0,0},{0,1,0},200, 200);
+   camaras[2] = new Camara(1,{50,0,0}, {0,0,0}, {0,1,0},300, 300);
+   camaras[3] = new Camara(0, {-50,0,0}, {0,0,0}, {0,1,0}, 400, 400);
+   
+   numCamaraActiva = 0;
 
    animacionAutomatica = animacionManual = animacionLuz = false;
    grado = -1;
@@ -219,14 +224,30 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
          boton = true;
          break;
       case 3:
-         if(estado == GLUT_UP)
-            camaras[numCamaraActiva]->zoom(1);
+         camaras[numCamaraActiva]->zoom(1);
          break;
       case 4:
-         if(estado == GLUT_DOWN)
-            camaras[numCamaraActiva]->zoom(-1);
+         camaras[numCamaraActiva]->zoom(-1);
          break;
    }
+
+   
+  /*
+  if(boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN){
+     boton = false;
+     xraton = x;
+     yraton = y;
+  }
+  else if(boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN){
+     boton = true;
+  }
+  else if(boton = 3){
+     camaras[numCamaraActiva]->zoom(1);
+  }
+   else if(boton = 4){
+     camaras[numCamaraActiva]->zoom(1);
+  }
+  */
 
 }
 
@@ -286,7 +307,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          modoMenu=SELDIBUJADO;
          cout<<"Entrando en modo selección dibujado"<<endl; 
          break ;
-         // COMPLETAR con los diferentes opciones de teclado
+      case 'C':
+         modoMenu = SELCAM;
+         cout<<"Entrando en modo selección de cámaras"<<endl; 
+         break;
       case 'Y':
          if(modoMenu == SELOBJETO)
             seleccionDibujo = 1;
@@ -328,7 +352,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       
       case 'A':
-         if(modoMenu == SELVISUALIZACION && !luz){
+         if(modoMenu == NADA){
+            if(!animacionAutomatica){
+               modoMenu = SELANIMAUTO;
+               animacionAutomatica = true;
+               alaX->puntoSalida(-700,700,-700);
+               cout<<"Animando modelo jerárquico automáticamente"<<endl; 
+            }
+         }
+         else if(modoMenu == SELANIMAUTO){
+            modoMenu = NADA;
+            cout<<"Animación automatica desactivada"<<endl; 
+            animacionAutomatica = false;
+         }
+         else if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             ajedrez = !ajedrez;
             cout<<"Entrando en modo ajedrez"<<endl; 
@@ -337,16 +374,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             angulo = true;
             cout<<"Seleccion del angulo ALPHA"<<endl; 
          }
-         else{
-            animacionAutomatica = !animacionAutomatica;
-            alaX->puntoSalida(-700,700,-700);
-            cout<<"Animando modelo jerárquico automáticamente"<<endl; 
-         }
          break;
          
       
       case 'M':
-         if(modoMenu == SELVISUALIZACION){
+         if(modoMenu == NADA){
+            modoMenu = SELANIMMAN;
             animacionAutomatica = false;
             cout<<"Selección de animación manual del modelo jerárquico"<<endl; 
          }
@@ -382,15 +415,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             else
                cout<<"Desactivando luz 0"<<endl; 
          }
-         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica){
+         else if(modoMenu == SELANIMMAN){
             grado = 0;
             cout<<"Seleccion del grado 0"<<endl; 
+         }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 0;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
          }
          break;
       
       case '1' :
-         if(modoMenu == SELDIBUJADO)
+         if(modoMenu == SELDIBUJADO){
             metodoDibujado = false;
+            cout<<"Dibujando en modo inmediato"<<endl; 
+         }
          else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[1] = !switchLuces[1];
             if(switchLuces[1])
@@ -398,15 +443,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             else
                cout<<"Desactivando luz 1"<<endl; 
          }
-         else if(modoMenu == SELVISUALIZACION &&!luz && !animacionAutomatica){
+         else if(modoMenu == SELANIMMAN){
             grado = 1;
             cout<<"Seleccion del grado 1"<<endl; 
+         }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 1;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
          }
          break;
       
       case '2':
-         if(modoMenu == SELDIBUJADO)
+         if(modoMenu == SELDIBUJADO){
             metodoDibujado = true;
+            cout<<"Dibujando en modo diferido"<<endl; 
+         }
          else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[2] = !switchLuces[2];
             if(switchLuces[0])
@@ -414,9 +471,19 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             else
                cout<<"Desactivando luz 2"<<endl; 
          }
-         else if(modoMenu == SELVISUALIZACION && !luz && !animacionAutomatica){
+         else if(modoMenu == SELANIMMAN){
             grado = 2;
             cout<<"Seleccion del grado 2"<<endl; 
+         }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 2;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
          }
          break;
       
@@ -428,10 +495,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                else
                   cout<<"Desactivando luz 3"<<endl; 
             }
-            else if(!luz && !animacionAutomatica){
+            else if(modoMenu == SELANIMMAN){
                grado = 3;
                cout<<"Seleccion del grado 3"<<endl; 
             }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 3;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+         }
          break;
       
       case '4':
@@ -442,10 +519,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                else
                   cout<<"Desactivando luz 4"<<endl; 
             }
-            else if(!luz && !animacionAutomatica){
+            else if(modoMenu == SELANIMMAN){
                grado = 4;
                cout<<"Seleccion del grado 4"<<endl; 
             }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva =4;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+         }
          break;
       
       case '5':
@@ -456,10 +543,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                else
                   cout<<"Desactivando luz 5"<<endl; 
             }
-            else if(!luz && !animacionAutomatica){
+            else if(modoMenu == SELANIMMAN){
                grado = 5;
                cout<<"Seleccion del grado 5"<<endl; 
             }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 5;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+         }
          break;
       
       case '6':
@@ -470,10 +567,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                else
                   cout<<"Desactivando luz 6"<<endl; 
             }
-            else if(!luz && !animacionAutomatica){
-               grado = 6;
-               cout<<"Seleccion del grado 6"<<endl; 
-            }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 6;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+         }
          break;
       
       case '7':
@@ -484,10 +587,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                else
                   cout<<"Desactivando luz 7"<<endl; 
             }
-            else if(!luz && !animacionAutomatica){
+            else if(modoMenu == SELANIMMAN){
                grado = 7;
                cout<<"Seleccion del grado 7"<<endl; 
             }
+            else if(modoMenu == SELCAM){
+               numCamaraActiva = 7;
+               if(camaras[numCamaraActiva] != nullptr){
+                  cout<<"Seleccion de cámara "<<numCamaraActiva<<endl; 
+                  change_observer();
+                  change_projection(1);
+               }
+               else
+                  cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+         }
          break;
       
       case '>':
@@ -541,16 +654,16 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
    switch ( Tecla1 )
    {
 	   case GLUT_KEY_LEFT:
-         Observer_angle_y-- ;
+         camaras[numCamaraActiva]->rotarXExaminar(-1);
          break;
 	   case GLUT_KEY_RIGHT:
-         Observer_angle_y++ ;
+         camaras[numCamaraActiva]->rotarXExaminar(1);
          break;
 	   case GLUT_KEY_UP:
-         Observer_angle_x-- ;
+         camaras[numCamaraActiva]->rotarYExaminar(1) ;
          break;
 	   case GLUT_KEY_DOWN:
-         Observer_angle_x++ ;
+         camaras[numCamaraActiva]->rotarYExaminar(-1) ;
          break;
 	   case GLUT_KEY_PAGE_UP:
          Observer_distance *=1.2 ;
@@ -574,8 +687,10 @@ void Escena::change_projection( const float ratio_xy )
 {
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
-   const float wx = float(Height)*ratio_xy ;
+   /*const float wx = float(Height)*ratio_xy ;
    glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+   */
+  camaras[numCamaraActiva]->setProyeccion();
 }
 //**************************************************************************
 // Funcion que se invoca cuando cambia el tamaño de la ventana
@@ -598,8 +713,10 @@ void Escena::change_observer()
    // posicion del observador
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   glTranslatef( 0.0, 0.0, -Observer_distance );
+   /*glTranslatef( 0.0, 0.0, -Observer_distance );
    glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+   */
+  camaras[numCamaraActiva]->setObserver();
 }
 

@@ -35,7 +35,7 @@ class Camara
         
     public:
         Camara(){};
-        Camara(Tupla3f e, Tupla3f a, Tupla3f u, int t, float ancho, float alto);
+        Camara(int t,Tupla3f e, Tupla3f a, Tupla3f u, float ancho, float alto);
         void rotarXExaminar(float angulo);
         void rotarYExaminar(float angulo);
         //void rotarZExaminar(float angulo);

@@ -24,7 +24,7 @@
 
 using namespace std;
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO,SELANIMAUTO,SELANIMMAN,SELCAM} menu;
 class Escena
 {
 
@@ -95,7 +95,6 @@ class Escena
 
         //Funciones para las camaras
         void clickRaton(int boton, int estado, int x, int y);
-
         void ratonMovido(int x, int y);
 
         // Dibujar
