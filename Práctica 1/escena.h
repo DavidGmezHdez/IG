@@ -84,7 +84,7 @@ class Escena
     bool angulo,objeto,animacionAutomatica,animacionManual,animacionLuz;
 
     //Parametros raton
-    bool boton; //false->derecho, true->izquierdo
+    bool boton,objetoSeleccionado = false; //false->derecho, true->izquierdo
     int xraton, yraton;
 
     public:

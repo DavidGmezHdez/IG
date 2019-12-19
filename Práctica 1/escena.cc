@@ -41,10 +41,10 @@ Escena::Escena()
    luces[1] = new LuzDireccional(GL_LIGHT2,{0, 0},{0.0, 0.0, 0.0, 1.0}, {1.0, 1.0, 1.0, 1.0}, {1.0, 1.0, 1.0, 1.0});
 
    //Creacion de cámaras
-   camaras[0] = new Camara(1,{50,50,50},{0,0,0},{0,1,0},100,100);
-   camaras[1] = new Camara(1,{-50,-50,-50}, {0,0,0},{0,1,0},200, 200);
-   camaras[2] = new Camara(1,{50,0,0}, {0,0,0}, {0,1,0},300, 300);
-   camaras[3] = new Camara(0, {-50,0,0}, {0,0,0}, {0,1,0}, 400, 400);
+   camaras[0] = new Camara(1,{200,200,200},{0,0,0},{0,1,0},100,100);
+   camaras[1] = new Camara(2,{-200,-200,-200}, {0,0,0},{0,1,0},500, 500);
+   camaras[2] = new Camara(1,{200,-200,0}, {0,0,0}, {0,1,0},100, 100);
+   camaras[3] = new Camara(2, {-200,0,0}, {0,0,0}, {0,1,0},200, 200);
    
    numCamaraActiva = 0;
 
@@ -272,7 +272,7 @@ void Escena::ratonMovido(int x, int y){
 
 bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 {
-   using namespace std ;
+
    cout << "Tecla pulsada: '" << tecla << "'" << endl;
    bool salir=false;
    bool angulo;
@@ -666,7 +666,6 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
          break;
 	}
 
-	//std::cout << Observer_distance << std::endl;
 }
 
 //**************************************************************************
@@ -680,9 +679,7 @@ void Escena::change_projection( const float ratio_xy )
 {
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
-   /*const float wx = float(Height)*ratio_xy ;
-   glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
-   */
+
    if(camaras[numCamaraActiva]!=nullptr)
       camaras[numCamaraActiva]->setProyeccion();
 }
@@ -707,10 +704,7 @@ void Escena::change_observer()
    // posicion del observador
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   /*glTranslatef( 0.0, 0.0, -Observer_distance );
-   glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
-   glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
-   */
+
    if(camaras[numCamaraActiva]!=nullptr)
      camaras[numCamaraActiva]->setObserver();
 }

@@ -51,7 +51,7 @@ Tupla3f Camara::cambiarMatriz(Tupla3f eje, Tupla3f vector, float angulo){
 
 void Camara::rotarPP(float angulo, int eje){
 
-    Tupla3f auxAt,auxUp;
+    Tupla3f auxAt;
 
     vectorDir = {at(0) - eye(0), at(1) - eye(1), at(2) - eye(2)};
 
@@ -60,12 +60,10 @@ void Camara::rotarPP(float angulo, int eje){
     switch(eje){
         case 0:
             auxAt = cambiarMatriz(vectorY,vectorDir,angulo);
-            auxUp = cambiarMatriz(vectorY,up,angulo);
             vectorX = cambiarMatriz(vectorY,vectorX,angulo);
             break;
         case 1:
             auxAt = cambiarMatriz(vectorX,vectorDir,angulo);
-            auxUp = cambiarMatriz(vectorX,up,angulo);
             vectorY = cambiarMatriz(vectorX,vectorY,angulo);
             break;
     }
@@ -74,12 +72,11 @@ void Camara::rotarPP(float angulo, int eje){
     at(0) = auxAt(0) + eye(0);
     at(1) = auxAt(1) + eye(1);
     at(2) = auxAt(2) + eye(2);
-    up = auxUp;    
 
 }
 
 void Camara::rotarE(float angulo, int eje){
-    Tupla3f auxVectorDir , auxUp, auxAt;
+    Tupla3f auxVectorDir , auxAt;
 
     auxVectorDir = {eye(0) - at(0), eye(1) - at(1), eye(2) - at(2)};
 
@@ -88,12 +85,10 @@ void Camara::rotarE(float angulo, int eje){
     switch(eje){
         case 0:
             auxVectorDir = cambiarMatriz(vectorY,auxVectorDir,angulo);
-            auxUp = cambiarMatriz(vectorY,up,angulo);
             vectorX = cambiarMatriz(vectorY,vectorX,angulo);
             break;
         case 1:
             auxVectorDir = cambiarMatriz(vectorX,auxVectorDir,angulo);
-            auxUp = cambiarMatriz(vectorX,up,angulo);
             vectorY = cambiarMatriz(vectorX,vectorY,angulo);
             break;
     }
@@ -102,7 +97,6 @@ void Camara::rotarE(float angulo, int eje){
     eye(0) = at(0) + auxVectorDir(0);
     eye(1) = at(1) + auxVectorDir(1);
     eye(2) = at(2) + auxVectorDir(2);
-    up = auxUp;  
 
 }
 
