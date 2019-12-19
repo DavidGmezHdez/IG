@@ -50,20 +50,35 @@ class Malla3D
 
    void calcularNormales();
 
-   
+   Tupla3f getPosicion(){return posicion;};
+
+   Tupla3f getColor(){return color;};
 
    void setMaterial(Material mat);
 
    void setTextura(Textura tex);
+
+   void setPosicion(Tupla3i pos){posicion(0) = pos(0); posicion(1) = pos(1); posicion(2) = pos(2);};
+
+   virtual void calcularCoordenadas(){};
+
+   virtual void switchTapas(bool &tapas){};
+
+   virtual void animacionAutomatica(){};
+
+   virtual void animacionManual(int grado, float incremento){};
    
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
 
+   
+
    std::vector<Tupla3f> v,vnotapas,nc,nv;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f,fnotapas,impares, pares; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c, cimpares, cpares,cp,cl; //una terna 3 float por cada color
    std::vector<Tupla2f> ct;                        //Terna de 2 floats para textura 
+   Tupla3f posicion,color;                               //Terna de 2 ints para saber la posicion
    bool puntos,lineas,solido,ajedrez;
    GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0,vbo_cp = 0,vbo_cl = 0, vbo_nv = 0,vbo_ct = 0;
    Material *m = nullptr;

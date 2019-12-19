@@ -50,6 +50,7 @@ class Camara
         void setObserver();
         void setProyeccion();
 
+        inline void setAt(Tupla3f objetivo){at = objetivo;};
 
 
 

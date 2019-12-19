@@ -50,17 +50,12 @@ class Escena
     menu modoMenu=NADA;
     // Objetos de la escena
     Ejes ejes;
-    Cubo * cubo = nullptr; 
-    Tetraedro * tetraedro= nullptr;
-    Cilindro * cilindro = nullptr;
-    AlaX * alaX = nullptr;
-    Cuadro * cuadro = nullptr;
-    Cono * cono = nullptr;
-    Esfera * esfera = nullptr;
-    ObjPLY * hormiga = nullptr;
-    ObjRevolucion * peon = nullptr;
-    ObjRevolucion * peon2 = nullptr;
+    Malla3D* mallas[8]= {nullptr};
+
+    //Materiales
     Material oro,plata,bronce,negro;
+
+    //Texturas
     Textura  madera;
 
     //Luces
@@ -72,6 +67,7 @@ class Escena
     bool switchCamaras[8] = {false};
     int numCamaraActiva = 0;
 
+    //Modos visualizacion, dibujado y dibujo
     bool metodoDibujado;
     int seleccionDibujo;
     int modoVisualizacion;
@@ -85,7 +81,7 @@ class Escena
 
     //Parametros raton
     bool boton,objetoSeleccionado = false; //false->derecho, true->izquierdo
-    int xraton, yraton;
+    int xraton, yraton,xpixel, ypixel, objsel;
 
     public:
 
@@ -103,9 +99,14 @@ class Escena
         // Interacción con la escena
         bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
         void teclaEspecial( int Tecla1, int x, int y );
-
+        
+        //Funciones de animacion
         void animarModeloJerarquico();
         void animarManual();
+
+        //Funciones de seleccion
+        void dibujaSeleccion();
+        void seleccionarObjetivo(int obj);
 
 };
 #endif

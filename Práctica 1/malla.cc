@@ -18,6 +18,7 @@ void Malla3D::setColor(float R, float G, float B){
    c.clear();
    cp.clear();
    cl.clear();
+   color = {R,G,B};
    Tupla3f colorPuntos(0.7, 0.3, 1.0), colorLineas(0.3, 0.0, 0.0), colorSolido(R,G,B);
    for(int i=0;i<v.size();i++){
       cp.push_back(colorPuntos);

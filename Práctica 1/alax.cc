@@ -3,14 +3,14 @@
 AlaX::AlaX(){
     morro = new Morro();
     trasera = new Trasera();
-    direccion = {0,0,0};
+    posicion = {0,0,0};
     rotacion = {0,0,0};
 }
 
 void AlaX::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess){
 glPushMatrix();
 
-    glTranslatef(direccion(0),direccion(1),direccion(2));
+    glTranslatef(posicion(0),posicion(1),posicion(2));
     glRotatef(rotacion(0),1,0,0);
     glRotatef(rotacion(1),0,1,0);
     glRotatef(rotacion(2),0,0,1);
@@ -74,16 +74,16 @@ void AlaX::rotarNave(int angulo, int incremento,int max){
 void AlaX::dirigirNave(int dir, int incremento, int posicionFinal){
     switch(dir){
         case 0:
-                if(direccion(0)+incremento!=posicionFinal)
-                    direccion(0)= direccion(0)+incremento;
+                if(posicion(0)+incremento!=posicionFinal)
+                    posicion(0)= posicion(0)+incremento;
             break;
         case 1:
-                if(direccion(1)+incremento!=posicionFinal)
-                    direccion(1)= direccion(1)+incremento;
+                if(posicion(1)+incremento!=posicionFinal)
+                    posicion(1)= posicion(1)+incremento;
             break;
         case 2:
-                if(direccion(2)+incremento!=posicionFinal)
-                    direccion(2)= direccion(2)+incremento;
+                if(posicion(2)+incremento!=posicionFinal)
+                    posicion(2)= posicion(2)+incremento;
             break;
     }
 
@@ -91,7 +91,7 @@ void AlaX::dirigirNave(int dir, int incremento, int posicionFinal){
 
 
 //Animaciones
-void AlaX::aterrizar(){
+void AlaX::animacionAutomatica(){
      /*
       Angulo 0:   
                   +30 --> derecha
@@ -107,7 +107,7 @@ void AlaX::aterrizar(){
 
     switch(fase){
         case 0:
-            if(getDireccion()(0) != -201){
+            if(getPosicion()(0) != -201){
                 desplegarAlas(1.0);
                 guardarTrenAterrizaje(1.0);
                 rotarNave(0,1.0,30);
@@ -121,7 +121,7 @@ void AlaX::aterrizar(){
                 fase = 1;
             break;
         case 1:
-            if(getDireccion()(0) != -1){
+            if(getPosicion()(0) != -1){
                 rotarNave(0,-1.0,0);
                 rotarNave(1,1.0,0);
                 rotarNave(2,1.0,0);
