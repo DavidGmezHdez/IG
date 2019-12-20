@@ -29,9 +29,13 @@ Escena::Escena()
    //Esfera
    esfera = new Esfera(50,50,10);
    //Cuadro
-   cuadro = new Cuadro();
+   cuadro = new Cuadro(100);
    //AlaX
    alaX = new AlaX();
+
+   suelo = new Cuadro(2500);
+
+   semiesfera = new Semiesfera(50,50,10);
 
    //Creacion de materiales
    plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.508273, 0.508273,0.508273, 1.0},128.0);//Sin brillos especulares
@@ -41,6 +45,10 @@ Escena::Escena()
 
    //Creacion de texturas
    madera = Textura("archivosP5/text-madera.jpg",1);
+   lata = Textura("archivosP5/text-lata-1.jpg",2);
+   hierba = Textura("archivosP5/text-hierba.jpg",3);
+   planeta = Textura("archivosP5/textura-planeta-tierra.jpg",4);
+   poster = Textura("archivosP5/text-cuadro.jpg",5);
 
    //Creacion de luces
    luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
@@ -67,13 +75,24 @@ Escena::Escena()
    esfera->setMaterial(bronce);
    cuadro->setMaterial(plata);
    alaX->setMaterial(plata);
+   suelo->setMaterial(plata);
+   semiesfera->setMaterial(bronce);
 
    
    //Aplicacion de texturas
-   cuadro->calcularCoordenadas();
-   cuadro->setTextura(madera);
-   cubo->calcularCoordenadas();
+   cuadro->setTextura(poster);
    cubo->setTextura(madera);
+   cilindro->setTextura(lata);
+   esfera->setTextura(planeta);
+   semiesfera->setTextura(planeta);
+
+   std::vector<Tupla2f> texturasSuelo;
+   texturasSuelo.push_back({0,0});
+   texturasSuelo.push_back({1000,0});
+   texturasSuelo.push_back({0,1000});
+   texturasSuelo.push_back({1000,1000});
+   suelo->setCoordenadasTextura(texturasSuelo);
+   suelo->setTextura(hierba);
 
    //Declaracion variables seleccion
    objeto = -1;
@@ -109,6 +128,10 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
+   
+   if(xpixel!=-1 && ypixel != -1)
+      dibujaSeleccion();
+   
    glEnable(GL_CULL_FACE);
    glEnable(GL_NORMALIZE);
    glDisable(GL_LIGHTING);
@@ -117,6 +140,9 @@ void Escena::dibujar()
    change_observer();
    
    ejes.draw();
+   
+
+
    
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
@@ -143,49 +169,44 @@ void Escena::dibujar()
    switch (seleccionDibujo){
       case 1:
          glPushMatrix();
-         glTranslatef(100,0,0);
+         tetraedro->setPosicion({100,0,0});
          glScalef(25,25,25);
          tetraedro->setColor(0,0,1);
-         tetraedro->setPosicion({100,0,0});
          tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
-         glTranslatef(-100,0,100);
+         cubo->setPosicion({-100,0,100});
          glScalef(25,25,25);
          cubo->setColor(0,1,0);
-         cubo->setPosicion({-100,0,100});
          cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
+         peon->setPosicion({0,0,0});
          glScalef(25.0,25.0,25.0);
          peon->setColor(1,0,0);
-         peon->setPosicion({0,0,0});
          peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
-         glTranslatef(-100,0,0);
+         hormiga->setPosicion({-100,0,0});
          glScalef(3,3,3);
          hormiga->setColor(1,0,1);
-         hormiga->setPosicion({-100,0,0});
          hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
-         glTranslatef(-100,0,-100);
+         cilindro->setPosicion({-100,0,-100});
          glScalef(3,3,3);
          cilindro->setColor(0,0,1);
-         cilindro->setPosicion({-100,0,-100});
          cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
-         glTranslatef(100,0,100);
+         esfera->setPosicion({100,0,100});
          glScalef(5,5,5);
          esfera->setColor(1,0,1);
-         esfera->setPosicion({100,0,100});
          esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
@@ -196,19 +217,54 @@ void Escena::dibujar()
          cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
-         glTranslatef(-100,0,100);
+         glPushMatrix();
+         cubo->setPosicion({-100,0,100});
          glScalef(25,25,25);
          cubo->setColor(0,1,0);
-         cubo->setPosicion({-100,0,100});
          cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         cilindro->setPosicion({50,50,50});
+         glScalef(1.2,1.5,1.2);
+         glRotatef(180,1,0,0);
+         cilindro->setColor(0,0,1);
+         cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         esfera->setPosicion({100,0,100});
+         glScalef(2,2,2);
+         esfera->setColor(1,0,1);
+         esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
 
          glDisable(GL_TEXTURE_2D);
          break;
       case 3:
+         glEnable(GL_TEXTURE_2D);
+         glPushMatrix();
+         suelo->setColor(1,0,0);
+         suelo->setPosicion({-suelo->getLado()/2,-18,suelo->getLado()/2});
+         glRotatef(-90,1,0,0);
+         suelo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         glDisable(GL_TEXTURE_2D);
+/*
+         glPushMatrix();
+         //semiesfera->setPosicion({100,0,100});
+         glScalef(100,100,100);
+         glRotatef(180,1,0,0);
+         semiesfera->setColor(1,0,1);
+         semiesfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         */
+
          glPushMatrix();
          alaX->setColor(0.7,0.7,0.7);
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
+ 
          break;
    }
    glPopMatrix();
@@ -289,7 +345,7 @@ void Escena::ratonMovido(int x, int y){
 
 
 void Escena::guardarCloresSeleccion(bool estado){
-   if(estado){
+   if(!estado){
       coloresAux.push_back(tetraedro->getColor());
       coloresAux.push_back(cubo->getColor());
       coloresAux.push_back(peon->getColor());
@@ -376,7 +432,8 @@ void Escena::dibujaSeleccion(){
       seleccionarObjetivo(7,alaX);
 
    //Volvemos a ponerle los colores
-   guardarCloresSeleccion(false);
+   guardarCloresSeleccion(true);
+   xpixel = -1; ypixel = -1;
 
 }
 
@@ -770,10 +827,10 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
          camaras[numCamaraActiva]->rotarXExaminar(1);
          break;
 	   case GLUT_KEY_UP:
-         camaras[numCamaraActiva]->rotarYExaminar(1) ;
+         camaras[numCamaraActiva]->rotarYExaminar(-1) ;
          break;
 	   case GLUT_KEY_DOWN:
-         camaras[numCamaraActiva]->rotarYExaminar(-1) ;
+         camaras[numCamaraActiva]->rotarYExaminar(1) ;
          break;
 	   case GLUT_KEY_PAGE_UP:
          Observer_distance *=1.2 ;

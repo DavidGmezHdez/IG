@@ -1,9 +1,9 @@
 #include "cuadro.h"
 
 
-Cuadro::Cuadro(){
-
-    Tupla3f v0(0.0,0.0,0.0), v1(100.0, 0.0, 0.0), v2(0.0, 100.0, 0.0), v3(100.0, 100.0, 0.0);
+Cuadro::Cuadro(float lado){
+    this->lado = lado;
+    Tupla3f v0(0.0,0.0,0.0), v1(this->lado, 0.0, 0.0), v2(0.0,this->lado, 0.0), v3(this->lado, this->lado, 0.0);
    
     v.push_back(v0);
     v.push_back(v1);
@@ -24,5 +24,5 @@ Cuadro::Cuadro(){
 
 void Cuadro::calcularCoordenadas(){   
     Tupla2f c0(0,0),c1(1.0,0.0),c2(0.0,1.0),c3(1.0,1.0);
-    ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
+    ct.push_back(c3); ct.push_back(c2); ct.push_back(c1); ct.push_back(c0);
 }

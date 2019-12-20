@@ -183,12 +183,43 @@ void ObjRevolucion::switchTapas(bool &tapas){
    tapas = !tapas;
 }
 
+
+void ObjRevolucion::calcularCoordenadas(std::vector<Tupla3f> perfil_original, int num_instancias){
+   calcularPerfil(perfil_original);
+   std::vector<Tupla2f>aux;
+
+   for(float i = 0;i<num_instancias;i++){
+      for(float j=0;j<perfil_original.size();j++){
+         aux.push_back({i/num_instancias,(float)distancias[j]/distancias[perfil_original.size()-1]});
+      }
+   }
+
+   for(int i = aux.size()-1;i>0;i--)
+      ct.push_back(aux[i]);
+      
+}
+
+double ObjRevolucion::calcularVertices(Tupla3f a, Tupla3f b){
+   return sqrt((pow(a(0)-b(0),2)) + (pow(a(1)-b(1),2)) + (pow(a(2)-b(2),2)));
+}
+
+void ObjRevolucion::calcularPerfil(std::vector<Tupla3f> perfil_original){
+   distancias.clear();
+   distancias.resize(perfil_original.size()+1);
+   distancias[0] = 0;
+
+   for(int i= 1;i<perfil_original.size();i++)
+      distancias[i] = distancias[i-1] + calcularVertices(perfil_original[i-1],perfil_original[i]);
+      
+}
+
 // *****************************************************************************
 // Función principal que crea la malla del objeto
 // *****************************************************************************
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf) {
    Tupla3f tapaInf, tapaSup;
+   N = num_instancias, M = perfil_original.size();
    if(perfil_original[0](1) < perfil_original[perfil_original.size()-1](1))
       perfil_original = crearPuntosReversos(perfil_original);
    
@@ -203,4 +234,8 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, int num_ins
       this->crearTapaSup(perfil_original,num_instancias);
    if(tapa_inf)
       this->crearTapaInf(perfil_original,num_instancias);
+   
+   if(ct.empty())
+      calcularCoordenadas(perfil_original,num_instancias);
+      
 }

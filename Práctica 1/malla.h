@@ -58,7 +58,9 @@ class Malla3D
 
    void setTextura(Textura tex);
 
-   void setPosicion(Tupla3i pos){posicion(0) = pos(0); posicion(1) = pos(1); posicion(2) = pos(2);};
+   void setPosicion(Tupla3i pos);
+
+   inline void setCoordenadasTextura(std::vector<Tupla2f> texturas){ct = texturas;};
 
    virtual void calcularCoordenadas(){};
    

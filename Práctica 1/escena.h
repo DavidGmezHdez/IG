@@ -13,6 +13,7 @@
 #include "cilindro.h"
 #include "cono.h"
 #include "esfera.h"
+#include "semiesfera.h"
 #include "material.h"
 #include "luz.h"
 #include "luzdireccional.h"
@@ -57,13 +58,15 @@ class Escena
     ObjRevolucion* cilindro = nullptr;
     ObjRevolucion* esfera = nullptr;
     Cuadro* cuadro = nullptr;
+    Cuadro* suelo = nullptr;
     AlaX* alaX = nullptr;
+    Semiesfera* semiesfera = nullptr;
 
     //Materiales
     Material oro,plata,bronce,negro;
 
     //Texturas
-    Textura  madera;
+    Textura  madera,lata,hierba,planeta,poster;
 
     //Luces
     Luz*  luces[8] = {nullptr};

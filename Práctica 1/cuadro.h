@@ -15,9 +15,11 @@
 
 class Cuadro : public Malla3D
 {
+    float lado;
     public:
-        Cuadro();
+        Cuadro(float l = 1);
         void calcularCoordenadas();
+        inline float getLado(){return lado;};
 };
 
 #endif

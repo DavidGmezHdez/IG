@@ -243,6 +243,13 @@ void Malla3D::setTextura(Textura tex){
    this->t = new Textura(tex);
 }
 
+void Malla3D::setPosicion(Tupla3i pos){
+   posicion(0) = pos(0);
+   posicion(1) = pos(1);
+   posicion(2) = pos(2);
+   glTranslatef(posicion(0),posicion(1),posicion(2));
+}
+
 // -----------------------------------------------------------------------------
 // Función que calcula las coordenadas para las texturas
 // -----------------------------------------------------------------------------
@@ -262,12 +269,15 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
    if(m!=nullptr)
       m->aplicar();
 
+   if(ct.empty() && t!=nullptr)
+      calcularCoordenadas();
+
    if(t!=nullptr)
       t->activar();
- 
+ /*
    if(nv.empty())
       this->calcularNormales();
-
+*/
    if(puntos){
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
       if(ajedrez)
