@@ -41,7 +41,7 @@ class ObjRevolucion : public Malla3D
     const float PI = 3.141592653;
     void crearMalla(std::vector<Tupla3f> perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf);
     
-    void crearPuntos(std::vector<Tupla3f> perfil_original,int num_instancias,bool tapaSup, bool tapaInf);
+    virtual void crearPuntos(std::vector<Tupla3f> perfil_original,int num_instancias,bool tapaSup, bool tapaInf);
     std::vector<Tupla3f> crearPuntosReversos(std::vector<Tupla3f> perfil_original);
     
     virtual void crearTriangulos(std::vector<Tupla3f> perfil_original,int num_instancias);

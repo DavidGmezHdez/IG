@@ -250,15 +250,15 @@ void Escena::dibujar()
          suelo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          glDisable(GL_TEXTURE_2D);
-/*
+
          glPushMatrix();
          //semiesfera->setPosicion({100,0,100});
-         glScalef(100,100,100);
-         glRotatef(180,1,0,0);
+         glScalef(5,5,5);
+         //glRotatef(180,1,0,0);
          semiesfera->setColor(1,0,1);
          semiesfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
-         */
+         
 
          glPushMatrix();
          alaX->setColor(0.7,0.7,0.7);
