@@ -61,12 +61,6 @@ class Malla3D
    void setPosicion(Tupla3i pos){posicion(0) = pos(0); posicion(1) = pos(1); posicion(2) = pos(2);};
 
    virtual void calcularCoordenadas(){};
-
-   virtual void switchTapas(bool &tapas){};
-
-   virtual void animacionAutomatica(){};
-
-   virtual void animacionManual(int grado, float incremento){};
    
    protected:
 

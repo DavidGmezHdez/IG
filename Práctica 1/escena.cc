@@ -17,25 +17,25 @@ Escena::Escena()
 
    //Creacion de objetos
    //Tetrahedro
-   mallas[0] = new Tetraedro();
+   tetraedro = new Tetraedro();
    //Cubo
-   mallas[1] = new Cubo();
+   cubo = new Cubo();
    //Peon
-   mallas[2] = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
+   peon = new ObjRevolucion("plys/peon.ply",30,tapas,tapas);
    //Hormiga
-   mallas[3] = new ObjPLY("plys/ant.ply");
+   hormiga = new ObjPLY("plys/ant.ply");
    //Cilindro
-   mallas[4] = new Cilindro(50,25,10);
+   cilindro = new Cilindro(50,25,10);
    //Esfera
-   mallas[5] = new Esfera(50,50,10);
+   esfera = new Esfera(50,50,10);
    //Cuadro
-   mallas[6] = new Cuadro();
+   cuadro = new Cuadro();
    //AlaX
-   mallas[7] = new AlaX();
+   alaX = new AlaX();
 
    //Creacion de materiales
-   plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.0, 0.0,0.0, 1.0},128.0);//Sin brillos especulares
-   oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.0, 0.0, 0.0, 0.1},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
+   plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.508273, 0.508273,0.508273, 1.0},128.0);//Sin brillos especulares
+   oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.75164, 0.60648, 0.22648	, 1.0},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
 
@@ -59,25 +59,21 @@ Escena::Escena()
    grado = -1;
 
    //Aplicacion de materiales
-   for(int i=0,j=0;i<8;i++,j++){
-      switch(j%3){
-         case 0:
-            mallas[i]->setMaterial(bronce);
-            break;
-         case 1:
-            mallas[i]->setMaterial(plata);
-            break;
-         case 2:
-            mallas[i]->setMaterial(oro);
-            break;
-      }
-   }
+   tetraedro->setMaterial(bronce);
+   cubo->setMaterial(plata);
+   peon->setMaterial(plata);
+   hormiga->setMaterial(bronce);
+   cilindro->setMaterial(oro);
+   esfera->setMaterial(bronce);
+   cuadro->setMaterial(plata);
+   alaX->setMaterial(plata);
+
    
    //Aplicacion de texturas
-   mallas[6]->calcularCoordenadas();
-   mallas[6]->setTextura(madera);
-   mallas[1]->calcularCoordenadas();
-   mallas[1]->setTextura(madera);
+   cuadro->calcularCoordenadas();
+   cuadro->setTextura(madera);
+   cubo->calcularCoordenadas();
+   cubo->setTextura(madera);
 
    //Declaracion variables seleccion
    objeto = -1;
@@ -149,70 +145,69 @@ void Escena::dibujar()
          glPushMatrix();
          glTranslatef(100,0,0);
          glScalef(25,25,25);
-         mallas[0]->setColor(0,0,1);
-         mallas[0]->setPosicion({100,0,0});
-         mallas[0]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         tetraedro->setColor(0,0,1);
+         tetraedro->setPosicion({100,0,0});
+         tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,100);
          glScalef(25,25,25);
-         mallas[1]->setColor(0,1,0);
-         mallas[1]->setPosicion({-100,0,100});
-         mallas[1]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         cubo->setColor(0,1,0);
+         cubo->setPosicion({-100,0,100});
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          glScalef(25.0,25.0,25.0);
-         mallas[2]->setColor(1,0,0);
-         mallas[2]->setPosicion({0,0,0});
-         mallas[2]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         peon->setColor(1,0,0);
+         peon->setPosicion({0,0,0});
+         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,0);
          glScalef(3,3,3);
-         mallas[3]->setColor(1,0,1);
-         mallas[3]->setPosicion({-100,0,0});
-         mallas[3]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         hormiga->setColor(1,0,1);
+         hormiga->setPosicion({-100,0,0});
+         hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          glTranslatef(-100,0,-100);
          glScalef(3,3,3);
-         mallas[4]->setColor(0,0,1);
-         mallas[4]->setPosicion({-100,0,-100});
-         mallas[4]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         cilindro->setColor(0,0,1);
+         cilindro->setPosicion({-100,0,-100});
+         cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          glTranslatef(100,0,100);
          glScalef(5,5,5);
-         mallas[5]->setColor(1,0,1);
-         mallas[5]->setPosicion({100,0,100});
-         mallas[5]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         esfera->setColor(1,0,1);
+         esfera->setPosicion({100,0,100});
+         esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
       case 2:
          glEnable(GL_TEXTURE_2D);
          glPushMatrix();
-         mallas[6]->setColor(1,0,0);
-         mallas[6]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         cuadro->setColor(1,0,0);
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glTranslatef(-100,0,100);
          glScalef(25,25,25);
-         mallas[1]->setColor(0,1,0);
-         mallas[1]->setPosicion({-100,0,100});
-         mallas[1]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         cubo->setColor(0,1,0);
+         cubo->setPosicion({-100,0,100});
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
 
          glDisable(GL_TEXTURE_2D);
          break;
       case 3:
          glPushMatrix();
-         mallas[7]->setColor(1,0,0);
-         mallas[7]->setPosicion({0,0,0});
-         mallas[7]->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         alaX->setColor(0.7,0.7,0.7);
+         alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
    }
@@ -227,7 +222,7 @@ void Escena::dibujar()
 
 void Escena::animarModeloJerarquico(){
    if(animacionAutomatica)
-      mallas[7]->animacionAutomatica();
+      alaX->animacionAutomatica();
 
    if(animacionLuz)
       luces[0]->animarLuz();
@@ -250,7 +245,8 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
          }
          break;
       case GLUT_LEFT_BUTTON:
-         boton = true;
+         if(estado == GLUT_DOWN)
+            boton = true;  
          break;
       case 3:
          if(estado == GLUT_UP)
@@ -271,10 +267,18 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
 //**************************************************************************
 void Escena::ratonMovido(int x, int y){
    if(!boton){
-      camaras[numCamaraActiva]->rotarXPrimeraPersona((x-xraton)*0.1);
-      camaras[numCamaraActiva]->rotarYPrimeraPersona((y-yraton)*0.1);
-      xraton = x;
-      yraton = y;
+         if(objetoSeleccionado){
+            camaras[numCamaraActiva]->rotarXExaminar((x-xraton)*0.1);
+            camaras[numCamaraActiva]->rotarYExaminar((y-yraton)*0.1);
+            xraton = x;
+            yraton = y;
+         }
+         else{
+            camaras[numCamaraActiva]->rotarXPrimeraPersona((x-xraton)*0.1);
+            camaras[numCamaraActiva]->rotarYPrimeraPersona((y-yraton)*0.1);
+            xraton = x;
+            yraton = y;
+         }
    }
    else{
       xpixel = x;
@@ -284,14 +288,52 @@ void Escena::ratonMovido(int x, int y){
 }
 
 
-void Escena::seleccionarObjetivo(int obj){
+void Escena::guardarCloresSeleccion(bool estado){
+   if(estado){
+      coloresAux.push_back(tetraedro->getColor());
+      coloresAux.push_back(cubo->getColor());
+      coloresAux.push_back(peon->getColor());
+      coloresAux.push_back(hormiga->getColor());
+      coloresAux.push_back(cilindro->getColor());
+      coloresAux.push_back(esfera->getColor());
+      coloresAux.push_back(cuadro->getColor());
+      coloresAux.push_back(alaX->getColor());
+   }
+   else{
+      tetraedro->setColor(coloresAux[0](0),coloresAux[0](1),coloresAux[0](2));
+      cubo->setColor(coloresAux[1](0),coloresAux[1](1),coloresAux[1](2));
+      peon->setColor(coloresAux[2](0),coloresAux[2](1),coloresAux[2](2));
+      hormiga->setColor(coloresAux[3](0),coloresAux[3](1),coloresAux[3](2));
+      cilindro->setColor(coloresAux[4](0),coloresAux[4](1),coloresAux[4](2));
+      esfera->setColor(coloresAux[5](0),coloresAux[5](1),coloresAux[5](2));
+      cuadro->setColor(coloresAux[6](0),coloresAux[6](1),coloresAux[6](2));
+      alaX->setColor(coloresAux[7](0),coloresAux[7](1),coloresAux[7](2));
+   }
+}
+
+void Escena::asignarCloresSeleccion(){
+   tetraedro->setColor(0.1,0,0);
+   cubo->setColor(0.2,0,0);
+   peon->setColor(0.3,0,0);
+   hormiga->setColor(0.4,0,0);
+   cilindro->setColor(0.5,0,0);
+   esfera->setColor(0.6,0,0);
+   cuadro->setColor(0.7,0,0);
+   alaX->setColor(0.8,0,0);
+}
+
+
+
+void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    if(objsel != obj){
       objsel = obj;
-      camaras[numCamaraActiva]->setAt(mallas[obj]->getPosicion());
+      camaras[numCamaraActiva]->setAt(malla->getPosicion());
+      objetoSeleccionado = true;
    }
    else{
       objeto = -1;
       camaras[numCamaraActiva]->setAt({0,0,0});
+      objetoSeleccionado = false;
    }
 }
 
@@ -304,17 +346,9 @@ void Escena::dibujaSeleccion(){
    glDisable(GL_LIGHTING);
    puntos = false, lineas = false, solido = true, ajedrez = false, luz = false;
 
-   vector<Tupla3f> coloresAux;
+   guardarCloresSeleccion(false);
 
-   for(int i=0;i<8;i++){
-      coloresAux.push_back(mallas[i]->getColor());
-   }
-
-   float j=0.0;
-   for(int i=0;i<8;i++){
-      mallas[i]->setColor(j,0,0);
-      j+=0.1;
-   }
+   asignarCloresSeleccion();
 
    GLint viewport[4];
    GLubyte pixel[3];
@@ -325,26 +359,24 @@ void Escena::dibujaSeleccion(){
 
 
    if(round(pixel[0]*10)/10 == 0.0)
-      seleccionarObjetivo(0);
+      seleccionarObjetivo(0,tetraedro);
    else if(round(pixel[0]*10)/10 == 0.1)
-      seleccionarObjetivo(1);
+      seleccionarObjetivo(1,cubo);
    else if(round(pixel[0]*10)/10 == 0.2)
-      seleccionarObjetivo(2);
+      seleccionarObjetivo(2,peon);
    else if(round(pixel[0]*10)/10 == 0.3)
-      seleccionarObjetivo(3);
+      seleccionarObjetivo(3,hormiga);
    else if(round(pixel[0]*10)/10 == 0.4)
-      seleccionarObjetivo(4);
+      seleccionarObjetivo(4,cilindro);
    else if(round(pixel[0]*10)/10 == 0.5)
-      seleccionarObjetivo(5);
+      seleccionarObjetivo(5,esfera);
    else if(round(pixel[0]*10)/10 == 0.6)
-      seleccionarObjetivo(6);
+      seleccionarObjetivo(6,cuadro);
    else if(round(pixel[0]*10)/10 == 0.7)
-      seleccionarObjetivo(7);
+      seleccionarObjetivo(7,alaX);
 
    //Volvemos a ponerle los colores
-   for(int i=0;i<8;i++){
-      mallas[i]->setColor(coloresAux[i](0),coloresAux[i](1),coloresAux[i](2));
-   }
+   guardarCloresSeleccion(false);
 
 }
 
@@ -436,7 +468,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             if(!animacionAutomatica){
                modoMenu = SELANIMAUTO;
                animacionAutomatica = true;
-               mallas[7]->setPosicion({-700,700,-700});
+               alaX->setPosicion({-700,700,-700});
                cout<<"Animando modelo jerárquico automáticamente"<<endl; 
             }
          }
@@ -474,8 +506,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       
       case 'T':
          if(modoMenu == SELVISUALIZACION){
-            mallas[2]->switchTapas(tapas);
-            mallas[4]->switchTapas(tapas);
+            cilindro->switchTapas(tapas);
+            peon->switchTapas(tapas);
             cout<<"Activando/Desactivando tapas"<<endl; 
          }
          break;
@@ -707,7 +739,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             if(!animacionAutomatica){
                inc = 1.0;
-               mallas[7]->animacionManual(grado,inc);
+               alaX->animacionManual(grado,inc);
             }
          }
          break;
@@ -716,7 +748,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             if(!animacionAutomatica){
                inc = -1.0;
-               mallas[7]->animacionManual(grado,inc);
+               alaX->animacionManual(grado,inc);
             }
          }
          break;

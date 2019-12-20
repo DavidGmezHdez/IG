@@ -50,7 +50,14 @@ class Escena
     menu modoMenu=NADA;
     // Objetos de la escena
     Ejes ejes;
-    Malla3D* mallas[8]= {nullptr};
+    Tetraedro* tetraedro = nullptr;
+    Cubo* cubo = nullptr;
+    ObjRevolucion* peon = nullptr;
+    ObjPLY* hormiga = nullptr;
+    ObjRevolucion* cilindro = nullptr;
+    ObjRevolucion* esfera = nullptr;
+    Cuadro* cuadro = nullptr;
+    AlaX* alaX = nullptr;
 
     //Materiales
     Material oro,plata,bronce,negro;
@@ -79,9 +86,10 @@ class Escena
     bool puntos = false, lineas = false, solido = false, ajedrez = false, tapas = true, luz = false, camara = false;
     bool angulo,objeto,animacionAutomatica,animacionManual,animacionLuz;
 
-    //Parametros raton
+    //Variables seleccion
     bool boton,objetoSeleccionado = false; //false->derecho, true->izquierdo
     int xraton, yraton,xpixel, ypixel, objsel;
+    vector<Tupla3f> coloresAux;
 
     public:
 
@@ -106,7 +114,9 @@ class Escena
 
         //Funciones de seleccion
         void dibujaSeleccion();
-        void seleccionarObjetivo(int obj);
+        void seleccionarObjetivo(int obj,Malla3D* malla);
+        void asignarCloresSeleccion();
+        void guardarCloresSeleccion(bool estado);
 
 };
 #endif
