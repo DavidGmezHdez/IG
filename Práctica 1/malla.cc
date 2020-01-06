@@ -274,10 +274,10 @@ void Malla3D::draw(bool modoDibujado,bool points,bool lines,bool fill, bool ches
 
    if(t!=nullptr)
       t->activar();
- /*
+ 
    if(nv.empty())
       this->calcularNormales();
-*/
+
    if(puntos){
       glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
       if(ajedrez)

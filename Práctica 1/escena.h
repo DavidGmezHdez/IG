@@ -13,7 +13,6 @@
 #include "cilindro.h"
 #include "cono.h"
 #include "esfera.h"
-#include "semiesfera.h"
 #include "material.h"
 #include "luz.h"
 #include "luzdireccional.h"
@@ -21,7 +20,7 @@
 #include "textura.h"
 #include "cuadro.h"
 #include "camara.h"
-
+#include "skybox.h"
 
 using namespace std;
 
@@ -60,13 +59,13 @@ class Escena
     Cuadro* cuadro = nullptr;
     Cuadro* suelo = nullptr;
     AlaX* alaX = nullptr;
-    Semiesfera* semiesfera = nullptr;
+    Skybox * skybox = nullptr;
 
     //Materiales
     Material oro,plata,bronce,negro;
 
     //Texturas
-    Textura  madera,lata,hierba,planeta,poster;
+    Textura  madera,lata,hierba,planeta,poster,cielo;
 
     //Luces
     Luz*  luces[8] = {nullptr};
@@ -97,6 +96,12 @@ class Escena
     public:
 
         Escena();
+        void creacionObjetos();
+        void creacionAuxiliares();
+        void asignacionColores();
+        void asignacionMateriales();
+        void asignacionTexturas();
+
         void inicializar( int UI_window_width, int UI_window_height );
         void redimensionar( int newWidth, int newHeight ) ;
 
@@ -118,8 +123,8 @@ class Escena
         //Funciones de seleccion
         void dibujaSeleccion();
         void seleccionarObjetivo(int obj,Malla3D* malla);
-        void asignarCloresSeleccion();
-        void guardarCloresSeleccion(bool estado);
+        void asignarColoresSeleccion();
+        void guardarColoresSeleccion(bool estado);
 
 };
 #endif

@@ -2,27 +2,25 @@
 
 
 Cuadro::Cuadro(float lado){
-    this->lado = lado;
-    Tupla3f v0(0.0,0.0,0.0), v1(this->lado, 0.0, 0.0), v2(0.0,this->lado, 0.0), v3(this->lado, this->lado, 0.0);
+// Vertices
+    Tupla3f v0(-lado/2,lado/2,0.0),  v1(-lado/2,-lado/2,0.0),  v2(lado/2,-lado/2,0.0),  v3(lado/2,lado/2,0.0);
    
-    v.push_back(v0);
-    v.push_back(v1);
-    v.push_back(v2);
-    v.push_back(v3);
+   v.push_back(v0);
+   v.push_back(v1);
+   v.push_back(v2);
+   v.push_back(v3);
 
-    Tupla3i f0(2,0,1),f1(1,3,2);
-    f.push_back(f0);
-    f.push_back(f1);
+   // Triangulos
+   Tupla3i  f0(0,1,3), f1(1,2,3);
 
-    Tupla3f c0(1.0, 0.0, 0.0), c1(1.0, 0.0, 0.0), c2(1.0, 0.0, 0.0), c3(1.0, 0.0, 0.0);
-    c.push_back(c0);
-    c.push_back(c1);
-    c.push_back(c2);
-    c.push_back(c3);
-
+   f.push_back(f0);
+   f.push_back(f1);
 }
 
-void Cuadro::calcularCoordenadas(){   
-    Tupla2f c0(0,0),c1(1.0,0.0),c2(0.0,1.0),c3(1.0,1.0);
-    ct.push_back(c3); ct.push_back(c2); ct.push_back(c1); ct.push_back(c0);
+void Cuadro::calcularCoordenadas(){
+    ct.resize(4);
+    ct[0] = {0,0};
+    ct[1] = {0,1};
+    ct[2] = {1,1};
+    ct[3] = {1,0};
 }

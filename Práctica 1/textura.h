@@ -18,7 +18,7 @@
 class Textura{
     private:
         GLuint textura_id = 0;
-        std::vector<unsigned char*> data;
+        unsigned char* data;
         jpg::Imagen * pimg = nullptr;
         int ancho, alto;
     public:

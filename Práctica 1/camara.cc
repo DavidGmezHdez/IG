@@ -14,19 +14,28 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
     this->far=3000;
 
 
-    //Vector direccion
+    /*
+    VectorDir es el vector VPN, y sería, por decirlo de una forma intuitiva,
+    el eje Z de nuestro sistema de coordenadas de vista.
+    */
     vectorDir = {at(0) - eye(0), at(1) - eye(1), at(2) - eye(2)};
-
-    //Eje X
-    vectorX = {(vectorDir(1)*up(2)) - (vectorDir(2)*up(1)),
-                (vectorDir(2)*up(0)) - (vectorDir(0)*up(2)),
-                (vectorDir(0)*up(1)) - (vectorDir(1)*up(1))};
+    /*
+    VectorX sería el eje X de nuestro sistema de coordenadas de vista
+    (digamos “el que marca el sentido hacia la derecha”) y es
+    perpendicular al plano que forman VUP y VPN, por tanto, se
+    calcula como el resultado normalizado del producto vectorial
+    entre éstos dos vectores. ¡Ojo que el orden afecta!
+    */
+    vectorX = vectorDir.cross(this->up);
     vectorX = vectorX.normalized();
-    //Eje Y
-    vectorY = {(vectorDir(2)*vectorX(1)) - (vectorDir(1)*vectorX(2)),
-                (vectorDir(0)*vectorX(2)) - (vectorDir(2)*vectorX(0)),
-                (vectorDir(1)*vectorX(0)) - (vectorDir(0)*vectorX(1))};
+    /*
+    VectorY sería el eje Y del sistema de coordenadas de vista, y es
+    ortogonal a n y u, por lo que su cálculo es también mediante el
+    producto vectorial de estos dos ejes:
+    */
+    vectorY = vectorX.cross(this->vectorDir);
     vectorY = vectorY.normalized();
+    
 }
 
 
@@ -51,7 +60,7 @@ Tupla3f Camara::cambiarMatriz(Tupla3f eje, Tupla3f vector, float angulo){
 
 void Camara::rotarPP(float angulo, int eje){
 
-    Tupla3f auxAt;
+    Tupla3f auxAt,auxUp;
 
     vectorDir = {at(0) - eye(0), at(1) - eye(1), at(2) - eye(2)};
 
@@ -60,10 +69,12 @@ void Camara::rotarPP(float angulo, int eje){
     switch(eje){
         case 0:
             auxAt = cambiarMatriz(vectorY,vectorDir,angulo);
+            auxUp = cambiarMatriz(vectorY,up,angulo);
             vectorX = cambiarMatriz(vectorY,vectorX,angulo);
             break;
         case 1:
             auxAt = cambiarMatriz(vectorX,vectorDir,angulo);
+            auxUp = cambiarMatriz(vectorX,up,angulo);
             vectorY = cambiarMatriz(vectorX,vectorY,angulo);
             break;
     }
@@ -73,10 +84,13 @@ void Camara::rotarPP(float angulo, int eje){
     at(1) = auxAt(1) + eye(1);
     at(2) = auxAt(2) + eye(2);
 
+    //Cambiamos el up
+    this->up = auxUp;
+
 }
 
 void Camara::rotarE(float angulo, int eje){
-    Tupla3f auxVectorDir , auxAt;
+    Tupla3f auxVectorDir , auxAt, auxUp;
 
     auxVectorDir = {eye(0) - at(0), eye(1) - at(1), eye(2) - at(2)};
 
@@ -85,10 +99,12 @@ void Camara::rotarE(float angulo, int eje){
     switch(eje){
         case 0:
             auxVectorDir = cambiarMatriz(vectorY,auxVectorDir,angulo);
+            auxUp = cambiarMatriz(vectorY,up,angulo);
             vectorX = cambiarMatriz(vectorY,vectorX,angulo);
             break;
         case 1:
             auxVectorDir = cambiarMatriz(vectorX,auxVectorDir,angulo);
+            auxUp = cambiarMatriz(vectorX,up,angulo);
             vectorY = cambiarMatriz(vectorX,vectorY,angulo);
             break;
     }
@@ -97,6 +113,9 @@ void Camara::rotarE(float angulo, int eje){
     eye(0) = at(0) + auxVectorDir(0);
     eye(1) = at(1) + auxVectorDir(1);
     eye(2) = at(2) + auxVectorDir(2);
+
+    //Cambiamos el up
+    this->up = auxUp;
 
 }
 
@@ -145,7 +164,7 @@ void Camara::setObserver(){
 void Camara::setProyeccion(){
     switch(tipo){
         case 1:
-            gluPerspective(fov,aspect,near,far);
+            glFrustum(-left, left, -top, top, near, far);
             break;
         case 2:
             glOrtho(-left, left, -top, top, near, far);

@@ -1,20 +1,12 @@
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 
+
+
 //**************************************************************************
-// constructor de la escena (no puede usar ordenes de OpenGL)
+// constructores de objetos
 //**************************************************************************
-
-Escena::Escena()
-{
-   Front_plane       = 50.0;
-   Back_plane        = 2000.0;
-   Observer_distance = 4*Front_plane;
-   Observer_angle_x  = 0.0 ;
-   Observer_angle_y  = 0.0 ;
-
-   ejes.changeAxisSize( 5000 );
-
+void Escena::creacionObjetos(){
    //Creacion de objetos
    //Tetrahedro
    tetraedro = new Tetraedro();
@@ -32,11 +24,16 @@ Escena::Escena()
    cuadro = new Cuadro(100);
    //AlaX
    alaX = new AlaX();
-
+   //Suelo
    suelo = new Cuadro(2500);
 
-   semiesfera = new Semiesfera(50,50,10);
+   skybox = new Skybox();
 
+}
+//**************************************************************************
+// constructores de auxiliares
+//**************************************************************************
+void Escena::creacionAuxiliares(){
    //Creacion de materiales
    plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.508273, 0.508273,0.508273, 1.0},128.0);//Sin brillos especulares
    oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.75164, 0.60648, 0.22648	, 1.0},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
@@ -49,6 +46,7 @@ Escena::Escena()
    hierba = Textura("archivosP5/text-hierba.jpg",3);
    planeta = Textura("archivosP5/textura-planeta-tierra.jpg",4);
    poster = Textura("archivosP5/text-cuadro.jpg",5);
+   cielo = Textura("archivosP5/text-cielo.jpg",6);
 
    //Creacion de luces
    luces[0] = new LuzPosicional(GL_LIGHT1,{-100, 100, 100},{0.0,0.0,0.0,1.0},{1.0,1.0,1.0,1.0},{1.0,1.0,1.0,1.0});
@@ -59,13 +57,28 @@ Escena::Escena()
    camaras[1] = new Camara(2,{-200,-200,-200}, {0,0,0},{0,1,0},500, 500);
    camaras[2] = new Camara(1,{200,-200,0}, {0,0,0}, {0,1,0},100, 100);
    camaras[3] = new Camara(2, {-200,0,0}, {0,0,0}, {0,1,0},200, 200);
-   
-   numCamaraActiva = 0;
+}
 
-   //Modificando los parámetros para la animacion
-   animacionAutomatica = animacionManual = animacionLuz = false;
-   grado = -1;
+//**************************************************************************
+// setcolors para los objetos y no tener que hacerlos en el draw
+//**************************************************************************
+void Escena::asignacionColores(){
+   tetraedro->setColor(0,0,1);
+   cubo->setColor(0,1,0);
+   peon->setColor(1,0,0);
+   hormiga->setColor(1,0,1);
+   cilindro->setColor(0,0,1);
+   esfera->setColor(1,0,1);
+   cuadro->setColor(1,0,0);
+   suelo->setColor(1,0,0);
+   alaX->setColor(0.7,0.7,0.7);
+   skybox->setColor(1.0,0,0);
+}
 
+//**************************************************************************
+// setmaterial para los objetos y no tener que hacerlos en el draw
+//**************************************************************************
+void Escena::asignacionMateriales(){
    //Aplicacion de materiales
    tetraedro->setMaterial(bronce);
    cubo->setMaterial(plata);
@@ -76,15 +89,19 @@ Escena::Escena()
    cuadro->setMaterial(plata);
    alaX->setMaterial(plata);
    suelo->setMaterial(plata);
-   semiesfera->setMaterial(bronce);
+   skybox->setMaterial(bronce);
 
-   
+}
+//**************************************************************************
+// settextura para los objetos y no tener que hacerlos en el draw
+//**************************************************************************
+void Escena::asignacionTexturas(){
    //Aplicacion de texturas
    cuadro->setTextura(poster);
    cubo->setTextura(madera);
    cilindro->setTextura(lata);
    esfera->setTextura(planeta);
-   semiesfera->setTextura(planeta);
+   skybox->setTextura(cielo);
 
    std::vector<Tupla2f> texturasSuelo;
    texturasSuelo.push_back({0,0});
@@ -93,6 +110,37 @@ Escena::Escena()
    texturasSuelo.push_back({1000,1000});
    suelo->setCoordenadasTextura(texturasSuelo);
    suelo->setTextura(hierba);
+}
+
+
+//**************************************************************************
+// constructor de la escena (no puede usar ordenes de OpenGL)
+//**************************************************************************
+Escena::Escena()
+{
+   Front_plane       = 50.0;
+   Back_plane        = 2000.0;
+   Observer_distance = 4*Front_plane;
+   Observer_angle_x  = 0.0 ;
+   Observer_angle_y  = 0.0 ;
+
+   ejes.changeAxisSize( 5000 );
+
+   creacionObjetos();
+
+   creacionAuxiliares();
+
+   asignacionColores();
+
+   asignacionMateriales();
+
+   asignacionTexturas();
+
+   numCamaraActiva = 0;
+
+   //Modificando los parámetros para la animacion
+   animacionAutomatica = animacionManual = animacionLuz = false;
+   grado = -1;
 
    //Declaracion variables seleccion
    objeto = -1;
@@ -141,9 +189,6 @@ void Escena::dibujar()
    
    ejes.draw();
    
-
-
-   
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
          glEnable(GL_LIGHTING);
@@ -171,56 +216,49 @@ void Escena::dibujar()
          glPushMatrix();
          tetraedro->setPosicion({100,0,0});
          glScalef(25,25,25);
-         tetraedro->setColor(0,0,1);
          tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          cubo->setPosicion({-100,0,100});
          glScalef(25,25,25);
-         cubo->setColor(0,1,0);
          cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          peon->setPosicion({0,0,0});
          glScalef(25.0,25.0,25.0);
-         peon->setColor(1,0,0);
          peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          hormiga->setPosicion({-100,0,0});
          glScalef(3,3,3);
-         hormiga->setColor(1,0,1);
          hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          cilindro->setPosicion({-100,0,-100});
          glScalef(3,3,3);
-         cilindro->setColor(0,0,1);
          cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          esfera->setPosicion({100,0,100});
          glScalef(5,5,5);
-         esfera->setColor(1,0,1);
          esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          break;
       case 2:
          glEnable(GL_TEXTURE_2D);
          glPushMatrix();
-         cuadro->setColor(1,0,0);
+         cuadro->setPosicion({100,100,0});
          cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
          glPushMatrix();
          cubo->setPosicion({-100,0,100});
          glScalef(25,25,25);
-         cubo->setColor(0,1,0);
          cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
@@ -228,14 +266,12 @@ void Escena::dibujar()
          cilindro->setPosicion({50,50,50});
          glScalef(1.2,1.5,1.2);
          glRotatef(180,1,0,0);
-         cilindro->setColor(0,0,1);
          cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
          glPushMatrix();
          esfera->setPosicion({100,0,100});
          glScalef(2,2,2);
-         esfera->setColor(1,0,1);
          esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
@@ -243,25 +279,24 @@ void Escena::dibujar()
          break;
       case 3:
          glEnable(GL_TEXTURE_2D);
+
          glPushMatrix();
-         suelo->setColor(1,0,0);
          suelo->setPosicion({-suelo->getLado()/2,-18,suelo->getLado()/2});
          glRotatef(-90,1,0,0);
          suelo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
+
+         glPushMatrix();
+         glScalef(1000,1000,1000);
+         skybox->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
          glDisable(GL_TEXTURE_2D);
 
-         glPushMatrix();
-         //semiesfera->setPosicion({100,0,100});
-         glScalef(5,5,5);
-         //glRotatef(180,1,0,0);
-         semiesfera->setColor(1,0,1);
-         semiesfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
-         glPopMatrix();
-         
+       
+
 
          glPushMatrix();
-         alaX->setColor(0.7,0.7,0.7);
          alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
  
@@ -344,7 +379,7 @@ void Escena::ratonMovido(int x, int y){
 }
 
 
-void Escena::guardarCloresSeleccion(bool estado){
+void Escena::guardarColoresSeleccion(bool estado){
    if(!estado){
       coloresAux.push_back(tetraedro->getColor());
       coloresAux.push_back(cubo->getColor());
@@ -367,7 +402,7 @@ void Escena::guardarCloresSeleccion(bool estado){
    }
 }
 
-void Escena::asignarCloresSeleccion(){
+void Escena::asignarColoresSeleccion(){
    tetraedro->setColor(0.1,0,0);
    cubo->setColor(0.2,0,0);
    peon->setColor(0.3,0,0);
@@ -402,9 +437,9 @@ void Escena::dibujaSeleccion(){
    glDisable(GL_LIGHTING);
    puntos = false, lineas = false, solido = true, ajedrez = false, luz = false;
 
-   guardarCloresSeleccion(false);
+   guardarColoresSeleccion(false);
 
-   asignarCloresSeleccion();
+   asignarColoresSeleccion();
 
    GLint viewport[4];
    GLubyte pixel[3];
@@ -432,7 +467,7 @@ void Escena::dibujaSeleccion(){
       seleccionarObjetivo(7,alaX);
 
    //Volvemos a ponerle los colores
-   guardarCloresSeleccion(true);
+   guardarColoresSeleccion(true);
    xpixel = -1; ypixel = -1;
 
 }
@@ -882,6 +917,3 @@ void Escena::change_observer()
    if(camaras[numCamaraActiva]!=nullptr)
      camaras[numCamaraActiva]->setObserver();
 }
-
-//PROFESOR ME CAGO EN TODOS TUS MUERTOS LA PRACTICA ESTA DE LOS COJONES LA VA A HACER TU PUTA MADRE DESGRACIAO LUEGO TE TIRARARS
-//MEDIO AÑO PA CORREGIR VA CARLA MOSTRAME MEDIA TETA AUNQUE SEA SOY ALIADO UWU
