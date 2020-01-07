@@ -50,7 +50,15 @@ Skybox::Skybox(float lado){
 }
 
 void Skybox::calcularCoordenadas(){
-    Tupla2f c0(0,0),c1(1.0,0.0),c2(0.0,1.0),c3(1.0,1.0),c4(0,0),c5(1.0,0.0),c6(0.0,1.0),c7(1.0,1.0) ;
-    ct.push_back(c0); ct.push_back(c1); ct.push_back(c2); ct.push_back(c3);
-    ct.push_back(c4); ct.push_back(c5); ct.push_back(c6); ct.push_back(c7);
+    Tupla2f c0(0,0),c1(1.0,0.0),c2(1.0,1.0),c3(0.0,1.0),c4(0,0),c5(1.0,0.0),c6(1.0,1.0),c7(0.0,1.0);
+    ct.resize(8);
+    ct[0] = c0;
+    ct[1] = c2;
+    ct[2] = c1;
+    ct[3] = c3;
+    ct[4] = c7;
+    ct[5] = c6;
+    ct[6] = c5;
+    ct[7] = c4;
+    
 }

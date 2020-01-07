@@ -115,8 +115,6 @@ void Malla3D::draw_ModoDiferido(int modo)
    glTexCoordPointer(2,GL_FLOAT,0,0);
    glBindBuffer(GL_ARRAY_BUFFER,0);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-   
-
    glEnableClientState(GL_COLOR_ARRAY);
    
    switch(modo){
@@ -153,6 +151,8 @@ void Malla3D::draw_ModoDiferido(int modo)
 
 void Malla3D::draw_ajedrezInmediato(){
    glEnableClientState(GL_VERTEX_ARRAY);
+   //glEnable(GL_BLEND);
+   //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    glVertexPointer(3,GL_FLOAT,0,v.data());
    glEnableClientState(GL_COLOR_ARRAY);
 
@@ -185,6 +185,7 @@ void Malla3D::draw_ajedrezInmediato(){
    glDrawElements(GL_TRIANGLES, 3*impares.size(),GL_UNSIGNED_INT,impares.data());
 
    glDisableClientState(GL_COLOR_ARRAY);
+   //glDisable(GL_BLEND);
    glDisableClientState( GL_VERTEX_ARRAY );
    
 }

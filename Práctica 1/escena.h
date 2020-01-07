@@ -62,7 +62,7 @@ class Escena
     Skybox * skybox = nullptr;
 
     //Materiales
-    Material oro,plata,bronce,negro;
+    Material oro,plata,bronce,negro, cristal, blanco, rojo, azul;
 
     //Texturas
     Textura  madera,lata,hierba,planeta,poster,cielo;
@@ -124,7 +124,6 @@ class Escena
         void dibujaSeleccion();
         void seleccionarObjetivo(int obj,Malla3D* malla);
         void asignarColoresSeleccion();
-        void guardarColoresSeleccion(bool estado);
 
 };
 #endif

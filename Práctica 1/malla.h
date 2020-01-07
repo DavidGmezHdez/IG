@@ -74,7 +74,8 @@ class Malla3D
    std::vector<Tupla3i> f,fnotapas,impares, pares; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c, cimpares, cpares,cp,cl; //una terna 3 float por cada color
    std::vector<Tupla2f> ct;                        //Terna de 2 floats para textura 
-   Tupla3f posicion,color;                               //Terna de 2 ints para saber la posicion
+   Tupla3f posicion;                               //Terna de 3 floats para saber la posicion
+   Tupla3f color;                                  //Terna de 4 floats para saber el color
    bool puntos,lineas,solido,ajedrez;
    GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0,vbo_cp = 0,vbo_cl = 0, vbo_nv = 0,vbo_ct = 0;
    Material *m = nullptr;

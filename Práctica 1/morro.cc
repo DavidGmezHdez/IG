@@ -29,7 +29,10 @@ void Morro::draw(bool modoDibujado,bool points,bool lines,bool fill, bool chess)
             glTranslatef(6,12,0);
             glScalef(5.5,5.5,5.5);
             glRotatef(90,0,1,0);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
             cabina->draw(modoDibujado,points,lines,fill,chess);
+            glDisable(GL_BLEND);
         glPopMatrix();
 
         glPushMatrix();
@@ -62,27 +65,14 @@ void Morro::guardarTrenAterrizaje(int incremento){
 //void switchAterrizaje()
 
 //Modificadores de colores
-void Morro::setColor(float R,float G,float B){
-    setColorTorso(R,G,B);
-    setColorCabina(0.9,0.9,0.9);
-    setColorRemolque(0,0,0);
-    setColorBoca(0.5,0.5,0.5);
+void Morro::setColor(Tupla3f cabina,Tupla3f boca,Tupla3f remolque,Tupla3f torso){
+    this->cabina->setColor(cabina(0),cabina(1),cabina(2));
+    this->boca->setColor(boca(0),boca(1),boca(2));
+    this->rem->setColor(remolque(0),remolque(1),remolque(2));
+    this->torso->setColor(torso(0),torso(1),torso(2));
 }
 
-void Morro::setColorTorso(float R,float G,float B){
-    torso->setColor(R,G,B);
-}
 
-void Morro::setColorCabina(float R,float G,float B){
-    cabina->setColor(R,G,B);
-}
-
-void Morro::setColorRemolque(float R,float G,float B){
-    rem->setColor(R,G,B);
-}
-void Morro::setColorBoca(float R,float G,float B){
-    boca->setColor(R,G,B);
-}
 
 //Modificadores de materiales
 void Morro::setMaterial(Material mat){

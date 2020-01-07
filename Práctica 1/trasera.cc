@@ -90,53 +90,67 @@ void Trasera::girarAndroide(float incremento){
 }
 
 //Modificadores de colores
-void Trasera::setColor(float R,float G,float B){
-    setColorAlas(R,G,B);
-    setColorMotor(R,G,B);
+
+void Trasera::setColor(Tupla3f rotor, Tupla3f base, Tupla3f laser, Tupla3f canon,Tupla3f baseMotor, Tupla3f cola, Tupla3f androide){
+    setColorAlas(rotor,base,laser,canon);
+    setColorMotor(base,cola,androide);
 }
 
-void Trasera::setColorAlas(float R,float G,float B){
-    alaSupDer->setColorBase(R,G,B);
-    alaSupDer->setColorRotor(1,0,0);
-    alaSupDer->setColorLaser(0.2,0.2,0.2);
-    alaSupDer->setColorCanon(0,0,0);
+void Trasera::setColorAlas(Tupla3f rotor, Tupla3f base, Tupla3f laser, Tupla3f canon){
+    alaSupDer->setColorBase(base(0),base(1),base(2));
+    alaSupDer->setColorRotor(rotor(0),rotor(1),rotor(2));
+    alaSupDer->setColorLaser(laser(0),laser(1),laser(2));
+    alaSupDer->setColorCanon(canon(0),canon(1),canon(2));
 
-    alaSupIzq->setColorBase(R,G,B);
-    alaSupIzq->setColorRotor(1,0,0);
-    alaSupIzq->setColorLaser(0.2,0.2,0.2);
-    alaSupIzq->setColorCanon(0,0,0);
+    alaSupIzq->setColorBase(base(0),base(1),base(2));
+    alaSupIzq->setColorRotor(rotor(0),rotor(1),rotor(2));
+    alaSupIzq->setColorLaser(laser(0),laser(1),laser(2));
+    alaSupIzq->setColorCanon(canon(0),canon(1),canon(2));
     
-    alaInfDer->setColorBase(R,G,B);
-    alaInfDer->setColorRotor(1,0,0);
-    alaInfDer->setColorLaser(0.2,0.2,0.2);
-    alaInfDer->setColorCanon(0,0,0);
+    alaInfDer->setColorBase(base(0),base(1),base(2));
+    alaInfDer->setColorRotor(rotor(0),rotor(1),rotor(2));
+    alaInfDer->setColorLaser(laser(0),laser(1),laser(2));
+    alaInfDer->setColorCanon(canon(0),canon(1),canon(2));
 
-    alaInfIzq->setColorBase(R,G,B);
-    alaInfIzq->setColorRotor(1,0,0);
-    alaInfIzq->setColorLaser(0.2,0.2,0.2);
-    alaInfIzq->setColorCanon(0,0,0);
+    alaInfIzq->setColorBase(base(0),base(1),base(2));
+    alaInfIzq->setColorRotor(rotor(0),rotor(1),rotor(2));
+    alaInfIzq->setColorLaser(laser(0),laser(1),laser(2));
+    alaInfIzq->setColorCanon(canon(0),canon(1),canon(2));
 
 }
 
-void Trasera::setColorMotor(float R,float G,float B){
-    motor->setColorBase(R,G,B);
-    motor->setColorCola(0,0,0);
-    motor->setColorAndroide(0,0,1);
+void Trasera::setColorMotor(Tupla3f base, Tupla3f cola, Tupla3f androide){
+    motor->setColorBase(base(0),base(1),base(2));
+    motor->setColorCola(cola(0),cola(1),cola(2));
+    motor->setColorAndroide(androide(0),androide(1),androide(2));
 }
 
-//Modificadores de materiales
-void Trasera::setMaterial(Material mat){
-    setMaterialAlas(mat);
-    setMaterialMotor(mat);
+
+void Trasera::setMaterialAlas(Material rotor, Material base, Material laser, Material canon){
+    alaSupDer->setMaterialBase(base);
+    alaSupDer->setMaterialRotor(rotor);
+    alaSupDer->setMaterialLaser(laser);
+    alaSupDer->setMaterialCanon(canon);
+
+    alaSupIzq->setMaterialBase(base);
+    alaSupIzq->setMaterialRotor(rotor);
+    alaSupIzq->setMaterialLaser(laser);
+    alaSupIzq->setMaterialCanon(canon);
+
+    alaInfDer->setMaterialBase(base);
+    alaInfDer->setMaterialRotor(rotor);
+    alaInfDer->setMaterialLaser(laser);
+    alaInfDer->setMaterialCanon(canon);
+
+    alaInfIzq->setMaterialBase(base);
+    alaInfIzq->setMaterialRotor(rotor);
+    alaInfIzq->setMaterialLaser(laser);
+    alaInfIzq->setMaterialCanon(canon);
+
 }
 
-void Trasera::setMaterialAlas(Material mat){
-    alaSupDer->setMaterial(mat);
-    alaSupIzq->setMaterial(mat);
-    alaInfDer->setMaterial(mat);
-    alaInfIzq->setMaterial(mat);
-}
-
-void Trasera::setMaterialMotor(Material mat){
-    motor->setMaterial(mat);
+void Trasera::setMaterialMotor(Material base, Material cola, Material androide){
+    motor->setMaterialBase(base);
+    motor->setMaterialCola(cola);
+    motor->setMaterialAndroide(androide);
 }

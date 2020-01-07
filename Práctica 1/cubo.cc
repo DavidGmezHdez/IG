@@ -51,19 +51,6 @@ Cubo::Cubo(float lado)
    f.push_back(t11);
    f.push_back(t12);
 
-
-   //Inicializamos los colores
-
-   Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0), c5(200,0,0), c6(200,0,0), c7(200,0,0), c8(200,0,0);
-   c.push_back(c1);
-   c.push_back(c2);
-   c.push_back(c3);
-   c.push_back(c4);
-   c.push_back(c5);
-   c.push_back(c6);
-   c.push_back(c7);
-   c.push_back(c8);
-
 }
 
 void Cubo::calcularCoordenadas(){

@@ -19,14 +19,6 @@ Tetraedro::Tetraedro()
    f.push_back(t3);
    f.push_back(t4);
 
-
-
-   Tupla3f c1(200,0,0), c2(200,0,0), c3(200,0,0), c4(200,0,0);
-   c.push_back(c1);
-   c.push_back(c2);
-   c.push_back(c3); 
-   c.push_back(c4);
-
    // (es importante en cada cara ordenar los vértices en sentido contrario
    //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
 

@@ -54,14 +54,14 @@ class AlaX : public Malla3D
         void animacionManual(int grado, float incremento);
 
         //Modificadores colores
-        void setColor(float R,float G,float B);
-        void setColorTrasera(float R,float G,float B);
-        void setColorMorro(float R,float G,float B);
+        void setColor(Tupla3f cabina,Tupla3f torso, Tupla3f boca, Tupla3f remolque, Tupla3f rotor, Tupla3f base, Tupla3f canon, Tupla3f laser, Tupla3f basemotor, Tupla3f cola, Tupla3f androide);
 
         //Modificadores materiales
         void setMaterial(Material mat);
         void setMaterialTrasera(Material mat);
         void setMaterialMorro(Material mat);
+        void setMaterialGeneral(Material cabina, Material torso, Material boca, 
+        Material remolque, Material rotor, Material base, Material canon, Material laser, Material basemotor, Material cola, Material androide);
 };
 
 

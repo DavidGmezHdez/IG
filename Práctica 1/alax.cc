@@ -196,17 +196,9 @@ void AlaX::animacionManual(int grado, float incremento){
 
 
 //Modificadores colores
-void AlaX::setColor(float R,float G,float B){
-    setColorTrasera(R,G,B);
-    setColorMorro(R,G,B);
-}
-
-void AlaX::setColorTrasera(float R,float G,float B){
-    trasera->setColor(R,G,B);
-}
-
-void AlaX::setColorMorro(float R,float G,float B){
-    morro->setColor(R,G,B);
+void AlaX::setColor(Tupla3f cabina,Tupla3f torso, Tupla3f boca, Tupla3f remolque, Tupla3f rotor, Tupla3f base, Tupla3f canon, Tupla3f laser, Tupla3f basemotor, Tupla3f cola, Tupla3f androide){
+    this->morro->setColor(cabina,boca,remolque,torso);
+    this->trasera->setColor(rotor,base,laser,canon,basemotor,cola,androide);
 }
 
 //Modificadores materiales
@@ -221,4 +213,16 @@ void AlaX::setMaterialTrasera(Material mat){
 
 void AlaX::setMaterialMorro(Material mat){
     morro->setMaterial(mat);
+}
+
+
+void AlaX::setMaterialGeneral(Material cabina, Material torso, Material boca, Material remolque, Material rotor, Material base, Material canon, Material laser, Material basemotor, Material cola, Material androide){
+    morro->setMaterialCabina(cabina);
+    morro->setMaterialTorso(torso);
+    morro->setMaterialBoca(boca);
+    morro->setMaterialRemolque(remolque);
+
+    trasera->setMaterialAlas(rotor,base,laser,canon);
+    trasera->setMaterialMotor(base,cola,androide);
+
 }

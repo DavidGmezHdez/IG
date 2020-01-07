@@ -38,14 +38,13 @@ class Trasera : public Malla3D
         void girarAndroide(float incremento);
 
         //Modificadores de colores
-        void setColor(float R,float G,float B);
-        void setColorAlas(float R,float G,float B);
-        void setColorMotor(float R,float G,float B);
+        void setColor(Tupla3f rotor, Tupla3f base, Tupla3f laser, Tupla3f canon,Tupla3f baseMotor, Tupla3f cola, Tupla3f androide);
+        void setColorAlas(Tupla3f rotor, Tupla3f base, Tupla3f laser, Tupla3f canon);
+        void setColorMotor(Tupla3f base, Tupla3f cola, Tupla3f androide);
 
         //Modificadores de materiales
-        void setMaterial(Material mat);
-        void setMaterialAlas(Material mat);
-        void setMaterialMotor(Material mat);
+        void setMaterialAlas(Material rotor, Material base, Material laser, Material canon);
+        void setMaterialMotor(Material base, Material cola, Material androide);
 } ;
 
 #endif

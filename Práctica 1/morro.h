@@ -32,7 +32,7 @@ class Morro : public Malla3D
         void sacarTrenAterrizaje(int incremento);
         void guardarTrenAterrizaje(int incremento);
         //Modificadores de colores
-        void setColor(float R,float G,float B);
+        void setColor(Tupla3f cabina,Tupla3f boca,Tupla3f remolque,Tupla3f torso);
         void setColorTorso(float R,float G,float B);
         void setColorCabina(float R,float G,float B);
         void setColorRemolque(float R,float G,float B);
