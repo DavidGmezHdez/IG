@@ -440,7 +440,7 @@ void Escena::asignarPixeles(){
       seleccionarObjetivo(4,cilindro);
    else if(round(pixel[0]) == 153)
       seleccionarObjetivo(5,esfera);
-   else if(round(pixel[0]) == 178)
+   else if(round(pixel[0]) == 178 || round(pixel[0]) == 179)
       seleccionarObjetivo(6,cuadro);
    else if(round(pixel[0]) == 204)
       seleccionarObjetivo(7,alaX);
