@@ -89,7 +89,7 @@ class Escena
     bool angulo,objeto,animacionAutomatica,animacionManual,animacionLuz;
 
     //Variables seleccion
-    bool boton,objetoSeleccionado = false; //false->derecho, true->izquierdo
+    bool botonPulsado,objetoSeleccionado = false; //false->derecho, true->izquierdo
     int xraton, yraton,xpixel, ypixel, objsel;
     vector<Tupla3f> coloresAux;
 
@@ -101,6 +101,7 @@ class Escena
         void asignacionColores();
         void asignacionMateriales();
         void asignacionTexturas();
+        
 
         void inicializar( int UI_window_width, int UI_window_height );
         void redimensionar( int newWidth, int newHeight ) ;
@@ -110,6 +111,8 @@ class Escena
         void ratonMovido(int x, int y);
 
         // Dibujar
+        void crearLuces();
+        void crearEscena();
         void dibujar() ;
 
         // Interacción con la escena
@@ -124,6 +127,7 @@ class Escena
         void dibujaSeleccion();
         void seleccionarObjetivo(int obj,Malla3D* malla);
         void asignarColoresSeleccion();
+        void asignarPixeles();
 
 };
 #endif

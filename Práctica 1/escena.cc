@@ -1,7 +1,9 @@
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 
-
+//**************************************************************************
+// CONSTRUCTORES
+//**************************************************************************
 
 //**************************************************************************
 // constructores de objetos
@@ -141,6 +143,10 @@ Escena::Escena()
 
    asignacionTexturas();
 
+   //Modificando los parametros de visualizacion (por defecto SOLIDO)
+   puntos = false, lineas = false, solido = true, ajedrez = false, luz = false;
+
+   //Modificando los parametros de la camara activa
    numCamaraActiva = 0;
 
    //Modificando los parámetros para la animacion
@@ -171,29 +177,15 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	glViewport( 0, 0, UI_window_width, UI_window_height );
 }
 
-// **************************************************************************
-//
-// función de dibujo de la escena: limpia ventana, fija cámara, dibuja ejes,
-// y dibuja los objetos
-//
-// **************************************************************************
 
-void Escena::dibujar()
-{
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
-   
-   if(xpixel!=-1 && ypixel != -1)
-      dibujaSeleccion();
-   
-   glEnable(GL_CULL_FACE);
-   glEnable(GL_NORMALIZE);
-   glDisable(GL_LIGHTING);
-   glEnable(GL_SMOOTH);
-	change_projection(1);
-   change_observer();
-   
-   ejes.draw();
-   
+//**************************************************************************
+// ESCENA
+//**************************************************************************
+
+//**************************************************************************
+// funcion que enciende las luces activas
+//**************************************************************************
+void Escena::crearLuces(){
    if(luz){
       if(!glIsEnabled(GL_LIGHTING)){
          glEnable(GL_LIGHTING);
@@ -213,10 +205,21 @@ void Escena::dibujar()
          glDisable(GL_LIGHTING);
       glShadeModel(GL_FLAT);
    }
+}
 
+
+//**************************************************************************
+// funcion que dibuja los objetos con comandos de OpenGL
+//**************************************************************************
+void Escena::crearEscena(){
    glPushMatrix();
-   glPointSize(6);
-         
+      glPointSize(6); 
+         glPushMatrix();
+         tetraedro->setPosicion({200,0,0});
+         glScalef(25.0,25.0,25.0);
+         tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
          glPushMatrix();
          peon->setPosicion({-100,50,0});
          glScalef(25.0,25.0,25.0);
@@ -229,9 +232,11 @@ void Escena::dibujar()
          hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
 
-         glEnable(GL_TEXTURE_2D);
+         if(luz)
+            glEnable(GL_TEXTURE_2D);
+         
          glPushMatrix();
-         cuadro->setPosicion({300,100,0});
+         cuadro->setPosicion({200,100,0});
          cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
          
@@ -253,8 +258,10 @@ void Escena::dibujar()
          glScalef(2,2,2);
          esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
          glPopMatrix();
+         
+         glDisable(GL_TEXTURE_2D);
 
-
+         glEnable(GL_TEXTURE_2D);
          glPushMatrix();
          suelo->setPosicion({-suelo->getLado()/2,-18,suelo->getLado()/2});
          glRotatef(-90,1,0,0);
@@ -276,20 +283,55 @@ void Escena::dibujar()
 
 
 
+// **************************************************************************
+//
+// función de dibujo de la escena: limpia ventana, fija cámara, dibuja ejes,
+// y dibuja los objetos
+//
+// **************************************************************************
+
+void Escena::dibujar()
+{
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
+
+   if(xpixel!=-1 && ypixel != -1)
+      dibujaSeleccion();
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+   glEnable(GL_CULL_FACE);
+   glEnable(GL_NORMALIZE);
+   glDisable(GL_LIGHTING);
+   glEnable(GL_SMOOTH);
+	change_projection(1);
+   change_observer();
+   
+   ejes.draw();
+
+   crearLuces();
+
+   crearEscena();
+}
+
+
+
+//**************************************************************************
+// ANIMACION
+//**************************************************************************
+
 //**************************************************************************
 // Funcion que anima automaticamente el modelo
 //**************************************************************************
-
 void Escena::animarModeloJerarquico(){
    if(animacionAutomatica)
       alaX->animacionAutomatica();
 
    if(animacionLuz)
       luces[0]->animarLuz();
-   
-   
 }
 
+//**************************************************************************
+// RATON
+//**************************************************************************
 
 //**************************************************************************
 // Funcion que controla si se ha pulsado alguna tecla del raton
@@ -299,14 +341,16 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
    switch(boton){
       case GLUT_RIGHT_BUTTON:
          if(estado == GLUT_DOWN){
-            boton = false;
+            botonPulsado = true;
             xraton = x;
             yraton = y;
          }
          break;
       case GLUT_LEFT_BUTTON:
-         if(estado == GLUT_DOWN)
-            boton = true;  
+         if(estado == GLUT_DOWN){ 
+            xpixel = x;
+            ypixel = y;
+         }
          break;
       case 3:
          if(estado == GLUT_UP)
@@ -317,38 +361,34 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
             camaras[numCamaraActiva]->zoom(-1);
          break;
    }
-
-
 }
 
 
 //**************************************************************************
-// Funcion que controla si se ha pulsado el boton derecho
+// Funcion que controla si se ha pulsado el boton derecho para decidir si se rota en primera persona o se rota entorno a un objeto
 //**************************************************************************
 void Escena::ratonMovido(int x, int y){
-   if(!boton){
-         if(objetoSeleccionado){
-            camaras[numCamaraActiva]->rotarXExaminar((x-xraton)*0.1);
-            camaras[numCamaraActiva]->rotarYExaminar((y-yraton)*0.1);
-            xraton = x;
-            yraton = y;
-         }
-         else{
-            camaras[numCamaraActiva]->rotarXPrimeraPersona((x-xraton)*0.1);
-            camaras[numCamaraActiva]->rotarYPrimeraPersona((y-yraton)*0.1);
-            xraton = x;
-            yraton = y;
-         }
+   if(botonPulsado){
+      if(objetoSeleccionado){
+         camaras[numCamaraActiva]->rotarXExaminar((x-xraton)*0.1);
+         camaras[numCamaraActiva]->rotarYExaminar((y-yraton)*0.1);
+      }
+      else{
+         camaras[numCamaraActiva]->rotarXPrimeraPersona((x-xraton)*0.1);
+         camaras[numCamaraActiva]->rotarYPrimeraPersona((y-yraton)*0.1);
+      }
+      xraton = x;
+      yraton = y;
    }
-   else{
-      xpixel = x;
-      ypixel = y;
-   }
-
 }
 
+//**************************************************************************
+// SELECCION
+//**************************************************************************
 
-
+//**************************************************************************
+// Funcion que cambia los colores de los objetos para hacer posible la seleccion
+//**************************************************************************
 void Escena::asignarColoresSeleccion(){
    tetraedro->setColor(0.1,0,0);
    cubo->setColor(0.2,0,0);
@@ -361,7 +401,9 @@ void Escena::asignarColoresSeleccion(){
 }
 
 
-
+//**************************************************************************
+// Funcion que selecciona el objetivo de la camara | Si el objeto al que esta fijando vuelve a ser pulsado, vuelve a fijarse en el eje de coordenadas
+//**************************************************************************
 void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    if(objsel != obj){
       objsel = obj;
@@ -369,55 +411,76 @@ void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
       objetoSeleccionado = true;
    }
    else{
-      objeto = -1;
+      objsel = -1;
       camaras[numCamaraActiva]->setAt({0,0,0});
       objetoSeleccionado = false;
    }
 }
 
 //**************************************************************************
-// Funcion que controla la seleccion de objetos de la escena
+// Funcion que lee los pixeles en funcion del click izquierdo del raton y manda a fijar un objeto
 //**************************************************************************
-
-void Escena::dibujaSeleccion(){
-   glDisable(GL_DITHER);
-   glDisable(GL_LIGHTING);
-   puntos = false, lineas = false, solido = true, ajedrez = false, luz = false;
-
-
-   asignarColoresSeleccion();
-
+void Escena::asignarPixeles(){
    GLint viewport[4];
    GLubyte pixel[3];
 
    glGetIntegerv(GL_VIEWPORT,viewport);
 
    glReadPixels(xpixel,viewport[3]-ypixel,1,1,GL_RGB,GL_UNSIGNED_BYTE,(void *) pixel);
-
-
-   if(round(pixel[0]*10)/10 == 0.0)
+   
+   if(round(pixel[0]) == 26)
       seleccionarObjetivo(0,tetraedro);
-   else if(round(pixel[0]*10)/10 == 0.1)
+   else if(round(pixel[0]) == 51)
       seleccionarObjetivo(1,cubo);
-   else if(round(pixel[0]*10)/10 == 0.2)
+   else if(round(pixel[0]) == 76)
       seleccionarObjetivo(2,peon);
-   else if(round(pixel[0]*10)/10 == 0.3)
+   else if(round(pixel[0]) == 102)
       seleccionarObjetivo(3,hormiga);
-   else if(round(pixel[0]*10)/10 == 0.4)
+   else if(round(pixel[0]) == 128)
       seleccionarObjetivo(4,cilindro);
-   else if(round(pixel[0]*10)/10 == 0.5)
+   else if(round(pixel[0]) == 153)
       seleccionarObjetivo(5,esfera);
-   else if(round(pixel[0]*10)/10 == 0.6)
+   else if(round(pixel[0]) == 178)
       seleccionarObjetivo(6,cuadro);
-   else if(round(pixel[0]*10)/10 == 0.7)
+   else if(round(pixel[0]) == 204)
       seleccionarObjetivo(7,alaX);
+   
+}
+
+//**************************************************************************
+// Funcion que controla la seleccion de objetos de la escena
+//**************************************************************************
+void Escena::dibujaSeleccion(){
+   glDisable(GL_DITHER);
+   glDisable(GL_LIGHTING);
+
+   std::vector<bool>estadoAnterior= {puntos,lineas,solido,ajedrez,luz,metodoDibujado};
+   puntos = false, lineas = false, solido = true, ajedrez = false, luz = false, metodoDibujado = false;
+
+   //Cambiamos los colores
+   asignarColoresSeleccion();
+   
+   crearEscena();
+
+   //Deducimos cual es el pixel en el que ha hecho click
+   asignarPixeles();
 
    //Volvemos a ponerle los colores
    asignacionColores();
    xpixel = -1; ypixel = -1;
-
+   
+   puntos = estadoAnterior[0];
+   lineas = estadoAnterior[1];
+   solido = estadoAnterior[2];
+   ajedrez = estadoAnterior[3];
+   luz = estadoAnterior[4];
+   metodoDibujado = estadoAnterior[5];
 }
 
+
+//**************************************************************************
+// TECLAS
+//**************************************************************************
 
 //**************************************************************************
 //
@@ -822,6 +885,13 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 	}
 
 }
+
+
+
+
+//**************************************************************************
+// CÁMARAS
+//**************************************************************************
 
 //**************************************************************************
 // Funcion para definir la transformación de proyeccion
