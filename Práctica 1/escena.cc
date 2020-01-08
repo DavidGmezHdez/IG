@@ -427,8 +427,8 @@ void Escena::asignarPixeles(){
    glGetIntegerv(GL_VIEWPORT,viewport);
 
    glReadPixels(xpixel,viewport[3]-ypixel,1,1,GL_RGB,GL_UNSIGNED_BYTE,(void *) pixel);
-   
-   if(round(pixel[0]) == 26)
+
+   if(round(pixel[0]) == 26 || round(pixel[0]) == 25)
       seleccionarObjetivo(0,tetraedro);
    else if(round(pixel[0]) == 51)
       seleccionarObjetivo(1,cubo);
