@@ -390,14 +390,14 @@ void Escena::ratonMovido(int x, int y){
 // Funcion que cambia los colores de los objetos para hacer posible la seleccion
 //**************************************************************************
 void Escena::asignarColoresSeleccion(){
-   tetraedro->setColor(0.1,0,0);
-   cubo->setColor(0.2,0,0);
-   peon->setColor(0.3,0,0);
-   hormiga->setColor(0.4,0,0);
-   cilindro->setColor(0.5,0,0);
-   esfera->setColor(0.6,0,0);
-   cuadro->setColor(0.7,0,0);
-   alaX->setColor({0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0},{0.8,0,0});
+   tetraedro->setColor(0,0,0);
+   cubo->setColor(0,0,1);
+   peon->setColor(0,1,0);
+   hormiga->setColor(0,1,1);
+   cilindro->setColor(1,0,0);
+   esfera->setColor(1,0,1);
+   cuadro->setColor(1,1,0);
+   alaX->setColor({1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1});
 }
 
 
@@ -407,12 +407,18 @@ void Escena::asignarColoresSeleccion(){
 void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    if(objsel != obj){
       objsel = obj;
-      camaras[numCamaraActiva]->setAt(malla->getPosicion());
+      for(int i=0;i<7;i++){
+         if(camaras[i]!=nullptr)
+            camaras[i]->setAt(malla->getPosicion());
+      }
       objetoSeleccionado = true;
    }
    else{
       objsel = -1;
-      camaras[numCamaraActiva]->setAt({0,0,0});
+      for(int i=0;i<7;i++){
+         if(camaras[i] != nullptr)
+            camaras[i]->setAt({0,0,0});
+      }
       objetoSeleccionado = false;
    }
 }
@@ -428,21 +434,22 @@ void Escena::asignarPixeles(){
 
    glReadPixels(xpixel,viewport[3]-ypixel,1,1,GL_RGB,GL_UNSIGNED_BYTE,(void *) pixel);
 
-   if(round(pixel[0]) == 26 || round(pixel[0]) == 25)
+   printf("%d %d %d\n",pixel[0],pixel[1],pixel[2]);
+   if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)
       seleccionarObjetivo(0,tetraedro);
-   else if(round(pixel[0]) == 51)
+   else if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255)
       seleccionarObjetivo(1,cubo);
-   else if(round(pixel[0]) == 76)
+   else if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0)
       seleccionarObjetivo(2,peon);
-   else if(round(pixel[0]) == 102)
+   else if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 255)
       seleccionarObjetivo(3,hormiga);
-   else if(round(pixel[0]) == 128)
+   else if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0)
       seleccionarObjetivo(4,cilindro);
-   else if(round(pixel[0]) == 153)
+   else if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 255)
       seleccionarObjetivo(5,esfera);
-   else if(round(pixel[0]) == 178 || round(pixel[0]) == 179)
+   else if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 0)
       seleccionarObjetivo(6,cuadro);
-   else if(round(pixel[0]) == 204)
+   else if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255)
       seleccionarObjetivo(7,alaX);
    
 }
@@ -460,6 +467,7 @@ void Escena::dibujaSeleccion(){
    //Cambiamos los colores
    asignarColoresSeleccion();
    
+   //Creamos la escena con los colores
    crearEscena();
 
    //Deducimos cual es el pixel en el que ha hecho click
