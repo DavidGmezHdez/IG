@@ -438,28 +438,19 @@ void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    //Cuando seleccionas un objeto que no sea el suelo o el skybox
    if(objsel != obj && obj != -1){
       objsel = obj;
-      for(int i=0;i<7;i++){
-         if(camaras[i]!=nullptr)
-            camaras[i]->setAt(malla->getPosicion());
-      }
+      camaras[numCamaraActiva]->setAt(malla->getPosicion());
       objetoSeleccionado = true;
    }
    //Cuando deseleccionas pulsando en otro sitio que no sea el objeto seleccionado (el suelo o el skybox)
    else if(obj == -1){
       objsel = -1;
-      for(int i=0;i<7;i++){
-         if(camaras[i] != nullptr)
-            camaras[i]->volverAtAnterior();
-      }
+      camaras[numCamaraActiva]->volverAtAnterior();
       objetoSeleccionado = false;
    }
    //Cuando deseleccionas pulsando en el mismo objeto seleccionado
    else{
       objsel = -1;
-      for(int i=0;i<7;i++){
-         if(camaras[i] != nullptr)
-            camaras[i]->volverAtAnterior();
-      }
+      camaras[numCamaraActiva]->volverAtAnterior();
       objetoSeleccionado = false;
    }
 }

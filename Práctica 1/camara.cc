@@ -6,13 +6,16 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
     this->at = a;
     this->atAnterior = at;
     this->up = u.normalized();
-    this->fov = atan(left/near)*(180/M_PI)*2;
-    this->aspect = ancho/alto;
 
     this->left = alto/2;
     this->top = ancho/2;
+    this->aspect = ancho/alto;
     this->near = 50;
     this->far=3000;
+    this->fov = atan(left/near)*(180/M_PI)*2;
+    
+
+  
 
 
     /*
@@ -165,6 +168,7 @@ void Camara::setObserver(){
 void Camara::setProyeccion(){
     switch(tipo){
         case 1:
+            //gluPerspective(fov, aspect, near, far);
             glFrustum(-left, left, -top, top, near, far);
             break;
         case 2:
