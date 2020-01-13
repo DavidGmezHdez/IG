@@ -4,6 +4,7 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
     this->tipo = t;
     this->eye = e;
     this->at = a;
+    this->atAnterior = at;
     this->up = u.normalized();
     this->fov = atan(left/near)*(180/M_PI)*2;
     this->aspect = ancho/alto;
@@ -170,4 +171,13 @@ void Camara::setProyeccion(){
             glOrtho(-left, left, -top, top, near, far);
             break;
     }
+}
+
+
+void Camara::setAt(Tupla3f objetivo){
+    at = objetivo;
+}
+
+void Camara::volverAtAnterior(){
+    at = atAnterior;
 }

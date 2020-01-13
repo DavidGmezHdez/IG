@@ -37,8 +37,8 @@ void Escena::creacionObjetos(){
 //**************************************************************************
 void Escena::creacionAuxiliares(){
    //Creacion de materiales
-   plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.508273, 0.508273,0.508273, 1.0},128.0);//Sin brillos especulares
-   oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.75164, 0.60648, 0.22648	, 1.0},{0.628281, 0.555802, 0.366065, 0.1},128.0);//Sin reflectividad difusa
+   plata = Material({0.19225,0.19225,0.19225, 1.0},{0.50754, 0.50754,0.50754, 1.0},{0.508273, 0.508273,0.508273, 1.0},128.0);
+   oro = Material({0.24725,0.1995, 0.0745, 0.6},{0.75164, 0.60648, 0.22648	, 1.0},{0.628281, 0.555802, 0.366065, 0.1},128.0);
    bronce = Material({0.2125,0.1275,0.054,1.0},{0.714, 0.4284, 0.18144,1.0},{0.393548, 0.271906, 0.166721, 1.0},0.2);
    negro = Material({0.0,0.0,0.0,1.0},{0.0,0.0,0.0,1.0},{0.50,0.50,0.50,1.0},128*0.25);
 
@@ -61,9 +61,9 @@ void Escena::creacionAuxiliares(){
 
    //Creacion de cámaras
    camaras[0] = new Camara(1,{200,200,200},{0,0,0},{0,1,0},100,100);
-   camaras[1] = new Camara(2,{-200,-200,-200}, {0,0,0},{0,1,0},500, 500);
-   camaras[2] = new Camara(1,{200,-200,0}, {0,0,0}, {0,1,0},100, 100);
-   camaras[3] = new Camara(2, {-200,0,0}, {0,0,0}, {0,1,0},200, 200);
+   camaras[1] = new Camara(2,{500,300,100}, {0,0,0},{0,1,0},500, 500);
+   camaras[2] = new Camara(1,{200,200,0}, {0,0,0}, {0,1,0},100, 100);
+   camaras[3] = new Camara(2, {-700,300,0}, {0,0,0}, {0,1,0},200, 200);
 }
 
 //**************************************************************************
@@ -405,7 +405,38 @@ void Escena::asignarColoresSeleccion(){
 // Funcion que selecciona el objetivo de la camara | Si el objeto al que esta fijando vuelve a ser pulsado, vuelve a fijarse en el eje de coordenadas
 //**************************************************************************
 void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
-   if(objsel != obj){
+   switch(obj){
+      case 0:
+         cout<<"Ha seleccionado el tetraedro"<<endl;
+         break;
+      case 1:
+         cout<<"Ha seleccionado el cubo"<<endl;
+         break;
+      case 2:
+         cout<<"Ha seleccionado el peon"<<endl;
+         break;
+      case 3:
+         cout<<"Ha seleccionado la hormiga"<<endl;
+         break;
+      case 4:
+         cout<<"Ha seleccionado el cilindro"<<endl;
+         break;
+      case 5:
+         cout<<"Ha seleccionado la esfera"<<endl;
+         break;
+      case 6:
+         cout<<"Ha seleccionado el cuadro"<<endl;
+         break;
+      case 7:
+         cout<<"Ha seleccionado el Ala X"<<endl;
+         break;
+      case -1:
+         cout<<"Volviendo a posicion original"<<endl;
+         break;
+   }
+
+   //Cuando seleccionas un objeto que no sea el suelo o el skybox
+   if(objsel != obj && obj != -1){
       objsel = obj;
       for(int i=0;i<7;i++){
          if(camaras[i]!=nullptr)
@@ -413,11 +444,21 @@ void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
       }
       objetoSeleccionado = true;
    }
+   //Cuando deseleccionas pulsando en otro sitio que no sea el objeto seleccionado (el suelo o el skybox)
+   else if(obj == -1){
+      objsel = -1;
+      for(int i=0;i<7;i++){
+         if(camaras[i] != nullptr)
+            camaras[i]->volverAtAnterior();
+      }
+      objetoSeleccionado = false;
+   }
+   //Cuando deseleccionas pulsando en el mismo objeto seleccionado
    else{
       objsel = -1;
       for(int i=0;i<7;i++){
          if(camaras[i] != nullptr)
-            camaras[i]->setAt({0,0,0});
+            camaras[i]->volverAtAnterior();
       }
       objetoSeleccionado = false;
    }
@@ -434,7 +475,7 @@ void Escena::asignarPixeles(){
 
    glReadPixels(xpixel,viewport[3]-ypixel,1,1,GL_RGB,GL_UNSIGNED_BYTE,(void *) pixel);
 
-   printf("%d %d %d\n",pixel[0],pixel[1],pixel[2]);
+   //printf("%d %d %d\n",pixel[0],pixel[1],pixel[2]);
    if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)
       seleccionarObjetivo(0,tetraedro);
    else if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255)
@@ -451,6 +492,8 @@ void Escena::asignarPixeles(){
       seleccionarObjetivo(6,cuadro);
    else if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255)
       seleccionarObjetivo(7,alaX);
+   else
+      seleccionarObjetivo(-1,suelo);
    
 }
 

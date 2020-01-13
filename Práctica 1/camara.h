@@ -17,9 +17,7 @@ class Camara
 {
     private:
         
-        Tupla3f eye;
-        Tupla3f at;
-        Tupla3f up;
+        Tupla3f eye,at,up,atAnterior;
 
         int tipo; //0 = ortogonal | 1 = perspectiva
 
@@ -50,7 +48,8 @@ class Camara
         void setObserver();
         void setProyeccion();
 
-        inline void setAt(Tupla3f objetivo){at = objetivo;};
+        void setAt(Tupla3f objetivo);
+        void volverAtAnterior();
 
 
 
