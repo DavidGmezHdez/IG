@@ -577,7 +577,7 @@ void Escena::dibujaSeleccion(){
    //Creamos la escena con los colores
    crearEscena();
 
-   objetosSeleccionables();
+   //objetosSeleccionables();
 
    //Deducimos cual es el pixel en el que ha hecho click
    asignarPixeles();
@@ -616,8 +616,17 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    switch( toupper(tecla) )
    {
       case 'Q' :
-         if (modoMenu!=NADA)
-            modoMenu=NADA;            
+         if (modoMenu!=NADA){
+            modoMenu=NADA;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa O para entrar en el modo seleccion objeto"<<endl;
+            cout<<"Pulsa V para entrar en el modo seleccion visualizacion"<<endl;
+            cout<<"Pulsa D para entrar en el modo seleccion dibujado"<<endl;
+            cout<<"Pulsa A para activar la animacion del modelo jerárquico"<<endl;   
+            cout<<"Pulsa M para activar la animacion manual del modelo jerárquico"<<endl;
+            cout<<"Pulsa C para entrar en el modo seleccion camaras"<<endl;
+            cout<<"Pulsa Q para salir del programa"<<endl;
+         }         
          else {
             salir=true ;
          }
@@ -625,41 +634,63 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'O' :
          // ESTAMOS EN MODO SELECCION DE OBJETO
          modoMenu=SELOBJETO;
-         cout<<"Entrando en modo selección objeto"<<endl; 
+         cout<<"Entrando en modo selección objeto"<<endl;
+         cout<<"-------OPCIONES-------"<<endl;
+         cout<<"Actualmente todos los objetos estan dibujados"<<endl;
+         cout<<"Pulsa Q para volver al menu principal"<<endl;
          break ;
       case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
-         cout<<"Entrando en modo selección visualización"<<endl; 
+         cout<<"Entrando en modo selección visualización"<<endl;
+         cout<<"-------OPCIONES-------"<<endl;
+         cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+         cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+         cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+         cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+         cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+         cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+         cout<<"Pulsa Q para volver al menu principal"<<endl;
          break ;
       case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
          modoMenu=SELDIBUJADO;
-         cout<<"Entrando en modo selección dibujado"<<endl; 
+         cout<<"Entrando en modo selección dibujado"<<endl;
+         cout<<"-------OPCIONES-------"<<endl;
+         cout<<"Pulsa 1 para seleccionar el modo dibujado Inmediato"<<endl;
+         cout<<"Pulsa 2 para seleccionar el modo dibujado Diferido"<<endl;
+         cout<<"Pulsa Q para volver al menu principal"<<endl;
          break ;
       case 'C':
          modoMenu = SELCAM;
-         cout<<"Entrando en modo selección de cámaras"<<endl; 
-         break;
-      case 'Y':
-         if(modoMenu == SELOBJETO)
-            seleccionDibujo = 1;
-         break;
-      case 'N':
-         if(modoMenu == SELOBJETO)
-            seleccionDibujo = 2;
-            cout<<"Dibujando objetos texturas"<<endl; 
-         break;
-      case 'X':
-         if(modoMenu == SELOBJETO)
-            seleccionDibujo = 3;
-            cout<<"Dibujando modelo jerárquico"<<endl; 
+         cout<<"Entrando en modo selección de cámaras"<<endl;
+         cout<<"-------OPCIONES-------"<<endl;
+         for(int i=0;i<=7;i++)
+            cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+         /*cout<<"Pulsa 0 para seleccionar la camara 0"<<endl;
+         cout<<"Pulsa 1 para seleccionar la camara 1"<<endl;
+         cout<<"Pulsa 2 para seleccionar la camara 2"<<endl;
+         cout<<"Pulsa 3 para seleccionar la camara 3"<<endl;
+         cout<<"Pulsa 4 para seleccionar la camara 4"<<endl;
+         cout<<"Pulsa 5 para seleccionar la camara 5"<<endl;
+         cout<<"Pulsa 6 para seleccionar la camara 6"<<endl;
+         cout<<"Pulsa 7 para seleccionar la camara 7"<<endl;
+         */
+         cout<<"Pulsa Q para volver al menu principal"<<endl; 
          break;
       case 'P':
          if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             puntos = !puntos;
             cout<<"Entrando en modo puntos"<<endl; 
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          else if(modoMenu == SELVISUALIZACION && luz)
             animacionLuz = true;
@@ -669,7 +700,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             luz = false;
             lineas = !lineas;
-            cout<<"Entrando en modo lineas"<<endl; 
+            cout<<"Entrando en modo lineas"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
       
@@ -677,7 +716,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             luz = false;
             solido = !solido;
-            cout<<"Entrando en modo caras"<<endl; 
+            cout<<"Entrando en modo caras"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
       
@@ -698,11 +745,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          else if(modoMenu == SELVISUALIZACION && !luz){
             luz = false;
             ajedrez = !ajedrez;
-            cout<<"Entrando en modo ajedrez"<<endl; 
+            cout<<"Entrando en modo ajedrez"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          else if(modoMenu == SELVISUALIZACION && luz){
             angulo = true;
-            cout<<"Seleccion del angulo ALPHA"<<endl; 
+            cout<<"Seleccion del angulo ALPHA"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
          
@@ -711,14 +774,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == NADA){
             modoMenu = SELANIMMAN;
             animacionAutomatica = false;
-            cout<<"Selección de animación manual del modelo jerárquico"<<endl; 
+            cout<<"Selección de animación manual del modelo jerárquico"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            for(int i=0;i<=7;i++)
+               cout<<"Pulsa "<< i <<" para seleccionar el grado de libertad "<<i<<endl;
+         
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
          
       case 'B':
-         if(luz){
+         if(modoMenu == SELVISUALIZACION && luz){
             angulo = false;
-            cout<<"Entrando en modo selección objeto"<<endl; 
+            cout<<"Seleccion del angulo BETA"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
       
@@ -726,26 +802,73 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION){
             cilindro->switchTapas(tapas);
             peon->switchTapas(tapas);
-            cout<<"Activando/Desactivando tapas"<<endl; 
+            cout<<"Activando/Desactivando tapas"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
+            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;
          }
          break;
       
       case 'I':
          if(modoMenu == SELVISUALIZACION){
             luz = !luz;
-            cout<<"Activando modo iluminación"<<endl; 
+
+            if(luz){
+               cout<<"Activando modo iluminación"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
+            }else{
+               cout<<"Desactivando modo iluminación"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
+               cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
+               cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
+               cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
+               cout<<"Pulsa I para activar la visualizacion de luz"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;
+            }
+
          }
       case '0':
          if(modoMenu == SELVISUALIZACION && luz){
-            switchLuces[0] = !switchLuces[0];
+            switchLuces[0] = !switchLuces[0];  
             if(switchLuces[0])
                cout<<"Activando luz 0"<<endl; 
             else
                cout<<"Desactivando luz 0"<<endl; 
+            
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
          }
          else if(modoMenu == SELANIMMAN){
             grado = 0;
-            cout<<"Seleccion del grado 0"<<endl; 
+            cout<<"Seleccion del grado 0"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;    
          }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 0;
@@ -756,24 +879,48 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;  
          }
          break;
       
       case '1' :
          if(modoMenu == SELDIBUJADO){
             metodoDibujado = false;
-            cout<<"Dibujando en modo inmediato"<<endl; 
+            cout<<"Dibujando en modo inmediato"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa 1 para seleccionar el modo dibujado Inmediato"<<endl;
+            cout<<"Pulsa 2 para seleccionar el modo dibujado Diferido"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[1] = !switchLuces[1];
             if(switchLuces[1])
                cout<<"Activando luz 1"<<endl; 
             else
-               cout<<"Desactivando luz 1"<<endl; 
+               cout<<"Desactivando luz 1"<<endl;
+
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
          }
          else if(modoMenu == SELANIMMAN){
             grado = 1;
-            cout<<"Seleccion del grado 1"<<endl; 
+            cout<<"Seleccion del grado 1"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;    
          }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 1;
@@ -784,24 +931,49 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
       case '2':
          if(modoMenu == SELDIBUJADO){
             metodoDibujado = true;
-            cout<<"Dibujando en modo diferido"<<endl; 
+            cout<<"Dibujando en modo diferido"<<endl;
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa 1 para seleccionar el modo dibujado Inmediato"<<endl;
+            cout<<"Pulsa 2 para seleccionar el modo dibujado Diferido"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;  
          }
          else if(modoMenu == SELVISUALIZACION && luz){
             switchLuces[2] = !switchLuces[2];
             if(switchLuces[0])
                cout<<"Activando luz 2"<<endl; 
             else
-               cout<<"Desactivando luz 2"<<endl; 
+               cout<<"Desactivando luz 2"<<endl;
+
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;    
          }
          else if(modoMenu == SELANIMMAN){
             grado = 2;
-            cout<<"Seleccion del grado 2"<<endl; 
+            cout<<"Seleccion del grado 2"<<endl;
+            
+            cout<<"-------OPCIONES-------"<<endl;
+            cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+            cout<<"Pulsa Q para volver al menu principal"<<endl;    
          }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 2;
@@ -812,6 +984,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -821,11 +998,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                if(switchLuces[3])
                   cout<<"Activando luz 3"<<endl; 
                else
-                  cout<<"Desactivando luz 3"<<endl; 
+                  cout<<"Desactivando luz 3"<<endl;
+
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;    
             }
             else if(modoMenu == SELANIMMAN){
                grado = 3;
-               cout<<"Seleccion del grado 3"<<endl; 
+               cout<<"Seleccion del grado 3"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;    
             }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 3;
@@ -836,6 +1029,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -845,11 +1043,26 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                if(switchLuces[4])
                   cout<<"Activando luz 4"<<endl; 
                else
-                  cout<<"Desactivando luz 4"<<endl; 
+                  cout<<"Desactivando luz 4"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
             }
             else if(modoMenu == SELANIMMAN){
                grado = 4;
-               cout<<"Seleccion del grado 4"<<endl; 
+               cout<<"Seleccion del grado 4"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;    
             }
             else if(modoMenu == SELCAM){
                numCamaraActiva =4;
@@ -860,6 +1073,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -869,11 +1087,25 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                if(switchLuces[5])
                   cout<<"Activando luz 5"<<endl; 
                else
-                  cout<<"Desactivando luz 5"<<endl; 
+                  cout<<"Desactivando luz 5"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;     
             }
             else if(modoMenu == SELANIMMAN){
                grado = 5;
-               cout<<"Seleccion del grado 5"<<endl; 
+               cout<<"Seleccion del grado 5"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;    
             }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 5;
@@ -884,6 +1116,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -893,7 +1130,26 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                if(switchLuces[6])
                   cout<<"Activando luz 6"<<endl; 
                else
-                  cout<<"Desactivando luz 6"<<endl; 
+                  cout<<"Desactivando luz 6"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
+            }
+            else if(modoMenu == SELANIMMAN){
+               grado = 6;
+               cout<<"Seleccion del grado 6"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;     
+            
             }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 6;
@@ -904,6 +1160,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -913,11 +1174,25 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                if(switchLuces[7])
                   cout<<"Activando luz 7"<<endl; 
                else
-                  cout<<"Desactivando luz 7"<<endl; 
+                  cout<<"Desactivando luz 7"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
             }
             else if(modoMenu == SELANIMMAN){
                grado = 7;
-               cout<<"Seleccion del grado 7"<<endl; 
+               cout<<"Seleccion del grado 7"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa + para aumentar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa - para decrementar el valor del grado de libertad"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;     
             }
             else if(modoMenu == SELCAM){
                numCamaraActiva = 7;
@@ -928,6 +1203,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                }
                else
                   cerr<<"Cámara "<<numCamaraActiva<<" no creada"<<endl;
+               
+               cout<<"-------OPCIONES-------"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl; 
          }
          break;
       
@@ -954,7 +1234,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       
       case '+':
-         if(modoMenu == SELVISUALIZACION){
+         if(modoMenu == SELANIMMAN){
             if(!animacionAutomatica){
                inc = 1.0;
                alaX->animacionManual(grado,inc);
@@ -963,7 +1243,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break;
       
       case '-':
-         if(modoMenu == SELVISUALIZACION){
+         if(modoMenu == SELANIMMAN){
             if(!animacionAutomatica){
                inc = -1.0;
                alaX->animacionManual(grado,inc);

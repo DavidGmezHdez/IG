@@ -158,6 +158,16 @@ int main( int argc, char **argv )
    // SUSTITUIR EL NOMBRE DEL ALUMNO
    glutCreateWindow("Practicas IG: David Gómez Hernández");
 
+
+   cout<<"-------OPCIONES-------"<<endl;
+   cout<<"Pulsa O para entrar en el modo seleccion objeto"<<endl;
+   cout<<"Pulsa V para entrar en el modo seleccion visualizacion"<<endl;
+   cout<<"Pulsa D para entrar en el modo seleccion dibujado"<<endl;
+   cout<<"Pulsa A para activar la animacion del modelo jerárquico"<<endl;   
+   cout<<"Pulsa M para activar la animacion manual del modelo jerárquico"<<endl;
+   cout<<"Pulsa C para entrar en el modo seleccion camaras"<<endl;
+   cout<<"Pulsa Q para salir del programa"<<endl;
+
    //Funciones para la deteccion de click y movimiento del raton
    glutMouseFunc(clickRaton);
    glutMotionFunc(ratonMovido);
