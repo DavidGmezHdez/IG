@@ -90,7 +90,7 @@ class Escena
 
     //Variables seleccion
     bool botonPulsado,objetoSeleccionado = false; //false->derecho, true->izquierdo
-    int xraton, yraton,xpixel, ypixel, objsel;
+    int xraton, yraton,xpixel, ypixel, objsel, xobj,yobj;
     vector<Tupla3f> coloresAux;
 
     public:
@@ -128,6 +128,8 @@ class Escena
         void seleccionarObjetivo(int obj,Malla3D* malla);
         void asignarColoresSeleccion();
         void asignarPixeles();
+        void iluminarSeleccion(bool sel,Malla3D* malla);
+        void objetosSeleccionables();
 
 };
 #endif

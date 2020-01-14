@@ -296,6 +296,7 @@ void Escena::dibujar()
 
    if(xpixel!=-1 && ypixel != -1)
       dibujaSeleccion();
+   
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
    glEnable(GL_CULL_FACE);
@@ -380,6 +381,10 @@ void Escena::ratonMovido(int x, int y){
       xraton = x;
       yraton = y;
    }
+   else{
+      xobj = x;
+      yobj = y;
+   }
 }
 
 //**************************************************************************
@@ -455,6 +460,74 @@ void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    }
 }
 
+void Escena::iluminarSeleccion(bool sel,Malla3D* malla){
+   if(sel){
+      if(!luz){
+         malla->setColor(1,0.9,0.1);
+      }
+      else{
+         Material aux = Material({ 0.0f,0.0f,0.0f,1.0f },{ 0.5f,0.5f,0.0f,1.0f},{0.6f,0.6f,0.5f,1.0f },0.25f);
+         malla->setMaterial(aux); 
+      }
+   }
+   else{
+      asignarColoresSeleccion();
+      asignacionMateriales();
+   }
+}
+
+
+void Escena::objetosSeleccionables(){
+   GLint viewport[4];
+   GLfloat pixel[3];
+
+   glGetIntegerv(GL_VIEWPORT,viewport);
+
+   glReadPixels(xraton,viewport[3]-yraton,1,1,GL_RGB,GL_FLOAT,(void *) pixel);
+   printf("%d %d %d\n",pixel[0],pixel[1],pixel[2]);
+
+   if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)
+      iluminarSeleccion(true,tetraedro);
+   else
+      iluminarSeleccion(false,tetraedro);
+
+   if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255)
+      iluminarSeleccion(true,cubo);
+   else
+      iluminarSeleccion(false,cubo);
+      
+   if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0)
+      iluminarSeleccion(true,peon);
+   else
+      iluminarSeleccion(false,peon);
+
+   if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 255)
+      iluminarSeleccion(true,hormiga);
+   else
+      iluminarSeleccion(false,hormiga);
+
+   if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0)
+      iluminarSeleccion(true,cilindro);
+   else
+      iluminarSeleccion(true,cilindro);
+
+   if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 255)
+      iluminarSeleccion(true,esfera);
+   else
+      iluminarSeleccion(false,esfera);
+   
+   if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 0)
+      iluminarSeleccion(true,cuadro);
+   else
+      iluminarSeleccion(true,cuadro);
+   
+   if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255)
+      iluminarSeleccion(true,alaX);
+   else
+      iluminarSeleccion(false,alaX);
+
+}
+
 //**************************************************************************
 // Funcion que lee los pixeles en funcion del click izquierdo del raton y manda a fijar un objeto
 //**************************************************************************
@@ -503,6 +576,8 @@ void Escena::dibujaSeleccion(){
    
    //Creamos la escena con los colores
    crearEscena();
+
+   objetosSeleccionables();
 
    //Deducimos cual es el pixel en el que ha hecho click
    asignarPixeles();

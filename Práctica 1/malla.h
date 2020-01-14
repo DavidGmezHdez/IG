@@ -63,6 +63,10 @@ class Malla3D
    inline void setCoordenadasTextura(std::vector<Tupla2f> texturas){ct = texturas;};
 
    virtual void calcularCoordenadas(){};
+
+   inline bool getSuperpuesto(){return superpuesto;};
+
+   inline void setSuperpuesto(bool sup){superpuesto = sup;};
    
    protected:
 
@@ -80,6 +84,7 @@ class Malla3D
    GLuint vbo_v = 0,vbo_f= 0, vbo_c = 0,vbo_cp = 0,vbo_cl = 0, vbo_nv = 0,vbo_ct = 0;
    Material *m = nullptr;
    Textura *t = nullptr;
+   bool superpuesto = false;
 } ;
 
 #endif
