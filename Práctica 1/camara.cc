@@ -15,7 +15,7 @@ Camara::Camara( int t,Tupla3f e, Tupla3f a, Tupla3f u,float ancho, float alto){
     this->fov = atan(left/near)*(180/M_PI)*2;
     
 
-  
+    seleccionandoObjeto = false;
 
 
     /*
@@ -184,4 +184,13 @@ void Camara::setAt(Tupla3f objetivo){
 
 void Camara::volverAtAnterior(){
     at = atAnterior;
+}
+
+
+
+void Camara::setSeleccionando(bool sel){
+    seleccionandoObjeto = sel;
+}
+bool Camara::getSeleccionando(){
+    return seleccionandoObjeto;
 }

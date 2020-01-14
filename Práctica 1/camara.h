@@ -23,6 +23,8 @@ class Camara
 
         float fov,aspect,near,far,top,left;
 
+        bool seleccionandoObjeto;
+
         //Vectores de direccion y ejes de la cámara
         Tupla3f vectorDir, vectorX, vectorY;
 
@@ -50,6 +52,9 @@ class Camara
 
         void setAt(Tupla3f objetivo);
         void volverAtAnterior();
+
+        void setSeleccionando(bool sel);
+        bool getSeleccionando();
 
 
 

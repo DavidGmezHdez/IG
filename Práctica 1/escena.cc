@@ -369,7 +369,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
 //**************************************************************************
 void Escena::ratonMovido(int x, int y){
    if(botonPulsado){
-      if(objetoSeleccionado){
+      if(camaras[numCamaraActiva]->getSeleccionando()){
          camaras[numCamaraActiva]->rotarXExaminar((x-xraton)*0.1);
          camaras[numCamaraActiva]->rotarYExaminar((y-yraton)*0.1);
       }
@@ -439,19 +439,19 @@ void Escena::seleccionarObjetivo(int obj,Malla3D* malla){
    if(objsel != obj && obj != -1){
       objsel = obj;
       camaras[numCamaraActiva]->setAt(malla->getPosicion());
-      objetoSeleccionado = true;
+      camaras[numCamaraActiva]->setSeleccionando(true);
    }
    //Cuando deseleccionas pulsando en otro sitio que no sea el objeto seleccionado (el suelo o el skybox)
    else if(obj == -1){
       objsel = -1;
       camaras[numCamaraActiva]->volverAtAnterior();
-      objetoSeleccionado = false;
+      camaras[numCamaraActiva]->setSeleccionando(false);
    }
    //Cuando deseleccionas pulsando en el mismo objeto seleccionado
    else{
       objsel = -1;
       camaras[numCamaraActiva]->volverAtAnterior();
-      objetoSeleccionado = false;
+      camaras[numCamaraActiva]->setSeleccionando(false);
    }
 }
 
