@@ -123,8 +123,7 @@ void Escena::asignacionTexturas(){
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
-Escena::Escena()
-{
+Escena::Escena(){
    Front_plane       = 50.0;
    Back_plane        = 2000.0;
    Observer_distance = 4*Front_plane;
@@ -164,8 +163,7 @@ Escena::Escena()
 // Principalmemnte, inicializa OpenGL y la transf. de vista y proyección
 //**************************************************************************
 
-void Escena::inicializar( int UI_window_width, int UI_window_height )
-{
+void Escena::inicializar( int UI_window_width, int UI_window_height ){
 	glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
 	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
@@ -290,8 +288,7 @@ void Escena::crearEscena(){
 //
 // **************************************************************************
 
-void Escena::dibujar()
-{
+void Escena::dibujar(){
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 
    if(xpixel!=-1 && ypixel != -1)
@@ -758,14 +755,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          else if(modoMenu == SELVISUALIZACION && luz){
             angulo = true;
             cout<<"Seleccion del angulo ALPHA"<<endl;
-            cout<<"-------OPCIONES-------"<<endl;
-            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
-            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
-            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
-            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
-            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
-            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
-            cout<<"Pulsa Q para volver al menu principal"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
          }
          break;
          
@@ -787,14 +786,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          if(modoMenu == SELVISUALIZACION && luz){
             angulo = false;
             cout<<"Seleccion del angulo BETA"<<endl;
-            cout<<"-------OPCIONES-------"<<endl;
-            cout<<"Pulsa P para activar/desactivar la visualizacion de puntos"<<endl;
-            cout<<"Pulsa L para activar/desactivar la visualizacion de lineas"<<endl;   
-            cout<<"Pulsa S para activar/desactivar la visualizacion de solido"<<endl;
-            cout<<"Pulsa A para activar/desactivar la visualizacion de ajedrez"<<endl;
-            cout<<"Pulsa I para activar/desactivar la visualizacion de luz"<<endl;
-            cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
-            cout<<"Pulsa Q para volver al menu principal"<<endl;
+               cout<<"-------OPCIONES-------"<<endl;
+               cout<<"Pulsa I para desactivar la visualizacion de luz"<<endl;
+               for(int i=0;i<=7;i++)
+                  cout<<"Pulsa "<< i <<" para activar la luz numero "<<i<<endl;
+               cout<<"Pulsa A seleccionar el angulo ALPHA"<<endl;
+               cout<<"Pulsa B seleccionar el angulo BETA"<<endl;
+               cout<<"Pulsa < para decrementar el angulo"<<endl;
+               cout<<"Pulsa > para aumentar el angulo"<<endl;
+               cout<<"Pulsa T para activar/desactivar las tapas de los objeto revolucion"<<endl;
+               cout<<"Pulsa Q para volver al menu principal"<<endl;   
          }
          break;
       
