@@ -664,15 +664,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          cout<<"-------OPCIONES-------"<<endl;
          for(int i=0;i<=7;i++)
             cout<<"Pulsa "<< i <<" para seleccionar la camara "<<i<<endl;
-         /*cout<<"Pulsa 0 para seleccionar la camara 0"<<endl;
-         cout<<"Pulsa 1 para seleccionar la camara 1"<<endl;
-         cout<<"Pulsa 2 para seleccionar la camara 2"<<endl;
-         cout<<"Pulsa 3 para seleccionar la camara 3"<<endl;
-         cout<<"Pulsa 4 para seleccionar la camara 4"<<endl;
-         cout<<"Pulsa 5 para seleccionar la camara 5"<<endl;
-         cout<<"Pulsa 6 para seleccionar la camara 6"<<endl;
-         cout<<"Pulsa 7 para seleccionar la camara 7"<<endl;
-         */
          cout<<"Pulsa Q para volver al menu principal"<<endl; 
          break;
       case 'P':
