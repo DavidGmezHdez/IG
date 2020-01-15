@@ -113,6 +113,10 @@ class Escena
         // Dibujar
         void crearLuces();
         void crearEscena();
+        void crearEscenaObjetos();
+        void crearEscenaAuxiliar();
+        void crearEscenaObjetosEscalados();
+        void asignarColoresExtra();
         void dibujar() ;
 
         // Interacción con la escena

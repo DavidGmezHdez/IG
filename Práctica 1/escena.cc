@@ -279,7 +279,137 @@ void Escena::crearEscena(){
    glPopMatrix();
 }
 
+void Escena::crearEscenaObjetos(){
+   glPushMatrix();
+      glPointSize(6); 
+         glPushMatrix();
+         tetraedro->setPosicion({200,0,0});
+         glScalef(25.0,25.0,25.0);
+         tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
 
+         glPushMatrix();
+         peon->setPosicion({-100,50,0});
+         glScalef(25.0,25.0,25.0);
+         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         hormiga->setPosicion({-100,0,0});
+         glScalef(3,3,3);
+         hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         if(luz)
+            glEnable(GL_TEXTURE_2D);
+         
+         glPushMatrix();
+         cuadro->setPosicion({200,100,0});
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         
+         glPushMatrix();
+         cubo->setPosicion({-100,0,100});
+         glScalef(25,25,25);
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         cilindro->setPosicion({-100,50,-100});
+         glScalef(1.2,1.5,1.2);
+         glRotatef(180,1,0,0);
+         cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         esfera->setPosicion({100,0,100});
+         glScalef(2,2,2);
+         esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         
+         glDisable(GL_TEXTURE_2D);
+
+         glPushMatrix();
+         alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+}
+
+void Escena::crearEscenaAuxiliar(){
+         glDisable(GL_TEXTURE_2D);
+
+         glEnable(GL_TEXTURE_2D);
+         glPushMatrix();
+         suelo->setPosicion({-suelo->getLado()/2,-18,suelo->getLado()/2});
+         glRotatef(-90,1,0,0);
+         suelo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         glScalef(1000,1000,1000);
+         skybox->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glDisable(GL_TEXTURE_2D);
+}
+
+
+
+void Escena::crearEscenaObjetosEscalados(){
+   glPushMatrix();
+      glPointSize(6); 
+         glPushMatrix();
+         tetraedro->setPosicion({200,0,0});
+         glScalef(27.0,27.0,27.0);
+         tetraedro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         peon->setPosicion({-100,50,0});
+         glScalef(26.0,26.0,26.0);
+         peon->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         hormiga->setPosicion({-100,0,0});
+         glScalef(3.5,3.5,3.5);
+         hormiga->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         if(luz)
+            glEnable(GL_TEXTURE_2D);
+         
+         glPushMatrix();
+         cuadro->setPosicion({200,100,0});
+         glScalef(1.1,1.1,1.1);
+         cuadro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         
+         glPushMatrix();
+         cubo->setPosicion({-100,0,100});
+         glScalef(26,26,26);
+         cubo->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         cilindro->setPosicion({-100,50,-100});
+         glScalef(1.3,1.6,1.3);
+         glRotatef(180,1,0,0);
+         cilindro->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+
+         glPushMatrix();
+         esfera->setPosicion({100,0,100});
+         glScalef(3,3,3);
+         esfera->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+         
+         glDisable(GL_TEXTURE_2D);
+
+         glPushMatrix();
+         glScalef(1.01,1.01,1.01);
+         alaX->draw(metodoDibujado,puntos,lineas,solido,ajedrez);
+         glPopMatrix();
+}
 
 // **************************************************************************
 //
@@ -289,6 +419,8 @@ void Escena::crearEscena(){
 // **************************************************************************
 
 void Escena::dibujar(){
+   glDepthMask (1);
+   glColorMask (1,1,1,1);
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 
    if(xpixel!=-1 && ypixel != -1)
@@ -307,7 +439,12 @@ void Escena::dibujar(){
 
    crearLuces();
 
-   crearEscena();
+   //crearEscena();
+   /*
+   crearEscenaObjetos();
+   crearEscenaAuxiliar();
+*/
+   objetosSeleccionables();
 }
 
 
@@ -397,10 +534,23 @@ void Escena::asignarColoresSeleccion(){
    peon->setColor(0,1,0);
    hormiga->setColor(0,1,1);
    cilindro->setColor(1,0,0);
-   esfera->setColor(1,0,1);
-   cuadro->setColor(1,1,0);
+   esfera->setColor(1,0,0);
+   cuadro->setColor(0,0,0);
    alaX->setColor({1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1},{1,1,1});
 }
+
+/*
+void Escena::asignarColoresExtra(){
+   tetraedro->setColor(0,0,0);
+   cubo->setColor((0,0,0);
+   peon->setColor((0,0,0);
+   hormiga->setColor((0,0,0);
+   cilindro->setColor((0,0,0);
+   esfera->setColor((0,0,0);
+   cuadro->setColor(0,0,0);
+   alaX->setColor({(0,0,0},{((0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0},{(0,0,0});
+}
+*/
 
 
 //**************************************************************************
@@ -475,53 +625,32 @@ void Escena::iluminarSeleccion(bool sel,Malla3D* malla){
 
 
 void Escena::objetosSeleccionables(){
-   GLint viewport[4];
-   GLfloat pixel[3];
+   glEnable(GL_DEPTH_TEST);
+   glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-   glGetIntegerv(GL_VIEWPORT,viewport);
-
-   glReadPixels(xraton,viewport[3]-yraton,1,1,GL_RGB,GL_FLOAT,(void *) pixel);
-   printf("%d %d %d\n",pixel[0],pixel[1],pixel[2]);
-
-   if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0)
-      iluminarSeleccion(true,tetraedro);
-   else
-      iluminarSeleccion(false,tetraedro);
-
-   if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255)
-      iluminarSeleccion(true,cubo);
-   else
-      iluminarSeleccion(false,cubo);
-      
-   if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0)
-      iluminarSeleccion(true,peon);
-   else
-      iluminarSeleccion(false,peon);
-
-   if(pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 255)
-      iluminarSeleccion(true,hormiga);
-   else
-      iluminarSeleccion(false,hormiga);
-
-   if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0)
-      iluminarSeleccion(true,cilindro);
-   else
-      iluminarSeleccion(true,cilindro);
-
-   if(pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 255)
-      iluminarSeleccion(true,esfera);
-   else
-      iluminarSeleccion(false,esfera);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);   
    
-   if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 0)
-      iluminarSeleccion(true,cuadro);
-   else
-      iluminarSeleccion(true,cuadro);
-   
-   if(pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255)
-      iluminarSeleccion(true,alaX);
-   else
-      iluminarSeleccion(false,alaX);
+   glStencilMask(0x00);
+   glPushMatrix();
+   crearEscenaAuxiliar();
+   glPopMatrix();
+
+   glStencilFunc(GL_ALWAYS, 1, 0xFF); 
+   glStencilMask(0xFF);
+   asignarColoresSeleccion();
+   glPushMatrix();
+   crearEscenaObjetosEscalados();
+   glPopMatrix(); 
+
+   glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+   glStencilMask(0x00); 
+   glDisable(GL_DEPTH_TEST);
+   asignacionColores();
+   glPushMatrix();
+   crearEscenaObjetos();
+   glPopMatrix();
+   glStencilMask(0xFF);
+   glEnable(GL_DEPTH_TEST); 
 
 }
 
