@@ -639,6 +639,8 @@ void Escena::objetosSeleccionables(){
    glStencilMask(0xFF);
    asignarColoresSeleccion();
    glPushMatrix();
+   glDisable(GL_LIGHTING);
+   glDisable(GL_TEXTURE_2D);
    crearEscenaObjetosEscalados();
    glPopMatrix(); 
 
@@ -647,6 +649,8 @@ void Escena::objetosSeleccionables(){
    glDisable(GL_DEPTH_TEST);
    asignacionColores();
    glPushMatrix();
+   if(luz)
+      glEnable(GL_LIGHTING);
    crearEscenaObjetos();
    glPopMatrix();
    glStencilMask(0xFF);
